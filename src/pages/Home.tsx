@@ -7,6 +7,7 @@
  */
 
 import Nav from '../components/home/Nav'
+import Hero from '../components/home/Hero'
 
 type StubProps = {
   node: string
@@ -41,7 +42,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-navy-900 font-plex">
       <Nav />
-      <Stub node="5:111" name="hero" height={900} surface="navy" pattern="bp-grid" />
+      <Hero />
       {/* about us goes here, once designed */}
       <Stub node="5:112" name="countdown" height={300} surface="navy" />
       <Stub node="5:114" name="events" height={900} surface="paper" pattern="iso-hatch" />

@@ -6,6 +6,8 @@
  * src/components/home/. Delete Stub once the last section lands.
  */
 
+import Nav from '../components/home/Nav'
+
 type StubProps = {
   node: string
   name: string
@@ -38,7 +40,7 @@ function Stub({ node, name, height, surface, pattern }: StubProps) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-navy-900 font-plex">
-      <Stub node="4:108" name="nav" height={72} surface="navy" />
+      <Nav />
       <Stub node="5:111" name="hero" height={900} surface="navy" pattern="bp-grid" />
       {/* about us goes here, once designed */}
       <Stub node="5:112" name="countdown" height={300} surface="navy" />

@@ -26,6 +26,29 @@ body {
   background-size: 256px 256px;
 }
 
+/* Home redesign — blueprint grid (navy sections).
+   Figma: 1px white lines every 24px on both axes, every 5th line (120px) heavier.
+   Minor 6% opacity, major 10%. Major listed first so it paints on top. */
+.bp-grid {
+  background-image:
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 24px);
+}
+
+/* Home redesign — isometric hatch (paper sections).
+   Figma draws it as 81x47 diamonds on a triangular lattice with a vertical tick
+   through each centre. That is a true 30deg isometric grid: three 1px line
+   families in navy-900 at 15% (frame opacity in Figma), verticals every 41px
+   and diagonals every 40.5px. */
+.iso-hatch {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px),
+    repeating-linear-gradient(60deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 40.5px),
+    repeating-linear-gradient(120deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 40.5px);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

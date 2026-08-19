@@ -4,14 +4,28 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Existing palette — used by the five non-home pages. Do not rename or remove.
         navy: '#2B3455',
         grayBg: '#6B6B6B',
         border: '#8A8FB0',
         footerBg: '#E8E8E8',
         muted: '#C0C0C0',
+
+        // Home redesign, from Figma variables. `navy` above is Figma's navy/base.
+        'navy-950': '#12162B',
+        'navy-900': '#1B2140',
+        'navy-800': '#232B4D',
+        'navy-600': '#465184',
+        'navy-400': '#7883AB',
+        'navy-200': '#B7BEDB',
+        paper: '#F6F4EE',
+        'paper-dim': '#ECE9DF',
+        redline: '#C0392B',
       },
       fontFamily: {
         mono: ['"Courier New"', 'Courier', 'monospace'],
+        plex: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        display: ['Roboto', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         pill: '9999px',

@@ -28,17 +28,25 @@ export default function App() {
   }, [location.pathname])
 
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/designathon" element={<Designathon />} />
-        <Route path="/mission" element={<Mission />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/full" element={<FullPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
+    <Routes>
+      {/* Home is full-bleed and renders its own nav and footer, so it opts out of Layout. */}
+      <Route path="/" element={<Home />} />
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <Routes>
+              <Route path="/designathon" element={<Designathon />} />
+              <Route path="/mission" element={<Mission />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/full" element={<FullPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        }
+      />
+    </Routes>
   )
 }

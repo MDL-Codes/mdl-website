@@ -11,22 +11,40 @@ import mcmaster from '../../assets/m24-wht.svg'
  * frame's own edges rather than off pinned coordinates.
  *
  * Responsive ladder, widest to narrowest:
- *   >=1280  everything: wing right-anchored at its drawn 59.1%, overhanging the
- *           frame's right border.
- *   >=1024  wing stays right-anchored but drops to 40% — at its drawn width its
- *           leftmost dimension line would run into the fixed-14px subhead and the
- *           button row, neither of which scales down with the viewport.
- *   >=720   wing reflows below the copy. The CAD title block goes — 300px of
- *           fixed-size type that cannot shrink — and so does the row/column/tick/
- *           arrow chrome, whose column numbers collide with the section counter
- *           once the band above the frame gets this narrow.
- *   <720    wing goes too. The frame border and the section counter survive at
- *           every width. 720 is the nav's breakpoint.
+ *   >=1280  everything: copy left-aligned, wing right-anchored at its drawn width,
+ *           inset one --hero-inset from the frame's right border.
+ *   >=1024  wing stays right-anchored but drops to ~2/3 of that — at its drawn
+ *           width its leftmost dimension line would run into the fixed-14px
+ *           subhead and the button row, neither of which scales with the viewport.
+ *   >=720   wing reflows below the copy and the whole hero centres. The frame
+ *           switches to justify-start so the copy pins to the top and the wing,
+ *           as the flex-1 child, absorbs and centres itself in what is left. The
+ *           CAD title block goes — 300px of fixed-size type that cannot shrink —
+ *           and so does the row/column/tick/arrow chrome, whose column numbers
+ *           collide with the section counter once the band above gets this narrow.
+ *   <720    wing goes too, so the frame goes back to justify-center and the copy
+ *           is centred in it both ways. The frame border and the section counter
+ *           survive at every width. 720 is the nav's breakpoint.
+ *   <~520   the button row wraps; the buttons keep their natural width and each
+ *           line centres itself.
+ *
+ * The wing SVG's viewBox is cropped to its ink, so the <img> box IS the drawing —
+ * that is what makes object-contain's centring exact in both axes at >=720.
  */
 
 const ZONE = 'absolute font-plex text-[10px] leading-none tracking-[1px] text-white'
 const LABEL = 'font-plex text-[11px] leading-none tracking-[1.54px] uppercase text-white/75'
 const VALUE = 'font-plex text-[14px] leading-none text-white'
+
+// The pair trades plates on hover: the light one darkens to navy-950, the outlined
+// one lights up to paper-dim. Same two inks, no new colour, no geometry change, and
+// the two keep reading as one component. The primary hovers to navy-950 rather than
+// to transparent because transparent made it a pixel-for-pixel copy of the resting
+// secondary — a hover state must not impersonate its neighbour's rest state. Focus-visible is a detached 1px paper rule instead, so it is a separate
+// signal from hover and survives either fill state. Redline was the other candidate
+// and lost: #C0392B on #2B3455 is 2.1:1, under the 3:1 floor for a focus indicator.
+const BUTTON =
+  'border px-[clamp(16px,4vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold leading-normal tracking-[1.68px] uppercase transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper'
 
 // Figma's dimension arrow: a 25px rule with a solid head on the frame-facing end.
 function Arrow({ className }: { className: string }) {
@@ -57,7 +75,7 @@ export default function Hero() {
           hero is a full 100svh so that it fills the screen once the nav has scrolled
           away — so the frame takes whatever is left, flex-1, growing past that only
           when the content needs it. */}
-      <div className="relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)]">
+      <div className="relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)] min-[720px]:justify-start min-[1024px]:justify-center">
         {/* drawing chrome: row letters, column numbers, quarter ticks, dimension arrows */}
         {/* Below 1024 the section counter and this row of column numbers land in the
             same shrinking band above the frame and collide, so the chrome goes with
@@ -98,7 +116,9 @@ export default function Hero() {
           <Arrow className="left-1/2 top-full mt-[12.5px] h-[10px] w-[25px] -translate-x-1/2 -translate-y-1/2 -rotate-90" />
         </div>
 
-        <div>
+        {/* Below 1024 the wing sits under the copy rather than beside it, so the
+            whole column centres — copy included. Above it the copy stays left. */}
+        <div className="text-center min-[1024px]:text-left">
           <p className="font-plex text-[11px] leading-normal tracking-[2.42px] uppercase text-white">
             january 16-17, 2027 &bull; hamilton, on
           </p>
@@ -107,7 +127,9 @@ export default function Hero() {
               ~65px on auto leading, and 65 is the only size at which the designed
               585px box breaks after "MCMASTER". Rendered values win; see report.
               9em == that 585px wrap width, in em so the break holds at every size. */}
-          <h1 className="mb-[0.415em] mt-[0.4em] max-w-[9em] font-display text-[clamp(36px,4.51vw,65px)] font-bold uppercase leading-[1.185] text-white">
+          {/* max-w-[9em] is a box narrower than the column, so centring the text
+              is not enough — the box has to centre too. */}
+          <h1 className="mx-auto mb-[0.415em] mt-[0.4em] max-w-[9em] min-[1024px]:mx-0 font-display text-[clamp(36px,4.51vw,65px)] font-bold uppercase leading-[1.185] text-white">
             mcmaster design league
           </h1>
 
@@ -115,32 +137,43 @@ export default function Hero() {
             ontario&rsquo;s hub for cad competitions &amp; workshops
           </p>
 
-          <div className="mt-[29px] flex flex-wrap gap-[30px]">
+          {/* Wrapping is what stacks the buttons around 520; centred, each wrapped
+              line centres on its own. They keep their natural width either way. */}
+          <div className="mt-[29px] flex flex-wrap justify-center gap-[30px] min-[1024px]:justify-start">
             {/* ponytail: the real waitlist destination is unknown — /designathon is a
                 stand-in until someone supplies the form URL. */}
             <Link
               to="/designathon"
-              className="border border-navy-950 bg-paper-dim px-[clamp(16px,4vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold leading-normal tracking-[1.68px] uppercase text-navy-950"
+              className={`${BUTTON} border-navy-950 bg-paper-dim text-navy-950 [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim`}
             >
               2027 designathon waitlist
             </Link>
             <Link
               to="/events"
-              className="border border-white px-[clamp(16px,4vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold leading-normal tracking-[1.68px] uppercase text-paper"
+              className={`${BUTTON} border-white text-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-paper-dim [@media(hover:hover)]:hover:text-navy-950`}
             >
               view events
             </Link>
           </div>
         </div>
 
-        {/* Reflowed, the drawing's own ~38% of vertical whitespace reads as a hole in
-            the layout, so that state crops it off; the ink is centred in the artboard. */}
+        {/* 720-1023: the last flex child, so flex-1 hands it every pixel the copy
+            did not take and object-contain centres the drawing in that box on both
+            axes — gap(buttons -> wing) == gap(wing -> frame) and likewise L/R. No
+            top margin: any would break the vertical half of that equality.
+            Capped at 56% of the frame (~440px at 1015, matching the sketch) and
+            self-centred, so the box narrows symmetrically and both equalities hold.
+
+            >=1024: absolute and right-anchored. Figma overhangs the frame's right
+            border; Sanika's call is to pull it inside instead, by one --hero-inset
+            so the gap reads as the same measure as the frame's own inset. Widths
+            are the drawn 59.1%/40% rescaled for the cropped viewBox (x 508/757). */}
         <img
           src={wing}
           alt=""
-          width={757}
-          height={505}
-          className="mt-[24px] hidden aspect-[757/280] h-auto w-full max-w-[440px] object-cover min-[720px]:block min-[1024px]:aspect-auto min-[1024px]:absolute min-[1024px]:right-[-4.5%] min-[1024px]:top-1/2 min-[1024px]:mt-0 min-[1024px]:max-h-[80%] min-[1024px]:w-[40%] min-[1024px]:max-w-none min-[1024px]:-translate-y-1/2 min-[1280px]:w-[59.1%]"
+          width={509}
+          height={132}
+          className="hidden min-h-0 w-full max-w-[56%] flex-1 self-center object-contain min-[720px]:block min-[1024px]:max-w-none min-[1024px]:self-auto min-[1024px]:absolute min-[1024px]:right-[var(--hero-inset)] min-[1024px]:top-1/2 min-[1024px]:h-auto min-[1024px]:w-[26.9%] min-[1024px]:-translate-y-1/2 min-[1280px]:w-[39.7%]"
         />
 
         {/* CAD title block — flush to the frame's bottom-right inner corner */}

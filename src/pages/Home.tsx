@@ -8,6 +8,7 @@
 
 import Nav from '../components/home/Nav'
 import Hero from '../components/home/Hero'
+import Countdown from '../components/home/Countdown'
 
 type StubProps = {
   node: string
@@ -44,7 +45,7 @@ export default function Home() {
       <Nav />
       <Hero />
       {/* about us goes here, once designed */}
-      <Stub node="5:112" name="countdown" height={300} surface="navy" />
+      <Countdown />
       <Stub node="5:114" name="events" height={900} surface="paper" pattern="iso-hatch" />
       <Stub node="5:115" name="gallery" height={800} surface="navy" />
       <Stub node="5:116" name="sponsors" height={640} surface="paper" pattern="iso-hatch" />

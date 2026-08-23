@@ -10,6 +10,7 @@ import Nav from '../components/home/Nav'
 import Hero from '../components/home/Hero'
 import Countdown from '../components/home/Countdown'
 import AboutUs from '../components/home/AboutUs'
+import Events from '../components/home/Events'
 
 type StubProps = {
   node: string
@@ -47,7 +48,7 @@ export default function Home() {
       <Hero />
       <Countdown />
       <AboutUs />
-      <Stub node="5:114" name="events" height={900} surface="paper" pattern="iso-hatch" />
+      <Events />
       <Stub node="5:115" name="gallery" height={800} surface="navy" />
       <Stub node="5:116" name="sponsors" height={640} surface="paper" pattern="iso-hatch" />
       <Stub node="5:117" name="final CTA" height={300} surface="navy" />

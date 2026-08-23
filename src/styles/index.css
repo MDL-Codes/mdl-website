@@ -38,15 +38,21 @@ body {
 }
 
 /* Home redesign — isometric hatch (paper sections).
-   Figma draws it as 81x47 diamonds on a triangular lattice with a vertical tick
-   through each centre. That is a true 30deg isometric grid: three 1px line
-   families in navy-900 at 15% (frame opacity in Figma), verticals every 41px
-   and diagonals every 40.5px. */
+   Three 1px families in navy-900 at 15%: verticals, and diagonals at +/-30deg
+   FROM HORIZONTAL — so the triangles point left/right and the lattice reads
+   wide, not tall. (A gradient's angle is its direction, and the bands run
+   perpendicular to it, so 30/150deg draws the shallow lines and 60/120 drew
+   the steep ones this used to have.)
+
+   All three share one 41px period, which is what makes it a true isometric
+   lattice rather than three families that drift out of register: for lines at
+   30deg the perpendicular spacing that closes the triangle on a 41px vertical
+   pitch is exactly 41px too. */
 .iso-hatch {
   background-image:
     repeating-linear-gradient(90deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px),
-    repeating-linear-gradient(60deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 40.5px),
-    repeating-linear-gradient(120deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 40.5px);
+    repeating-linear-gradient(30deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px),
+    repeating-linear-gradient(150deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px);
 }
 
 /* Home redesign — split-flap countdown tile (src/components/home/Countdown.tsx).

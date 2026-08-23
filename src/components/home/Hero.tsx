@@ -16,9 +16,16 @@ import mcmaster from '../../assets/m24-wht.svg'
  *   >=1024  wing stays right-anchored but drops to ~2/3 of that — at its drawn
  *           width its leftmost dimension line would run into the fixed-14px
  *           subhead and the button row, neither of which scales with the viewport.
- *   >=720   wing reflows below the copy and the whole hero centres. The frame
- *           switches to justify-start so the copy pins to the top and the wing,
- *           as the flex-1 child, absorbs and centres itself in what is left. The
+ *   >=720   wing reflows below the copy and the whole hero centres. Copy and
+ *           wing centre in the frame AS ONE BLOCK, on a fixed margin between
+ *           them. The wing is deliberately NOT flex-1 here: as a growing child
+ *           it swallowed every leftover pixel, so on a tall viewport (iPad Air,
+ *           820x1180) a 132px drawing sat centred in a ~600px box with dead air
+ *           above and below it. Sized to its own content instead, the pair reads
+ *           as one composition and the slack goes outside it, not through it.
+ *           A growing flex child also makes justify-content inert — there is no
+ *           free space left to distribute — so dropping flex-1 is what lets the
+ *           frame centre at all. The
  *           CAD title block goes — 300px of fixed-size type that cannot shrink —
  *           and so does the row/column/tick/arrow chrome, whose column numbers
  *           collide with the section counter once the band above gets this narrow.
@@ -75,7 +82,7 @@ export default function Hero() {
           hero is a full 100svh so that it fills the screen once the nav has scrolled
           away — so the frame takes whatever is left, flex-1, growing past that only
           when the content needs it. */}
-      <div className="relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)] min-[720px]:justify-start min-[1024px]:justify-center">
+      <div className="relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)]">
         {/* drawing chrome: row letters, column numbers, quarter ticks, dimension arrows */}
         {/* Below 1024 the section counter and this row of column numbers land in the
             same shrinking band above the frame and collide, so the chrome goes with
@@ -173,7 +180,7 @@ export default function Hero() {
           alt=""
           width={509}
           height={132}
-          className="hidden min-h-0 w-full max-w-[56%] flex-1 self-center object-contain min-[720px]:block min-[1024px]:max-w-none min-[1024px]:self-auto min-[1024px]:absolute min-[1024px]:right-[var(--hero-inset)] min-[1024px]:top-1/2 min-[1024px]:h-auto min-[1024px]:w-[26.9%] min-[1024px]:-translate-y-1/2 min-[1280px]:w-[39.7%]"
+          className="hidden min-h-0 w-full max-w-[56%] self-center object-contain min-[720px]:mt-[clamp(32px,6vw,72px)] min-[720px]:block min-[1024px]:mt-0 min-[1024px]:max-w-none min-[1024px]:self-auto min-[1024px]:absolute min-[1024px]:right-[var(--hero-inset)] min-[1024px]:top-1/2 min-[1024px]:h-auto min-[1024px]:w-[26.9%] min-[1024px]:-translate-y-1/2 min-[1280px]:w-[39.7%]"
         />
 
         {/* CAD title block — flush to the frame's bottom-right inner corner */}

@@ -6,9 +6,13 @@ import { events } from '../../data/eventsData'
  *
  * Vertical rhythm off Figma's y positions, top-down, every one clamp()ed against
  * its own 1440 anchor: counter 83, heading 108, dashed rule 193, card row 240,
- * cards end 740, button centre 825, section 900. The section floors at 100svh
- * and grows past it — three 500-tall cards plus the heading stack already exceed
- * 900 below ~1100, and the floor is what keeps it a full screen on short-wide.
+ * cards end 740, button centre 825, section 900. No min-height: the section is
+ * content-sized, like About us. A 100svh floor looked right at 1440 but above
+ * 1024 the three cards sit side by side and the content comes in well under a
+ * screen, so the floor only ever produced slack — and slack has to go somewhere
+ * visible, either stranding the button at the bottom of the viewport or leaving
+ * a band of empty paper before the next section. Below 1024 the cards stack past
+ * a screen anyway, so the floor was inert exactly where it would have helped.
  *
  * Figma runs the row from x=80 to x=1290 against an 80px left gutter — a 150px
  * right gutter. Same eyeball artefact as About us; the gutter here is symmetric
@@ -166,13 +170,13 @@ export default function Events() {
   return (
     <section
       style={{ '--gutter': 'clamp(28px,5.55vw,80px)' } as React.CSSProperties}
-      className="relative flex min-h-[100svh] w-full flex-col bg-paper px-[var(--gutter)] pb-[clamp(56px,7.08vw,102px)] pt-[clamp(48px,5.76vw,83px)]"
+      className="relative flex w-full flex-col bg-paper px-[var(--gutter)] pb-[clamp(56px,7.08vw,102px)] pt-[clamp(48px,5.76vw,83px)]"
     >
       <div aria-hidden className="iso-hatch pointer-events-none absolute inset-0" />
 
       {/* Everything above the pattern. One wrapper rather than a z-index on each
           child — the pattern is the only absolutely positioned thing in here. */}
-      <div className="relative flex flex-1 flex-col">
+      <div className="relative flex flex-col">
         <p className="font-plex text-[11px] leading-none tracking-[2.42px] uppercase text-navy-950">
           section - 03 / 05
         </p>
@@ -205,10 +209,10 @@ export default function Events() {
           ))}
         </div>
 
-        {/* mt-auto so the button hugs the bottom of the section wherever 100svh
-            leaves slack, and falls back to the drawn gap once the content is
-            taller than the floor. */}
-        <div className="mt-auto flex justify-center pt-[clamp(40px,4.03vw,58px)]">
+        {/* The button sits at its drawn gap under the cards at every width. No
+            mt-auto — with the section content-sized there is no slack for an
+            auto margin to absorb, and it would be a no-op that reads as intent. */}
+        <div className="flex justify-center pt-[clamp(40px,4.03vw,58px)]">
           <Link
             to="/events"
             className="border border-navy-600 px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold leading-normal tracking-[1.68px] uppercase text-navy-600 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-600 [@media(hover:hover)]:hover:bg-navy-600 [@media(hover:hover)]:hover:text-paper"

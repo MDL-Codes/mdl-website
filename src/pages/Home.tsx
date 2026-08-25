@@ -13,6 +13,7 @@ import AboutUs from '../components/home/AboutUs'
 import Events from '../components/home/Events'
 import Recap from '../components/home/Recap'
 import Sponsors from '../components/home/Sponsors'
+import FinalCTA from '../components/home/FinalCTA'
 
 type StubProps = {
   node: string
@@ -53,7 +54,7 @@ export default function Home() {
       <Events />
       <Recap />
       <Sponsors />
-      <Stub node="5:117" name="final CTA" height={300} surface="navy" />
+      <FinalCTA />
       <Stub node="5:118" name="footer" height={320} surface="navy" />
     </div>
   )

@@ -6,9 +6,6 @@ import largeEvent from "../assets/mission/large-event.jpg";
 import communityPizza from "../assets/mission/community-pizza.jpg";
 import cadWorkshop from "../assets/mission/cad-workshop.jpg";
 import printer from "../assets/mission/3d-printer.jpg";
-import designathonAuditorium from "../assets/mission/designathon-auditorium.jpg";
-import cadLab from "../assets/mission/hands-on-cad-lab.jpg";
-import studentEvent from "../assets/mission/student-event.jpg";
 
 const words = [
   { text: "design.", color: "#f3f0e8" },

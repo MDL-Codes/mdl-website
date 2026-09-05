@@ -19,7 +19,7 @@ const PHOTOS = [
 
 export default function Gallery() {
   return (
-    <PageShell title="Gallery" intro="Moments from workshops, designathons, and everything in between.">
+    <PageShell eyebrow="photo archive" title="Gallery" intro="Moments from workshops, designathons, and everything in between.">
       <div className="grid grid-cols-1 gap-[clamp(16px,2vw,28px)] min-[640px]:grid-cols-2 min-[1024px]:grid-cols-3">
         {PHOTOS.map(photo => (
           <img

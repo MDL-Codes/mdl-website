@@ -30,7 +30,12 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export default function Designathon() {
   return (
     <PageShell
+      eyebrow="annual cad competition"
       title="The MDL CAD Designathon"
+      /* Both facts already stated elsewhere on the site — 36 hours in the copy
+         below, Hamilton in the hero and the panel. Team size is not documented
+         anywhere in src/data, so it is not asserted here. */
+      meta="36 hours · hamilton, on"
       /* Was the 2026 event poster — a static image of an event that has already
          happened, on a page whose entire message is "next one is coming". In
          the hero slot the panel fills the first screen exactly, so the whole

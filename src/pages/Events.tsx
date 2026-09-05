@@ -3,7 +3,7 @@ import PageShell from '../components/PageShell'
 
 export default function Events() {
   return (
-    <PageShell title="2026-2027 Event Lineup" intro="Workshops, socials, and competitions running through the year.">
+    <PageShell eyebrow="what's on" title="2026-2027 Event Lineup" intro="Workshops, socials, and competitions running through the year.">
       <ul className="flex flex-col">
         {events.map((event, i) => (
           <li

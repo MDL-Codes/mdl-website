@@ -68,29 +68,33 @@ export default function ApplicationsStatus() {
          the countdown off. */
       className="relative flex flex-1 flex-col overflow-hidden border border-navy-600 bg-navy-800"
     >
-      <div aria-hidden className="bp-grid pointer-events-none absolute inset-0" />
+      {/* The blueprint grid used to be painted here, inside the plate, against a
+          flat navy page — which read as a patch of texture floating in nothing.
+          It belongs to the sheet, so it moved out to PageShell's hero band and
+          this is now a solid plate sitting on it, the way Hero's drawing frame
+          sits on the grid. */}
 
       {/* Padding is deliberately modest. This panel sits in a viewport-height
           band, so every pixel it spends internally is a pixel the band has to
           grow by — and once the band outgrows 100svh the bottom margin it was
           supposed to keep disappears under the fold. */}
-      <div className="relative flex flex-1 flex-col items-center justify-center px-[clamp(20px,3vw,48px)] py-[clamp(24px,3vw,48px)] text-center">
+      <div className="relative flex flex-1 flex-col items-center justify-center px-[clamp(20px,3vw,48px)] py-[clamp(20px,2.5vw,36px)] text-center">
         {/* Status field, styled as the title block's label/value pair. */}
         <p className="font-plex text-[11px] uppercase leading-none tracking-[2.42px] text-navy-200">
           status &mdash; {open ? 'now accepting applications' : 'awaiting release'}
         </p>
 
-        <h2 className="mt-[18px] max-w-[14em] font-display text-[clamp(28px,3.6vw,48px)] font-bold uppercase leading-[1.185] text-white">
+        <h2 className="mt-[14px] max-w-[15em] font-display text-[clamp(24px,2.8vw,38px)] font-bold uppercase leading-[1.185] text-white">
           2027 Designathon applications
         </h2>
 
         {OPEN_LABEL && !open && (
-          <p className="mt-[16px] font-plex text-[clamp(11px,1vw,14px)] font-semibold uppercase leading-normal tracking-[1.96px] text-paper">
+          <p className="mt-[14px] font-plex text-[clamp(11px,0.95vw,13px)] font-semibold uppercase leading-normal tracking-[1.96px] text-paper">
             applications open {OPEN_LABEL}
           </p>
         )}
 
-        <p className="mt-[10px] font-plex text-[clamp(10px,0.9vw,12px)] uppercase leading-normal tracking-[1.96px] text-navy-400">
+        <p className="mt-[8px] font-plex text-[clamp(10px,0.85vw,11px)] uppercase leading-normal tracking-[1.96px] text-navy-400">
           event &mdash; january 16&ndash;17, 2027 &bull; hamilton, on
         </p>
 
@@ -99,13 +103,13 @@ export default function ApplicationsStatus() {
             than abandoned. Digits are tabular and zero-padded so the row never
             reflows as values tick. */}
         {!open && (
-          <div className="mt-[clamp(28px,3.5vw,44px)] flex items-start gap-[clamp(12px,2vw,32px)]">
+          <div className="mt-[clamp(20px,2.4vw,32px)] flex items-start gap-[clamp(10px,1.6vw,24px)]">
             {units.map((v, i) => (
               <div key={LABELS[i]} className="flex flex-col items-center">
-                <span className="border border-navy-600 bg-navy-950 px-[clamp(8px,1.2vw,16px)] py-[clamp(8px,1vw,14px)] font-plex text-[clamp(20px,2.6vw,34px)] font-semibold leading-none text-white [font-variant-numeric:tabular-nums]">
+                <span className="border border-navy-600 bg-navy-950 px-[clamp(8px,1vw,14px)] py-[clamp(7px,0.85vw,11px)] font-plex text-[clamp(18px,2vw,28px)] font-semibold leading-none text-white [font-variant-numeric:tabular-nums]">
                   {String(v).padStart(2, '0')}
                 </span>
-                <span className="mt-[9px] font-plex text-[10px] uppercase leading-none tracking-[1.54px] text-navy-400">
+                <span className="mt-[8px] font-plex text-[10px] uppercase leading-none tracking-[1.54px] text-navy-400">
                   {LABELS[i]}
                 </span>
               </div>
@@ -113,13 +117,13 @@ export default function ApplicationsStatus() {
           </div>
         )}
 
-        <div className="mt-[clamp(28px,3.5vw,44px)] flex flex-wrap items-center justify-center gap-[20px]">
+        <div className="mt-[clamp(22px,2.6vw,34px)] flex flex-wrap items-center justify-center gap-[16px]">
           {open ? (
             <a
               href="https://www.instagram.com/mdlmcmaster"
               target="_blank"
               rel="noreferrer"
-              className="border border-navy-950 bg-paper-dim px-[clamp(16px,4vw,32px)] py-[18px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-950 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim"
+              className="border border-navy-950 bg-paper-dim px-[clamp(16px,3.4vw,28px)] py-[14px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-950 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim"
             >
               apply now
             </a>
@@ -131,7 +135,7 @@ export default function ApplicationsStatus() {
               type="button"
               aria-disabled="true"
               onClick={e => e.preventDefault()}
-              className="group relative cursor-not-allowed border border-navy-400 px-[clamp(16px,4vw,32px)] py-[18px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-200 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper"
+              className="group relative cursor-not-allowed border border-navy-400 px-[clamp(16px,3.4vw,28px)] py-[14px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-200 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper"
             >
               <span className="transition-opacity duration-200 [@media(hover:hover)]:group-hover:opacity-0">
                 apply &mdash; not yet open
@@ -149,7 +153,7 @@ export default function ApplicationsStatus() {
             href="https://www.instagram.com/mdlmcmaster"
             target="_blank"
             rel="noreferrer"
-            className="border border-white px-[clamp(16px,4vw,32px)] py-[18px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-paper transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-paper-dim [@media(hover:hover)]:hover:text-navy-950"
+            className="border border-white px-[clamp(16px,3.4vw,28px)] py-[14px] font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-paper transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-paper-dim [@media(hover:hover)]:hover:text-navy-950"
           >
             notify me
           </a>

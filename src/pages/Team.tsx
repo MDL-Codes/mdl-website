@@ -11,6 +11,7 @@ export default function Team() {
 
   return (
     <PageShell
+      eyebrow="who we are"
       title="Our Team"
       intro="The students who run the league — leads, and the subteams behind every event."
     >

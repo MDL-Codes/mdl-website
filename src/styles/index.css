@@ -42,6 +42,20 @@ body {
     repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 24px);
 }
 
+/* CAD centreline: long dash, dot, long dash on a 21px period. Home's AboutUs,
+   Events, Recap and Footer each carry this as a copied string literal — there
+   was no shared layer to put it in when they were written. There is now, so
+   anything new uses the class and those four can migrate when touched. */
+.rule-centreline {
+  background-image: repeating-linear-gradient(
+    to right,
+    #ece9df80 0 12px,
+    #ece9df00 12px 15px,
+    #ece9df80 15px 18px,
+    #ece9df00 18px 21px
+  );
+}
+
 /* Home redesign — isometric hatch (paper sections).
    Three 1px families in navy-900 at 15%: verticals, and diagonals at +/-30deg
    FROM HORIZONTAL — so the triangles point left/right and the lattice reads

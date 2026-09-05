@@ -26,6 +26,129 @@ body {
   background-size: 256px 256px;
 }
 
+/* Home redesign — blueprint grid (navy sections).
+   Figma: 1px white lines every 24px on both axes, every 5th line (120px) heavier.
+   Minor 6% opacity, major 10%. Major listed first so it paints on top. */
+.bp-grid {
+  background-image:
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 120px),
+    repeating-linear-gradient(to right, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 24px);
+}
+
+/* Home redesign — isometric hatch (paper sections).
+   Three 1px families in navy-900 at 15%: verticals, and diagonals at +/-30deg
+   FROM HORIZONTAL — so the triangles point left/right and the lattice reads
+   wide, not tall. (A gradient's angle is its direction, and the bands run
+   perpendicular to it, so 30/150deg draws the shallow lines and 60/120 drew
+   the steep ones this used to have.)
+
+   All three share one 41px period, which is what makes it a true isometric
+   lattice rather than three families that drift out of register: for lines at
+   30deg the perpendicular spacing that closes the triangle on a 41px vertical
+   pitch is exactly 41px too. */
+.iso-hatch {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px),
+    repeating-linear-gradient(30deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px),
+    repeating-linear-gradient(150deg, rgba(27, 33, 64, 0.15) 0 1px, transparent 1px 41px);
+}
+
+/* Home redesign — split-flap countdown tile (src/components/home/Countdown.tsx).
+   The seam Figma draws at each tile's mid-height is the hinge. One panel: the top
+   half peels forward off the seam and fades, revealing the still half beneath it.
+   The panel carries the NEW value, same as every other face — the number switches
+   on the first frame and the flip is the flourish, not the handover.
+
+   The still top half is blanked for the whole arc (.flap-hold) and the flap is
+   the only thing painting up there. That is what stops the digit ghosting: a
+   fading flap over a still copy of the same digit is two copies at different
+   foreshortenings blended together, which reads as a doubled, blurred number even
+   though the value is identical. With nothing behind it there is nothing to blend
+   with, so the flap can stay fully opaque through almost the whole fall.
+
+   The late taper is not decoration. A plane rotated to ~90deg about a horizontal
+   edge is edge-on only in an orthographic projection; under `perspective` it
+   points at the camera and projects as a bright wedge. Fading over the last 20%
+   kills the wedge, and the handover lands at -90deg where the flap has no
+   projected height at all — so the still half reappearing underneath it is
+   invisible rather than a pop. */
+@keyframes flapFall {
+  0% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(-90deg);
+    opacity: 0;
+  }
+}
+
+/* step-end holds `from` for the whole duration, then snaps — so the still top
+   half is blank until the exact frame the flap finishes, with no tween of its
+   own to go out of sync. */
+@keyframes flapHold {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.flap-hold {
+  animation: flapHold 300ms step-end forwards;
+}
+
+/* Second beat: the new bottom half swings up onto the seam after the top has
+   fallen. Starts at 88deg rather than 90 and fades in over the first few percent
+   so the near-edge-on wedge never paints. */
+@keyframes flapRise {
+  0% {
+    transform: rotateX(88deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.flap-rise {
+  transform-origin: top;
+  outline: 0.5px solid #ece9df;
+  outline-offset: -0.5px;
+  animation: flapRise 300ms 300ms ease-out both;
+}
+
+
+/* The moving face carries the tile's own hairline so it reads as the card peeling
+   away rather than as a bare fill. `outline` rather than `border` because it must
+   not change the panel's box — the digit inside is positioned off that box, and a
+   0.5px inset would shift it mid-flip. Drawn inside so it lands on the tile edge. */
+.flap-fall {
+  transform-origin: bottom;
+  outline: 0.5px solid #ece9df;
+  outline-offset: -0.5px;
+  animation: flapFall 300ms ease-in forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flap-fall,
+  .flap-hold,
+  .flap-rise {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

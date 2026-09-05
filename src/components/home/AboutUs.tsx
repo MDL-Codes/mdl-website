@@ -1,6 +1,6 @@
 // Same 1536x1198 source the Figma layer uses; already in the repo for the
 // mission page, so home does not add a second copy of it.
-import photo from '../../assets/our-mission-image1.png'
+import photo from '../../assets/our-mission-image1.webp'
 
 /**
  * About us — Figma 74:203 (1440x800, navy-900, no grid pattern).
@@ -115,14 +115,31 @@ export default function AboutUs() {
               1024-1100 band it ends up nearly as large as the 40px heading. The
               15px floor is where the single-column state below 1024 still reads
               as body copy. 1.25vw hits exactly 18 at 1440. */}
-          <p className="font-display text-[clamp(13px,1.25vw,18px)] font-normal leading-[normal] tracking-[clamp(1.3px,0.125vw,1.8px)] text-paper-dim">
-            McMaster Design League is a student-run community built around one weekend a year and
-            every week in between. We host the Designathon, a 36-hour competition with
-            industry-sponsored problems, real prototypes, and judges who work as practicing
-            engineers. Between competitions we run hands-on workshops that take you from zero to a
-            finished assembly. No CAD experience is needed to start. Adding another extra sentence
-            here just for more padding, so that it doesn&rsquo;t look like there&rsquo;s a big gap.
-          </p>
+          {/* Three paragraphs, not one five-sentence block. Two changes from the
+              layer spec, both for readability and both easy to revert:
+
+              leading 1.5 rather than Roboto's natural ~1.17. At 1.17 the lines
+              nearly touch, and this column runs to ~60 characters — the tight
+              setting is what made it read as a slab.
+
+              The block also used to end with a sentence that said, in the copy
+              itself, that it was there "just for more padding, so that it
+              doesn't look like there's a big gap". Splitting into three
+              paragraphs supplies that height honestly, so the filler is gone. */}
+          <div className="flex flex-col gap-[1.05em] font-display text-[clamp(13px,1.25vw,18px)] font-normal leading-[1.5] tracking-[clamp(1.3px,0.125vw,1.8px)] text-paper-dim">
+            <p>
+              McMaster Design League is a student-run community built around one weekend a year
+              &mdash; and every week in between.
+            </p>
+            <p>
+              We host the Designathon: a 36-hour competition with industry-sponsored problems, real
+              prototypes, and judges who work as practicing engineers.
+            </p>
+            <p>
+              Between competitions we run hands-on workshops that take you from zero to a finished
+              assembly. No CAD experience needed to start.
+            </p>
+          </div>
 
           {/* Figma draws this rule at 500 wide while the paragraph box is 469 and
               the three stat cells sit on a 181.5px pitch with 135px underlines —

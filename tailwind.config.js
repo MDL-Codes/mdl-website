@@ -4,14 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Existing palette — used by the five non-home pages. Do not rename or remove.
+        // One palette, from Figma variables. `navy` is Figma's navy/base.
         navy: '#2B3455',
-        grayBg: '#6B6B6B',
-        border: '#8A8FB0',
-        footerBg: '#E8E8E8',
-        muted: '#C0C0C0',
-
-        // Home redesign, from Figma variables. `navy` above is Figma's navy/base.
         'navy-950': '#12162B',
         'navy-900': '#1B2140',
         'navy-800': '#232B4D',

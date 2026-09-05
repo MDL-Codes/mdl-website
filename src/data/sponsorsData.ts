@@ -1,4 +1,4 @@
-import filler from '../assets/filler.png'
+import filler from '../assets/filler.webp'
 
 export type Tier = 'gold' | 'silver' | 'bronze'
 

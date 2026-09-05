@@ -1,10 +1,11 @@
-import gallery1 from '../assets/gallery1.png'
-import gallery2 from '../assets/gallery2.png'
-import gallery3 from '../assets/gallery3.png'
-import gallery4 from '../assets/gallery4.png'
-import gallery5 from '../assets/gallery5.png'
-import gallery6 from '../assets/gallery6.png'
-import gallery7 from '../assets/gallery7.png'
+import gallery1 from '../assets/gallery1.webp'
+import gallery2 from '../assets/gallery2.webp'
+import gallery3 from '../assets/gallery3.webp'
+import gallery4 from '../assets/gallery4.webp'
+import gallery5 from '../assets/gallery5.webp'
+import gallery6 from '../assets/gallery6.webp'
+import gallery7 from '../assets/gallery7.webp'
+import PageShell from '../components/PageShell'
 
 const PHOTOS = [
   { id: 0, src: gallery1 },
@@ -18,18 +19,19 @@ const PHOTOS = [
 
 export default function Gallery() {
   return (
-    <section>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-        {PHOTOS.map((photo) => (
+    <PageShell title="Gallery" intro="Moments from workshops, designathons, and everything in between.">
+      <div className="grid grid-cols-1 gap-[clamp(16px,2vw,28px)] min-[640px]:grid-cols-2 min-[1024px]:grid-cols-3">
+        {PHOTOS.map(photo => (
           <img
             key={photo.id}
             src={photo.src}
             alt=""
             loading="lazy"
-            className="w-full aspect-[4/3] object-cover rounded-lg border border-border/60"
+            decoding="async"
+            className="aspect-[4/3] w-full border border-navy-600 object-cover"
           />
         ))}
       </div>
-    </section>
+    </PageShell>
   )
 }

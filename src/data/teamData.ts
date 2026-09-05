@@ -1,9 +1,9 @@
-import photoAlex from '../assets/our-team-alex.png'
-import photoBrandon from '../assets/our-team-brandon.png'
-import photoChristina from '../assets/our-team-christina.png'
-import photoJocelyn from '../assets/our-team-jocelyn.png'
-import photoMax from '../assets/our-team-max.png'
-import photoSaloni from '../assets/our-team-saloni.png'
+import photoAlex from '../assets/our-team-alex.webp'
+import photoBrandon from '../assets/our-team-brandon.webp'
+import photoChristina from '../assets/our-team-christina.webp'
+import photoJocelyn from '../assets/our-team-jocelyn.webp'
+import photoMax from '../assets/our-team-max.webp'
+import photoSaloni from '../assets/our-team-saloni.webp'
 
 export type Lead = {
   name: string

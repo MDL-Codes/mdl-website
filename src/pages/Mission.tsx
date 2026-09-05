@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import "../styles/mission.css";
 
-import mdlTeam from "../assets/mission/mdl-team.jpg";
-import largeEvent from "../assets/mission/large-event.jpg";
-import communityPizza from "../assets/mission/community-pizza.jpg";
-import cadWorkshop from "../assets/mission/cad-workshop.jpg";
-import printer from "../assets/mission/3d-printer.jpg";
+import mdlTeam from "../assets/mission/mdl-team.webp";
+import largeEvent from "../assets/mission/large-event.webp";
+import communityPizza from "../assets/mission/community-pizza.webp";
+import cadWorkshop from "../assets/mission/cad-workshop.webp";
+import printer from "../assets/mission/3d-printer.webp";
 
 const words = [
   { text: "design.", color: "#f3f0e8" },
@@ -95,7 +95,9 @@ export default function Mission() {
     <div className="mdl-mission">
       <div className="mission-blueprint-grid" aria-hidden="true" />
 
-      <main id="mission-top">
+      {/* A div, not a <main>: Layout already provides the page's single <main>,
+          and on /full six pages render at once — six nested landmarks. */}
+      <div id="mission-top">
         <section className="mission-shell mission-hero">
           <div className="mission-hero-copy mission-reveal is-visible">
             <h1>
@@ -132,7 +134,12 @@ export default function Mission() {
                 }
               }}
             >
-              <img src={mdlTeam} alt="McMaster Design League team members at an event" />
+              {/* Above the fold, so eager — lazy here would delay the hero. */}
+              <img
+                src={mdlTeam}
+                alt="McMaster Design League team members at an event"
+                decoding="async"
+              />
               <figcaption className="mission-photo-pop-blurb">
                 MDL brings students together to learn, build, share ideas, and make things with people who
                 are interested in design.
@@ -167,7 +174,10 @@ export default function Mission() {
             >
               {media.map((item) => (
                 <figure className={`mission-media-card ${item.className}`} key={item.src}>
-                  <img src={item.src} alt={item.alt} />
+                  {/* Off-screen until the strip is scrolled, and the only images
+                      on the page besides the hero — every other page already
+                      lazy-loads, Mission did not. */}
+                  <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
                   <figcaption>{item.caption}</figcaption>
                 </figure>
               ))}
@@ -189,7 +199,9 @@ export default function Mission() {
             </div>
 
             <div className="mission-focus-grid">
-              <article className="mission-focus-card mission-reveal">
+              {/* data-number feeds the ghosted display numeral in the card's
+                  corner (mission.css .mission-focus-card::after). */}
+              <article className="mission-focus-card mission-reveal" data-number="01">
                 <span className="mission-focus-number">01</span>
                 <div className="mission-focus-rule" />
                 <h3>Designathon.</h3>
@@ -200,7 +212,7 @@ export default function Mission() {
                 <span className="mission-focus-tags">COMPETE / COLLABORATE</span>
               </article>
 
-              <article className="mission-focus-card mission-reveal">
+              <article className="mission-focus-card mission-reveal" data-number="02">
                 <span className="mission-focus-number">02</span>
                 <div className="mission-focus-rule" />
                 <h3>Workshops.</h3>
@@ -211,7 +223,7 @@ export default function Mission() {
                 <span className="mission-focus-tags">LEARN / BUILD</span>
               </article>
 
-              <article className="mission-focus-card mission-reveal">
+              <article className="mission-focus-card mission-reveal" data-number="03">
                 <span className="mission-focus-number">03</span>
                 <div className="mission-focus-rule" />
                 <h3>Community.</h3>
@@ -242,7 +254,7 @@ export default function Mission() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,16 @@
 import { Link } from 'react-router-dom'
+import PageShell from '../components/PageShell'
 
 export default function NotFound() {
   return (
-    <section className="flex flex-col gap-6 items-start">
-      <h1 className="font-bold uppercase text-3xl sm:text-4xl">404 — Page Not Found</h1>
-      <p className="text-white/85 max-w-md text-sm sm:text-base">
-        That page doesn't exist. Head back home and try again.
-      </p>
+    <PageShell title="404 — Page Not Found" intro="That page doesn't exist. Head back home and try again.">
+      {/* Same plate as Hero's primary button, minus the Figma-specific tracking. */}
       <Link
         to="/"
-        className="px-5 py-2 rounded-pill border border-border text-white font-bold text-sm hover:bg-white/10 transition-colors"
+        className="inline-block border border-navy-950 bg-paper-dim px-[clamp(16px,4vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-950 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim"
       >
-        BACK TO HOME
+        back to home
       </Link>
-    </section>
+    </PageShell>
   )
 }

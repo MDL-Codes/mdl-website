@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import gallery1 from '../../assets/gallery1.png'
-import gallery2 from '../../assets/gallery2.png'
-import gallery3 from '../../assets/gallery3.png'
-import gallery4 from '../../assets/gallery4.png'
-import gallery5 from '../../assets/gallery5.png'
-import gallery6 from '../../assets/gallery6.png'
-import gallery7 from '../../assets/gallery7.png'
+import gallery1 from '../../assets/gallery1.webp'
+import gallery2 from '../../assets/gallery2.webp'
+import gallery3 from '../../assets/gallery3.webp'
+import gallery4 from '../../assets/gallery4.webp'
+import gallery5 from '../../assets/gallery5.webp'
+import gallery6 from '../../assets/gallery6.webp'
+import gallery7 from '../../assets/gallery7.webp'
 
 /**
  * Recap — Figma 5:115, named `section/gallery` (the REAL gallery node — do not
@@ -122,11 +122,32 @@ export default function Recap() {
         {/* Image mat: fixed 3:2 box, object-contain so the photo scales as a
             whole and never crops or stretches. self-start on desktop keeps it
             from being pulled to the row's full height. */}
-        <img
-          src={slide.photo}
-          alt=""
-          className="aspect-[3/2] w-full border-[3px] border-paper bg-navy-950 object-contain min-[1024px]:self-start min-[1024px]:border-[5px]"
-        />
+        {/* Every slide is mounted and stacked, and only opacity changes — so the
+            swap cross-fades instead of cutting. Swapping one <img>'s src cannot
+            be transitioned at all: the element paints the new file the instant
+            it decodes, and on a cold cache it flashes empty first.
+
+            Mounting all seven also means the browser has them decoded before
+            their turn, so a fade never starts against a blank frame. They are
+            small WebP now, which is what makes that affordable.
+
+            The mat's border and fill moved to this container; the images fill
+            it and keep object-contain, so nothing crops. */}
+        <div className="relative aspect-[3/2] w-full overflow-hidden border-[3px] border-paper bg-navy-950 min-[1024px]:self-start min-[1024px]:border-[5px]">
+          {SLIDES.map((s, i) => (
+            <img
+              key={s.photo}
+              src={s.photo}
+              alt=""
+              aria-hidden={i !== index}
+              loading={i === 0 ? undefined : 'lazy'}
+              decoding="async"
+              className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-500 ease-out motion-reduce:transition-none ${
+                i === index ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))}
+        </div>
 
         {/* Arrows + counter, under the image column only (row 2 of the grid,
             col 1). aria-live announces the slide change for screen readers;
@@ -160,7 +181,15 @@ export default function Recap() {
             and mt-auto bottom-aligns the button with the photo's bottom edge.
             No mt-auto below 1024 — see header note. */}
         <div className="flex flex-col min-[1024px]:col-start-2 min-[1024px]:row-start-1">
-          <h3 className="font-plex text-[clamp(22px,2.5vw,36px)] font-semibold uppercase leading-[0.96] text-paper">
+          {/* Keyed on the index so the fade re-fires on every change. Without
+              it the photo cross-faded while its caption cut instantly, which
+              read as a half-finished transition. `page-fade` is the site's
+              existing 280ms fade — shorter than the image's 500ms, so the
+              caption has settled by the time the photo finishes. */}
+          <h3
+            key={index}
+            className="page-fade font-plex text-[clamp(22px,2.5vw,36px)] font-semibold uppercase leading-[0.96] text-paper motion-reduce:animate-none"
+          >
             {slide.subtitle}
           </h3>
           <p className="mt-[clamp(14px,1.53vw,22px)] font-display text-[16px] leading-normal tracking-[1.8px] text-paper-dim">

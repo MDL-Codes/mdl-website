@@ -2,14 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import mdlWhite from '../../assets/MDL_white.svg'
 
-// Figma 4:108. Labels differ from Sidebar's NAV_ITEMS (MISSION vs OUR MISSION,
-// no GALLERY, HOME included), so the list is local. Sidebar.tsx is frozen.
+// Figma 4:108. The single source of truth for site navigation — the old
+// Sidebar.tsx had a second, divergent list (OUR MISSION vs MISSION) and was the
+// only place GALLERY was reachable from. Both are reconciled here.
+//
+// `hash` is the section id FullPage.tsx renders for each route; on /full the
+// links scroll to those sections instead of navigating.
 const LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/designathon', label: 'Designathon' },
-  { to: '/mission', label: 'Mission' },
-  { to: '/team', label: 'Team' },
-  { to: '/events', label: 'Events' },
+  { to: '/', label: 'Home', hash: 'home' },
+  { to: '/designathon', label: 'Designathon', hash: 'designathon' },
+  { to: '/mission', label: 'Mission', hash: 'mission' },
+  { to: '/team', label: 'Team', hash: 'team' },
+  { to: '/events', label: 'Events', hash: 'events' },
+  { to: '/gallery', label: 'Gallery', hash: 'gallery' },
 ]
 
 // Figma's four 11x10 hairline L-marks, one per corner, hidden until hover/focus.
@@ -20,14 +25,20 @@ const CORNERS = [
   'right-0 bottom-0 border-r border-b',
 ]
 
+// Padding is tighter than Figma's flat 20px because the list carries six items
+// now, not five: at 20px the row measured ~751px and broke its own 720px
+// breakpoint. Clamped, the six fit at 720 and reach Figma's spacing by ~1100.
 const LINK_BASE =
-  'font-plex text-[11px] uppercase leading-none tracking-[1.54px] text-navy-200'
+  'font-plex text-[11px] uppercase leading-none tracking-[1.54px] transition-colors duration-200'
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const buttonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
+
+  // /full stacks every page as one scroll; links there move within the page.
+  const isFullPage = pathname === '/full'
 
   // Mirrors Layout.tsx:16 — force the drawer shut on navigation.
   useEffect(() => setOpen(false), [pathname])
@@ -70,9 +81,45 @@ export default function Nav() {
     />
   ))
 
+  // One renderer for the bar and the drawer both, so they can never drift apart
+  // the way Nav and the old Sidebar did. On /full these are scroll buttons;
+  // everywhere else, router links. The current page reads paper against the
+  // others' navy-200 — the old Sidebar's filled active pill has no equivalent
+  // in this chrome, and inverting one item would fight the corner ticks.
+  const item = (link: (typeof LINKS)[number], box: string) => {
+    const active = !isFullPage && pathname === link.to
+    const className = `group relative ${box} ${LINK_BASE} ${
+      active ? 'text-paper' : 'text-navy-200 [@media(hover:hover)]:hover:text-paper'
+    } focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper`
+
+    if (isFullPage) {
+      return (
+        <button
+          key={link.to}
+          type="button"
+          onClick={() => {
+            document.getElementById(link.hash)?.scrollIntoView({ behavior: 'smooth' })
+            setOpen(false)
+          }}
+          className={className}
+        >
+          {link.label}
+          {ticks}
+        </button>
+      )
+    }
+
+    return (
+      <Link key={link.to} to={link.to} aria-current={active ? 'page' : undefined} className={className}>
+        {link.label}
+        {ticks}
+      </Link>
+    )
+  }
+
   return (
     <header className="w-full bg-navy-950 px-[clamp(20px,3.47vw,50px)]">
-      <div className="flex h-[72px] w-full items-center justify-between">
+      <div className="flex h-[var(--nav-h)] w-full items-center justify-between">
         <Link to="/" aria-label="McMaster Design League, home" className="shrink-0">
           <img
             src={mdlWhite}
@@ -86,14 +133,9 @@ export default function Nav() {
         {/* 720px: below it the logo/link gutter drops under 50px and reads as crowded. */}
         <nav
           aria-label="Primary"
-          className="hidden min-[720px]:flex min-[720px]:items-center min-[720px]:gap-x-[clamp(10px,2.2vw,32px)]"
+          className="hidden min-[720px]:flex min-[720px]:items-center min-[720px]:gap-x-[clamp(4px,1.1vw,24px)]"
         >
-          {LINKS.map(({ to, label }) => (
-            <Link key={to} to={to} className={`group relative px-[20px] py-[12px] ${LINK_BASE}`}>
-              {label}
-              {ticks}
-            </Link>
-          ))}
+          {LINKS.map(link => item(link, 'px-[clamp(8px,1.25vw,20px)] py-[12px]'))}
         </nav>
 
         <button
@@ -132,12 +174,7 @@ export default function Nav() {
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {LINKS.map(({ to, label }) => (
-          <Link key={to} to={to} className={`group relative self-start px-[10px] py-[14px] ${LINK_BASE}`}>
-            {label}
-            {ticks}
-          </Link>
-        ))}
+        {LINKS.map(link => item(link, 'self-start px-[10px] py-[14px]'))}
       </div>
     </header>
   )

@@ -6,10 +6,22 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  /* Nav bar height. Full-viewport sections subtract it so that what fills the
+     screen on landing is the section itself, not section + nav overflowing by
+     the bar's height — which used to clip the bottom edge of the hero's drawing
+     frame and its title block. Nav.tsx sets its own height from this. */
+  --nav-h: 72px;
+}
+
+/* IBM Plex Mono, not Courier New. Courier was the old system's body face and
+   survived here as the global default long after the home redesign moved every
+   component onto font-plex — so anything that did not set a face explicitly
+   silently fell back to the retired one. navy-900 matches Layout's shell. */
 body {
   margin: 0;
-  font-family: "Courier New", Courier, monospace;
-  background-color: #2B3455;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  background-color: #1B2140;
   color: #FFFFFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -17,13 +29,6 @@ body {
 
 * {
   box-sizing: border-box;
-}
-
-.bg-grain {
-  opacity: 0.08;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
 }
 
 /* Home redesign — blueprint grid (navy sections).
@@ -146,6 +151,135 @@ body {
   .flap-rise {
     animation-duration: 1ms;
     animation-delay: 0ms;
+  }
+}
+
+/* Hero drawing probe (src/components/home/Hero.tsx).
+   The hero is drawn as a CAD sheet, so the cursor behaves like one: a crosshair
+   tracking the pointer across the drawing frame, with a live coordinate readout
+   in the frame's bottom-left corner — the corner opposite the title block.
+
+   Positions arrive as --cx/--cy percentages written by a rAF-throttled
+   pointermove handler. They are CSS variables rather than React state on
+   purpose: state would re-render the whole hero on every mouse move.
+
+   Hover-capable, fine-pointer devices only. On touch there is no cursor to
+   follow, and a crosshair frozen wherever the last tap landed reads as a
+   rendering bug. Coarse pointers get `display: none`, and the handler is never
+   attached in the first place. */
+.hero-probe-line,
+.hero-probe-readout {
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+  pointer-events: none;
+}
+
+.hero-probe-line {
+  position: absolute;
+  background: #ece9df;
+}
+
+.hero-probe-x {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  left: var(--cx, 50%);
+}
+
+.hero-probe-y {
+  left: 0;
+  right: 0;
+  height: 1px;
+  top: var(--cy, 50%);
+}
+
+/* 0.45 sits above the frame's own 6%/10% grid lines without competing with the
+   solid white border — the crosshair reads as drawn on the sheet, not as chrome. */
+.hero-frame[data-probe='on'] .hero-probe-line {
+  opacity: 0.45;
+}
+
+.hero-frame[data-probe='on'] .hero-probe-readout {
+  opacity: 1;
+}
+
+/* Construction marks: click the sheet and a redline cross stays where you put
+   it, snapped to the same lattice as the crosshair. `redline` (#C0392B) is the
+   palette's mark-up ink and had no other use. */
+.hero-mark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  margin: -5px 0 0 -5px;
+  pointer-events: none;
+  animation: markIn 200ms ease-out;
+}
+
+.hero-mark::before,
+.hero-mark::after {
+  content: '';
+  position: absolute;
+  background: #c0392b;
+}
+
+.hero-mark::before {
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.hero-mark::after {
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+@keyframes markIn {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* The drafting cursor itself. Links and buttons opt back out — the frame is a
+   drawing surface, but they are still controls. */
+@media (hover: hover) and (pointer: fine) {
+  .hero-frame {
+    cursor: crosshair;
+  }
+
+  .hero-frame a,
+  .hero-frame button {
+    cursor: pointer;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero-probe-line,
+  .hero-probe-readout,
+  .hero-mark {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-mark {
+    animation: none;
+  }
+}
+
+/* The crosshair is direct manipulation, not autoplay, so it stays — only the
+   fade is dropped, which is the part that could read as unwanted motion. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-probe-line,
+  .hero-probe-readout {
+    transition: none;
   }
 }
 

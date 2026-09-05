@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import wing from '../../assets/MDL_wing_drawing.svg'
 import mcmaster from '../../assets/m24-wht.svg'
@@ -66,11 +67,117 @@ function Arrow({ className }: { className: string }) {
 // x positions are quarter-centres of the frame; the ticks sit on the quarter lines.
 const COLUMNS = ['12.5%', '37.5%', '62.5%', '87.5%']
 
+// Readout digits are zero-padded to a fixed width so the string never changes
+// length — an unpadded number reflows the line on every move and the readout
+// visibly jitters.
+const mm = (n: number) => String(Math.round(n)).padStart(4, '0')
+
+// The minor pitch of .bp-grid, so the crosshair locks onto lines that are
+// actually drawn. Change one and the other has to follow.
+const GRID = 24
+
+// Enough to sketch a shape, few enough that the sheet never turns to noise.
+// Oldest mark drops off the front.
+const MAX_MARKS = 14
+
 export default function Hero() {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const readoutRef = useRef<HTMLSpanElement>(null)
+  const [marks, setMarks] = useState<{ id: number; x: string; y: string }[]>([])
+  const markId = useRef(0)
+
+  // Drafting probe: a crosshair tracking the pointer across the drawing frame,
+  // with the cursor's position on the sheet read out in the free bottom-left
+  // corner. Styles live in index.css alongside the grid and hatch.
+  useEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return
+    // No cursor to follow on touch, and a crosshair stranded at the last tap
+    // reads as a bug — so on coarse pointers this never runs at all.
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+
+    let raf = 0
+    let clientX = 0
+    let clientY = 0
+
+    const paint = () => {
+      raf = 0
+      const r = frame.getBoundingClientRect()
+      if (!r.width || !r.height) return
+
+      // The crosshair tracks the pointer exactly. It used to snap to the 24px
+      // lattice like a CAD cursor, which was wrong *here* for one reason: in
+      // real CAD the crosshair IS the cursor and the system pointer is hidden,
+      // so snapping reads as precision. With the OS pointer still visible
+      // alongside it, a crosshair sitting up to half a cell away from your hand
+      // reads as lag instead. Snapping stays where it earns its keep — the
+      // marks you click down, below.
+      const x = (clientX - r.left) / r.width
+      const y = (clientY - r.top) / r.height
+      frame.style.setProperty('--cx', `${(x * 100).toFixed(3)}%`)
+      frame.style.setProperty('--cy', `${(y * 100).toFixed(3)}%`)
+
+      // Figma draws this frame 1280x740 and the title block says all dimensions
+      // are in millimetres, so the readout is the pointer's position on that
+      // sheet — not on the viewport, which would mean nothing to the drawing.
+      if (readoutRef.current) {
+        readoutRef.current.textContent = `x ${mm(x * 1280)}  y ${mm(y * 740)}`
+      }
+    }
+
+    // Writing --cx/--cy directly beats React state here: state would re-render
+    // every section of the hero on each mousemove. Coalescing into rAF keeps it
+    // to one rect read and one style write per frame however fast the pointer
+    // moves — reading the rect inside the handler instead would thrash layout.
+    const onMove = (e: PointerEvent) => {
+      clientX = e.clientX
+      clientY = e.clientY
+      if (!raf) raf = requestAnimationFrame(paint)
+    }
+    const onEnter = () => {
+      frame.dataset.probe = 'on'
+    }
+    const onLeave = () => {
+      frame.dataset.probe = 'off'
+    }
+
+    // Click to leave a construction mark on the sheet, snapped to the same
+    // lattice. This is the actual toy: the crosshair says the drawing is live,
+    // the marks let you draw on it. They persist so a shape can accumulate.
+    const onClick = (e: MouseEvent) => {
+      // Never steal a click from the two buttons the hero exists to serve.
+      if ((e.target as HTMLElement).closest('a, button')) return
+      const r = frame.getBoundingClientRect()
+      if (!r.width || !r.height) return
+      const grid = frame.parentElement?.getBoundingClientRect() ?? r
+      const gx = Math.round((e.clientX - grid.left) / GRID) * GRID + grid.left
+      const gy = Math.round((e.clientY - grid.top) / GRID) * GRID + grid.top
+      const mark = {
+        id: markId.current++,
+        x: `${(((gx - r.left) / r.width) * 100).toFixed(3)}%`,
+        y: `${(((gy - r.top) / r.height) * 100).toFixed(3)}%`,
+      }
+      setMarks(prev => [...prev, mark].slice(-MAX_MARKS))
+    }
+
+    frame.addEventListener('pointermove', onMove)
+    frame.addEventListener('pointerenter', onEnter)
+    frame.addEventListener('pointerleave', onLeave)
+    frame.addEventListener('click', onClick)
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf)
+      frame.removeEventListener('pointermove', onMove)
+      frame.removeEventListener('pointerenter', onEnter)
+      frame.removeEventListener('pointerleave', onLeave)
+      frame.removeEventListener('click', onClick)
+    }
+  }, [])
+
   return (
     <section
       style={{ '--hero-inset': 'clamp(28px,5.55vw,80px)' } as React.CSSProperties}
-      className="relative flex min-h-[100svh] w-full flex-col bg-navy p-[var(--hero-inset)]"
+      className="relative flex min-h-[calc(100svh-var(--nav-h))] w-full flex-col bg-navy p-[var(--hero-inset)]"
     >
       <div aria-hidden className="bp-grid pointer-events-none absolute inset-0" />
 
@@ -82,7 +189,31 @@ export default function Hero() {
           hero is a full 100svh so that it fills the screen once the nav has scrolled
           away — so the frame takes whatever is left, flex-1, growing past that only
           when the content needs it. */}
-      <div className="relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)]">
+      <div
+        ref={frameRef}
+        data-probe="off"
+        className="hero-frame relative flex flex-1 flex-col justify-center border border-white p-[var(--hero-inset)]"
+      >
+        {/* Crosshair + readout. Positioned, so they paint over the copy — which
+            is what a drafting overlay does; at 1px and 45% they cross the
+            headline without competing with it. The readout takes the frame's
+            free bottom-left corner, opposite the title block, and hides with it
+            below 1024 where that corner belongs to the wing. */}
+        <span aria-hidden className="hero-probe-line hero-probe-x" />
+        <span aria-hidden className="hero-probe-line hero-probe-y" />
+
+        {/* Construction marks, in redline — the palette's one ink reserved for
+            marking up a drawing, and until now unused. */}
+        {marks.map(m => (
+          <span key={m.id} aria-hidden className="hero-mark" style={{ left: m.x, top: m.y }} />
+        ))}
+        <span
+          ref={readoutRef}
+          aria-hidden
+          className="hero-probe-readout absolute bottom-0 left-0 hidden font-plex text-[11px] leading-none tracking-[1.54px] text-paper min-[1024px]:block"
+        >
+          x 0000&nbsp;&nbsp;y 0000
+        </span>
         {/* drawing chrome: row letters, column numbers, quarter ticks, dimension arrows */}
         {/* Below 1024 the section counter and this row of column numbers land in the
             same shrinking band above the frame and collide, so the chrome goes with

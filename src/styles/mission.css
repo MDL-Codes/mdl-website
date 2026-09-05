@@ -1,15 +1,41 @@
+/* Mission's local design system, remapped onto the home branch's tokens.
+   Every value below was within a few hex points of an existing token already —
+   the page had simply redeclared them instead of sharing them. Kept as CSS
+   custom properties because this file is plain CSS, not Tailwind, but the values
+   are now exactly tailwind.config.js's so the two systems cannot drift:
+
+     --mission-navy    navy       #2B3455   (was #2b3455, identical)
+     --mission-navy-2  navy-800   #232B4D   (was #242d4d)
+     --mission-cream   paper      #F6F4EE   (was #f3f0e8)
+     --mission-dim     paper-dim  #ECE9DF   (was #d8d4ca, inlined at the card)
+     --mission-muted   navy-200   #B7BEDB   (was white at 68%)
+     --mission-line    navy-600   #465184 at 55%, so it still reads as a hairline
+
+   --mission-gutter is Hero's --hero-inset and Footer's --gutter, so Mission's
+   left edge lines up with the footer's and with PageShell's on every other page.
+   --mission-max matches PageShell's column. */
 .mdl-mission {
   --mission-navy: #2b3455;
-  --mission-navy-2: #242d4d;
-  --mission-cream: #f3f0e8;
-  --mission-muted: rgba(255, 255, 255, 0.68);
-  --mission-line: rgba(255, 255, 255, 0.13);
+  --mission-navy-2: #232b4d;
+  --mission-cream: #f6f4ee;
+  --mission-dim: #ece9df;
+  --mission-muted: #b7bedb;
+  --mission-line: rgba(70, 81, 132, 0.55);
   --mission-max: 1180px;
+  --mission-gutter: clamp(28px, 5.55vw, 80px);
   position: relative;
   overflow-x: hidden;
   background: var(--mission-navy);
   color: #fff;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Headings take the home branch's display face. Courier bold was the old
+   system's heading treatment; the Hero, About us and Events h2s are all Roboto. */
+.mdl-mission h1,
+.mdl-mission h2,
+.mdl-mission h3 {
+  font-family: Roboto, system-ui, sans-serif;
 }
 
 .mdl-mission *,
@@ -49,14 +75,20 @@
 }
 
 .mission-shell {
-  width: min(var(--mission-max), calc(100% - 72px));
+  width: min(var(--mission-max), calc(100% - 2 * var(--mission-gutter)));
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
+/* 100svh, not `calc(100vh - 70px)`. The 70px was subtracting a nav bar that is
+   72px and sits outside this element anyway, and 100vh on iOS Safari measures
+   the viewport with the toolbar retracted — so the hero overflowed by roughly
+   the toolbar's height and the first scroll jumped. svh is the small viewport
+   height: the toolbar-visible measurement, which is what is actually on screen
+   at load. Same unit Hero.tsx uses. */
 .mission-hero {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100svh - var(--nav-h));
   padding: 78px 0 86px;
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
@@ -171,7 +203,7 @@
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 24px;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   transform: rotate(var(--mission-resting-rotate));
@@ -226,7 +258,7 @@
   margin: 0;
   padding: 13px 15px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 13px;
+  border-radius: 0;
   background: rgba(31, 40, 72, 0.88);
   backdrop-filter: blur(11px);
   color: rgba(255, 255, 255, 0.94);
@@ -285,7 +317,7 @@
   width: 45px;
   height: 45px;
   border: 1px solid rgba(43, 52, 85, 0.26);
-  border-radius: 50%;
+  border-radius: 0;
   background: transparent;
   color: var(--mission-navy);
   cursor: pointer;
@@ -323,8 +355,8 @@
   flex: 0 0 min(62vw, 760px);
   margin: 0;
   overflow: hidden;
-  border-radius: 22px;
-  background: #d8d4ca;
+  border-radius: 0;
+  background: var(--mission-dim);
   scroll-snap-align: center;
 }
 
@@ -397,9 +429,52 @@
 }
 
 .mission-focus-card {
+  position: relative;
+  overflow: hidden;
   min-height: 390px;
   padding: 34px 30px 32px;
   border-right: 1px solid var(--mission-line);
+  transition: background 0.35s ease;
+}
+
+/* Ghosted numeral bled off the bottom-right corner. The section was three
+   columns of body copy and a hairline — nothing anchored a card visually. This
+   costs no assets: it is the number the card already carries, at display scale.
+   Roboto to match the headings, not the mono the small label uses. */
+.mission-focus-card::after {
+  content: attr(data-number);
+  position: absolute;
+  right: -8px;
+  bottom: -36px;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.045);
+  font-family: Roboto, system-ui, sans-serif;
+  font-size: 132px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+
+.mission-focus-rule {
+  transition: width 0.35s ease;
+}
+
+@media (hover: hover) {
+  .mission-focus-card:hover {
+    background: rgba(255, 255, 255, 0.028);
+  }
+
+  .mission-focus-card:hover::after {
+    color: rgba(255, 255, 255, 0.08);
+    transform: translateY(-8px);
+  }
+
+  /* The rule draws itself out — the card's one bit of feedback that it is a
+     thing you are looking at, rather than a box that happens to light up. */
+  .mission-focus-card:hover .mission-focus-rule {
+    width: 74px;
+  }
 }
 
 .mission-focus-card:last-child {
@@ -451,14 +526,31 @@
   background: var(--mission-navy-2);
 }
 
+/* Construction circles. These were `border-radius: 50%` and a blanket
+   sharp-corner pass squared them, which left two stray rectangles drifting off
+   the corners — the sweep was right for plates and cards and wrong here.
+   Circles are drawn geometry on a blueprint, not UI chrome, so they belong.
+
+   Rebuilt as real construction geometry rather than bare outlines: each carries
+   a concentric ring and a centre mark, the way a drawn circle carries its own
+   centre lines. All three layers are one background, so it stays two elements. */
 .mission-final-message::before,
 .mission-final-message::after {
   content: "";
   position: absolute;
   width: 420px;
   height: 420px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.16) 0 100%) center / 1px 30px no-repeat,
+    linear-gradient(rgba(255, 255, 255, 0.16) 0 100%) center / 30px 1px no-repeat,
+    radial-gradient(
+      circle at center,
+      transparent 0 55%,
+      rgba(255, 255, 255, 0.07) 55% calc(55% + 1px),
+      transparent calc(55% + 1px)
+    );
 }
 
 .mission-final-message::before {
@@ -500,18 +592,48 @@
 }
 
 .mission-final-ticker {
-  margin: 74px auto 0;
+  margin: 66px auto 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 9px;
-  letter-spacing: 0.17em;
+  gap: 18px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
 }
 
+/* The × separators turn slowly. It is the one moving part in an otherwise
+   static band, and the row's last word is REPEAT — so the motion is the point
+   rather than decoration. Negative delays stagger them, so the row reads as a
+   mechanism instead of four things blinking in unison.
+
+   The reduced-motion block at the end of this file already clamps these to a
+   single instant iteration. */
 .mission-final-ticker i {
+  display: inline-block;
   font-style: normal;
+  color: rgba(255, 255, 255, 0.32);
+  animation: tickerTurn 12s linear infinite;
+}
+
+.mission-final-ticker i:nth-of-type(2) {
+  animation-delay: -3s;
+}
+
+.mission-final-ticker i:nth-of-type(3) {
+  animation-delay: -6s;
+}
+
+.mission-final-ticker i:nth-of-type(4) {
+  animation-delay: -9s;
+}
+
+@keyframes tickerTurn {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .mission-reveal {
@@ -527,10 +649,7 @@
   transform: translateY(0);
 }
 
-@media (max-width: 900px) {
-  .mission-shell {
-    width: calc(100% - 48px);
-  }
+@media (max-width: 1023px) {
 
   .mission-hero {
     min-height: auto;
@@ -577,10 +696,7 @@
   }
 }
 
-@media (max-width: 560px) {
-  .mission-shell {
-    width: calc(100% - 30px);
-  }
+@media (max-width: 719px) {
 
   .mission-hero {
     padding: 52px 0 68px;
@@ -599,8 +715,17 @@
     font-size: clamp(2.4rem, 12vw, 4rem);
   }
 
+  /* These were display:none — and this is the one range where they matter most.
+     Below 720 there is no hover to hint that the strip scrolls, so with the
+     arrows gone the carousel read as a single cropped photo. They stay; the
+     heading wraps onto a second line to make room for them. */
+  .mission-media-heading {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
   .mission-carousel-controls {
-    display: none;
+    padding-bottom: 0;
   }
 
   .mission-carousel-wrap {

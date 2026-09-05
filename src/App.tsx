@@ -27,26 +27,21 @@ export default function App() {
     document.title = PAGE_TITLES[location.pathname] ?? 'McMaster Design League'
   }, [location.pathname])
 
+  // Every route shares one shell. Home used to sit outside Layout because Layout
+  // boxed its children in a 1152px column; Layout is full-bleed now, so the
+  // exception (and the duplicate nav/footer it forced) is gone.
   return (
-    <Routes>
-      {/* Home is full-bleed and renders its own nav and footer, so it opts out of Layout. */}
-      <Route path="/" element={<Home />} />
-      <Route
-        path="*"
-        element={
-          <Layout>
-            <Routes>
-              <Route path="/designathon" element={<Designathon />} />
-              <Route path="/mission" element={<Mission />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/full" element={<FullPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        }
-      />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/designathon" element={<Designathon />} />
+        <Route path="/mission" element={<Mission />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/full" element={<FullPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   )
 }

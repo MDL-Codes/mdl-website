@@ -16,7 +16,7 @@ const SECTIONS = [
 
 export default function FullPage() {
   return (
-    <div className="flex flex-col gap-24 md:gap-32">
+    <div className="flex flex-col gap-[clamp(64px,8vw,128px)]">
       {SECTIONS.map(({ id, component: Component }) => (
         <div key={id} id={id} className="scroll-mt-12">
           <Component />

@@ -1,39 +1,52 @@
+import LeadStack from '../components/LeadStack'
 import { leads, members } from '../data/teamData'
 
 export default function Team() {
-  // group members by subteam for cleaner display
-  const groupedMembers = members.reduce<Record<string, string[]>>((acc, m) => {
+  // Group the general members by subteam so the list has some structure.
+  const grouped = members.reduce<Record<string, string[]>>((acc, m) => {
     if (!acc[m.subteam]) acc[m.subteam] = []
     acc[m.subteam].push(m.name)
     return acc
   }, {})
 
   return (
-    <section className="flex flex-col gap-10">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-6">
-        {leads.map((lead) => (
-          <article key={lead.name} className="flex flex-col">
-            <img
-              src={lead.photo}
-              alt={lead.name}
-              loading="lazy"
-              className="w-full aspect-square object-cover object-[center_15%] rounded-lg border border-border/60"
-            />
-            <p className="mt-3 font-bold text-base sm:text-lg">{lead.name}</p>
-            <p className="text-sm text-white/85">{lead.role}</p>
-            <p className="mt-1 italic text-sm text-white/75">{lead.quote}</p>
-          </article>
-        ))}
-      </div>
+    <section className="flex flex-col gap-16 md:gap-24">
+      {/* Page title */}
+      <header className="flex flex-col gap-4">
+        <h1 className="font-mono font-bold uppercase leading-[1.05] text-4xl sm:text-5xl md:text-6xl">
+          Meet the Leads!
+        </h1>
+        <p className="max-w-xl text-sm sm:text-base leading-relaxed text-white/85">
+          The people who plan the Designathon, teach the workshops, and keep the
+          league running. Scroll to work through each subteam.
+        </p>
+      </header>
 
-      <div className="text-sm sm:text-base leading-relaxed text-white/90 flex flex-col gap-1">
-        {Object.entries(groupedMembers).map(([subteam, names]) =>
-          names.map((name) => (
-            <p key={`${subteam}-${name}`}>
-              {name} ({subteam})
-            </p>
-          ))
-        )}
+      <LeadStack leads={leads} />
+
+      {/* General members */}
+      <div className="flex flex-col gap-8">
+        <div className="flex items-center gap-4">
+          <h2 className="font-bold uppercase text-xs sm:text-sm tracking-[0.28em] text-white/85">
+            General Members
+          </h2>
+          <span aria-hidden="true" className="h-px flex-1 bg-white/20" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Object.entries(grouped).map(([subteam, names]) => (
+            <div key={subteam} className="flex flex-col gap-3">
+              <span className="rounded-pill border border-white/30 bg-white/10 px-3.5 py-1 text-[11px] uppercase tracking-widest self-start">
+                {subteam}
+              </span>
+              <ul className="flex flex-col gap-1.5 text-sm sm:text-base text-white/85">
+                {names.map((name, i) => (
+                  <li key={`${subteam}-${name}-${i}`}>{name}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

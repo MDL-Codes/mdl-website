@@ -104,7 +104,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Media':
     'Media is the team behind the camera. They shoot and edit the photo and video from every workshop and Designathon, and cut the recaps that show people what they missed.',
   'Operations':
-    'Operations is the team that runs the day. They plan the logistics and coordinate everything on site, build the sign-in, sign-up and judging forms, and keep participant and team information straight so the event actually moves.',
+    'Operations is the team that runs the day. They plan the logistics and coordinate everything on site, keeping the whole event moving from doors open to final judging.',
   'Software':
     'Software is the team that builds the tools. They maintain CADie, MDL’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
   'Sponsorship':

@@ -1,3 +1,4 @@
+import BackToTop from '../components/BackToTop'
 import LeadStack from '../components/LeadStack'
 import PageShell from '../components/PageShell'
 import { leads, members } from '../data/teamData'
@@ -36,6 +37,8 @@ export default function Team() {
           </section>
         ))}
       </div>
+
+      <BackToTop />
     </PageShell>
   )
 }

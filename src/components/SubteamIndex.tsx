@@ -20,7 +20,8 @@ type Props = {
  * on Sponsorship is to scroll past everyone else. All eleven subteams are
  * listed at once and stay listed — it is a contents page, a set of jump
  * targets, and a position readout, since the row for whichever card is pinned
- * keeps its redline tick.
+ * keeps its tick. The tick is paper, the same accent Nav gives the current
+ * page — redline is the flagship-event colour and read as an error here.
  *
  * From 1024 it pins in its own column beside the cards, which is the whole
  * point: eleven rows fit vertically with room to spare, so nothing is ever
@@ -56,8 +57,8 @@ export default function SubteamIndex({ groups, active, top, onJump }: Props) {
                 aria-current={lit ? 'true' : undefined}
                 className={`w-full whitespace-nowrap border-l-2 py-[7px] pl-[10px] pr-[10px] text-left font-plex text-[11px] uppercase leading-none tracking-[1.54px] transition-colors duration-150 ${
                   lit
-                    ? 'border-redline text-white'
-                    : 'border-navy-600 text-navy-200 [@media(hover:hover)]:hover:border-navy-400 [@media(hover:hover)]:hover:text-white'
+                    ? 'border-paper text-paper'
+                    : 'border-navy-600 text-navy-200 [@media(hover:hover)]:hover:border-navy-400 [@media(hover:hover)]:hover:text-paper'
                 }`}
               >
                 {group.subteam}

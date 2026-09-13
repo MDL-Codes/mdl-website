@@ -87,8 +87,9 @@ const RAMP = [
  * way down the stack. `leads` below hands each lead the entry for their team.
  */
 const SUBTEAM_BLURBS: Record<string, string> = {
-  'MDL President':
-    'TODO: blurb',
+  // Blank until the presidents write theirs; LeadCard omits the paragraph
+  // entirely rather than leaving a gap where it would have been.
+  'MDL President': '',
   'Internal Management':
     'Internal Management is the team that looks after everyone else — running socials through the year and checking in with members across every subteam.',
   'CAD Technical':

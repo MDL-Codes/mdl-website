@@ -76,9 +76,11 @@ function LeadCard({ lead }: Props) {
           </div>
         </div>
 
-        <p className="mt-5 md:mt-7 text-sm sm:text-base leading-relaxed text-white/85 max-w-[68ch]">
-          {lead.blurb}
-        </p>
+        {lead.blurb && (
+          <p className="mt-5 md:mt-7 text-sm sm:text-base leading-relaxed text-white/85 max-w-[68ch]">
+            {lead.blurb}
+          </p>
+        )}
       </div>
     </article>
   )

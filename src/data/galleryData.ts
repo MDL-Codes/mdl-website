@@ -43,14 +43,25 @@ export type GalleryGroup = {
  * alt text that says what it is — the page used to render alt="" on all seven,
  * which tells a screen reader there is nothing here. The page flattens it.
  *
- * The last group is the seven photos that were already on the page. Nobody
- * recorded which event they came from, so they keep a general label until
- * somebody does.
+ * The seven photos that were already on the page are now filed by event too —
+ * five from the 2026 Designathon, one from CAD-APULT, and one Welcome Week
+ * workshop shot that joins that group.
  */
 export const galleryGroups: GalleryGroup[] = [
   {
     event: 'Welcome Week 2025',
-    photos: [welcomeWeek202501, welcomeWeek202502, welcomeWeek202503, welcomeWeek202504, welcomeWeek202505, welcomeWeek202506, welcomeWeek202507, welcomeWeek202508, welcomeWeek202509],
+    photos: [
+      welcomeWeek202501,
+      welcomeWeek202502,
+      welcomeWeek202503,
+      welcomeWeek202504,
+      welcomeWeek202505,
+      welcomeWeek202506,
+      welcomeWeek202507,
+      welcomeWeek202508,
+      welcomeWeek202509,
+      gallery6,
+    ],
   },
   {
     event: 'CAD workshop, 2025',
@@ -65,8 +76,12 @@ export const galleryGroups: GalleryGroup[] = [
     photos: [miniEvent202401, miniEvent202402, miniEvent202403, miniEvent202404, miniEvent202405, miniEvent202406, miniEvent202407],
   },
   {
-    event: 'MDL events',
-    photos: [gallery1, gallery2, gallery3, gallery4, gallery5, gallery6, gallery7],
+    event: 'Designathon 2026',
+    photos: [gallery1, gallery2, gallery3, gallery4, gallery7],
+  },
+  {
+    event: 'CAD-APULT',
+    photos: [gallery5],
   },
 ]
 

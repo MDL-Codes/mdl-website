@@ -98,7 +98,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Finance':
     'Finance is the team that pays for it all. They manage the MDL budget, track what each subteam spends across the season, and handle the reimbursements and funding applications that get events paid for on time.',
   'Graphics':
-    'Graphics is the team that draws everything you see — posters, banners and digital assets for every campaign, plus the sponsorship packages and the merch, shirts and stickers included.',
+    'Graphics is the team that brings ideas to life — drawing and designing the posters, banners and digital assets behind every campaign, plus the sponsorship packages and the merch, shirts and stickers included.',
   'Marketing':
     'Marketing is the team that gets the word out. They run the campaigns that bring students in, answer whatever lands in the inbox and the DMs, and brainstorm and film the reels.',
   'Media':

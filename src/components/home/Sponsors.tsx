@@ -43,7 +43,7 @@ const GAP = 'gap-[clamp(12px,1.67vw,24px)]'
 // these are logo plates, and the point of the tile is that it reads lighter
 // than the paper surface it sits on.
 const TILE =
-  'flex items-center justify-center border border-navy-600 p-[clamp(10px,1.11vw,16px)]'
+  'flex items-center justify-center border border-navy-600 bg-white p-[clamp(10px,1.11vw,16px)]'
 
 // mono/label at its saved 11 — the tier stamp is meant to sit quietly in the
 // corner, unlike Events' eyebrows, which had to hold their own against a 30px
@@ -58,12 +58,8 @@ const STAMP =
 // the logo fits inside it rather than the other way round.
 function Tile({ sponsor, className = '' }: { sponsor: Sponsor; className?: string }) {
   return (
-    <div
-      className={`relative ${TILE} ${
-        sponsor.onDark ? 'bg-navy-800' : 'bg-white'
-      } ${className}`}
-    >
-      <span aria-hidden className={`${STAMP} ${sponsor.onDark ? 'text-navy-200' : ''}`}>
+    <div className={`relative ${TILE} ${className}`}>
+      <span aria-hidden className={STAMP}>
         {sponsor.tier}
       </span>
       <img
@@ -170,26 +166,25 @@ export default function Sponsors() {
         {/* The tile block. DOM order is gold -> silver -> bronze, which is both
             the required collapse order and the reading order, so no narrow
             layout needs to reorder anything. */}
-        {/* Capped rather than full-bleed. The block is a ratio grid, so on a wide
-            screen it just kept growing — at 1440 the lead plate came out 802x434,
-            a white slab with more presence than the section around it. 1040 is
-            the ceiling, which only binds past ~1200 and leaves everything below
-            that untouched. Capping the whole block rather than resizing the lead
-            plate is what keeps the drawn proportions exact: the 425:750 split,
-            the 750/406 plate and the derived 425/191 silvers all hold, the wall
-            is simply smaller. The band is inside the cap too, so both rows keep
-            a flush right edge. */}
-        <div className={`mt-[clamp(20px,2.57vw,37px)] flex max-w-[1040px] flex-col ${GAP}`}>
+        <div className={`mt-[clamp(20px,2.57vw,37px)] flex flex-col ${GAP}`}>
           {/* Top block. Above 1024 it is Figma's 425 : 750 split as a ratio
-              rather than two pinned widths, so gold stays the widest tile at
-              every width. Gold's aspect-ratio is what sets the row height; the
-              silver column is a grid item, so it stretches to that height and
-              its two 1fr rows land at (H - gap) / 2 = 191 at 1440 — exactly
-              Figma's silver height, derived rather than hardcoded. */}
+              rather than two pinned widths, so the lead plate stays the widest
+              tile at every width. Its aspect-ratio is what sets the row height;
+              the silver column is a grid item, so it stretches to that height
+              and its two 1fr rows split it.
+
+              750/340, not the drawn 750/406. The split is a ratio with no
+              ceiling, so the plate grows with the window — at 1440 it reached
+              802x434 and read as a white slab with more presence than the
+              section around it. Shortening it is what shrinks the block while
+              keeping it full-bleed to the gutters: a max-width would have left
+              a band of bare paper down the right, with the header still running
+              the full width above it. The silvers ride the change, landing a
+              little flatter than their drawn 425/191. */}
           <div className={`grid ${GAP} min-[1024px]:grid-cols-[425fr_750fr]`}>
             <Tile
               sponsor={LEAD}
-              className="aspect-[750/406] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
+              className="aspect-[750/340] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
             />
 
             {/* aspect-[425/191] governs each silver tile only while the rows are

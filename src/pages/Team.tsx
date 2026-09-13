@@ -16,8 +16,10 @@ export default function Team() {
       eyebrow="the roster"
       title="Who Runs MDL"
       /* Counted off the data rather than written down, so the masthead cannot
-         go stale the next time someone joins or leaves. */
-      meta={`${leads.length} leads · ${members.length} members`}
+         go stale the next time someone joins or leaves. The member count is the
+         whole league, leads included — `members` is only everyone who is not a
+         lead, which would read as though the club were 38 people. */
+      meta={`${leads.length} leads · ${leads.length + members.length} members`}
       intro="The people writing Designathon problem statements, teaching the CAD workshops, chasing sponsors, and shooting the recap videos — across every subteam in the league."
     >
       <LeadStack leads={leads} />

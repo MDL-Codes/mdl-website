@@ -52,6 +52,6 @@ export const faqs: FAQ[] = [
   {
     question: 'Who can I reach out to if I have more application questions?',
     answer:
-      'Message @mdlmcmaster on Instagram, or email us at mdl@mcmaster.ca.',
+      'Message @mdlmcmaster on Instagram, or email us at mdlmcmaster@gmail.com.',
   },
 ]

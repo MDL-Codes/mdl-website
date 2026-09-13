@@ -8,6 +8,23 @@
  * Anything marked TODO still needs confirming before this goes live.
  */
 
+import photoTolu from '../assets/team/tolu-agunbiade.webp'
+import photoAndy from '../assets/team/andy-duong.webp'
+import photoKai from '../assets/team/kai-qin.webp'
+import photoRegan from '../assets/team/regan-oconnor.webp'
+import photoBen from '../assets/team/ben-malkovich.webp'
+import photoNila from '../assets/team/nila-natkunendiraan.webp'
+import photoAlina from '../assets/team/alina-zeng.webp'
+import photoGokul from '../assets/team/gokul-radheepan.webp'
+import photoOliver from '../assets/team/oliver-nell.webp'
+import photoJessica from '../assets/team/jessica-wang.webp'
+import photoYvonne from '../assets/team/yvonne-xu.webp'
+import photoAvril from '../assets/team/avril-wang.webp'
+import photoNoor from '../assets/team/noor-sidhu.webp'
+import photoMinaya from '../assets/team/minaya-karunarathne.webp'
+import photoMaia from '../assets/team/maia-antolic.webp'
+import photoMichelle from '../assets/team/michelle-nishidera.webp'
+
 export type Lead = {
   /** Subteam label shown across the top of the card. */
   subteam: string
@@ -67,12 +84,14 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'MDL President',
     name: 'Tolu Agunbiade',
+    photo: photoTolu,
     role: 'Co-President',
     blurb: 'TODO: blurb',
   },
   {
     subteam: 'MDL President',
     name: 'Andy Duong',
+    photo: photoAndy,
     role: 'Co-President',
     blurb: 'TODO: blurb',
   },
@@ -81,12 +100,14 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Internal Management',
     name: 'Kai Qin',
+    photo: photoKai,
     role: 'Internal Manager',
     blurb: 'TODO: blurb',
   },
   {
     subteam: 'Internal Management',
     name: "Regan O'Connor",
+    photo: photoRegan,
     role: 'Internal Manager',
     blurb: 'TODO: blurb',
   },
@@ -101,6 +122,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'CAD Technical',
     name: 'Ben Malkovich',
+    photo: photoBen,
     role: 'CAD Technical Lead',
     blurb:
       'Develop and deliver CAD workshops for participants. Create supplementary learning materials, including sample models/references. Lead the development of Designathon problem statements and technical requirements. Support and manage 3D printing operations during events.',
@@ -108,6 +130,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'CAD Technical',
     name: 'Nila Natkunendiraan',
+    photo: photoNila,
     role: 'CAD Technical Lead',
     blurb:
       'Develop and deliver CAD workshops for participants. Create supplementary learning materials, including sample models/references. Lead the development of Designathon problem statements and technical requirements. Support and manage 3D printing operations during events.',
@@ -117,6 +140,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Creative Manager',
     name: 'Alina Zeng',
+    photo: photoAlina,
     role: 'Creative Manager',
     blurb:
       'Holds the visual direction of the league together, from brand and campaign concepts through to the look and feel of every event.',
@@ -126,6 +150,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Finance',
     name: 'Gokul Radheepan',
+    photo: photoGokul,
     role: 'Finance Lead',
     blurb:
       'Manages the league budget and tracks what each subteam spends across the season.',
@@ -133,6 +158,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Finance',
     name: 'Oliver Nell',
+    photo: photoOliver,
     role: 'Finance Lead',
     blurb:
       'Handles reimbursements and funding applications so events get paid for on time.',
@@ -142,6 +168,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Graphics',
     name: 'Jessica Wang',
+    photo: photoJessica,
     role: 'Graphics Lead',
     blurb:
       'Design marketing and promotional materials, including posters, banners, and digital assets. Drive creation of event graphics such as sponsorship packages and merchandise (shirts, stickers, etc.)! Conceptualize and produce visuals aligned with campaign and event needs.',
@@ -149,6 +176,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Graphics',
     name: 'Yvonne Xu',
+    photo: photoYvonne,
     role: 'Graphics Lead',
     blurb:
       'Design marketing and promotional materials, including posters, banners, and digital assets. Drive creation of event graphics such as sponsorship packages and merchandise (shirts, stickers, etc.)! Conceptualize and produce visuals aligned with campaign and event needs.',
@@ -158,6 +186,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Marketing',
     name: 'Avril Wang',
+    photo: photoAvril,
     role: 'Marketing Lead',
     blurb:
       'Develop and execute marketing campaigns to increase brand awareness and student engagement. Respond to inquiries and manage community communications across platforms. Brainstorm and film fun new reels!',
@@ -165,6 +194,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Marketing',
     name: 'Noor Sidhu',
+    photo: photoNoor,
     role: 'Marketing Lead',
     blurb:
       'Develop and execute marketing campaigns to increase brand awareness and student engagement. Respond to inquiries and manage community communications across platforms. Brainstorm and film fun new reels!',
@@ -174,6 +204,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Media',
     name: 'Minaya Karunarathne',
+    photo: photoMinaya,
     role: 'Media Lead',
     blurb:
       'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
@@ -197,6 +228,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Operations',
     name: 'Maia Antolic',
+    photo: photoMaia,
     role: 'Operations Lead',
     blurb:
       'Own event logistics by planning and coordinating day-of execution. Create and manage event forms such as sign-in, sign-up, and judging materials. Collect, structure, and manage participant and team information to ensure successful event flow.',
@@ -222,6 +254,7 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'Sponsorship',
     name: 'Michelle Nishidera',
+    photo: photoMichelle,
     role: 'Sponsorship Lead',
     blurb:
       'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',

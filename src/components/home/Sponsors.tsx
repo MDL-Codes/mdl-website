@@ -187,31 +187,42 @@ export default function Sponsors() {
               className="aspect-[750/340] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
             />
 
-            {/* aspect-[425/191] governs each silver tile only while the rows are
-                auto — below 1024. Above it the wrapper has a definite height
-                from the row, the 1fr rows are definite too, and a stretched
-                grid item's definite height wins over aspect-ratio. That is why
-                the same class works at all three widths without a reset. */}
+            {/* aspect-[425/191] shapes each tile only while the rows are auto —
+                below 1024. From there the wrapper has a definite height off the
+                lead plate and the two 1fr rows are definite with it, so the
+                tiles drop the ratio and fill their rows.
+
+                They have to be told to. A grid item does stretch to its row by
+                default, but an aspect-ratio with a definite width beats the
+                stretch, so each tile held its drawn 425/191 inside a much taller
+                row and left ~90px of dead paper under itself — two ragged gaps
+                down the left column against an even 24 everywhere else. */}
             <div
               className={`grid ${GAP} grid-cols-1 min-[640px]:grid-cols-2 min-[1024px]:col-start-1 min-[1024px]:row-start-1 min-[1024px]:grid-cols-1 min-[1024px]:grid-rows-2`}
             >
               {FLANK.map(sponsor => (
-                <Tile key={sponsor.name} sponsor={sponsor} className="aspect-[425/191]" />
+                <Tile
+                  key={sponsor.name}
+                  sponsor={sponsor}
+                  className="aspect-[425/191] min-[1024px]:aspect-auto"
+                />
               ))}
             </div>
           </div>
 
-          {/* Bronze. Fixed band depth rather than an aspect ratio: the four are
-              one row of identical plates, and a band that stays the same depth
-              across the row is what Figma's flat 120 was approximating. Two-up
-              below 640, where a quarter-width tile is under 90px and the name
-              stops fitting. */}
+          {/* Bronze. Fixed band depth rather than an aspect ratio: these are
+              one row of identical plates, and a band that holds its depth
+              across the row is what Figma's flat 120 was approximating. The
+              ceiling is 160 rather than that 120 — the block above it scales
+              with the viewport and has no ceiling at all, so a band that stopped
+              growing at 1440 read as a thin strip under it on a wide screen.
+              Two-up below 640, where a third of the width is under 90px. */}
           <div className={`grid grid-cols-2 ${GAP} ${BAND_COLS[Math.min(BAND.length, 4)] ?? ''}`}>
             {BAND.map(sponsor => (
               <Tile
                 key={sponsor.name}
                 sponsor={sponsor}
-                className="h-[clamp(72px,8.33vw,120px)]"
+                className="h-[clamp(72px,8.33vw,160px)]"
               />
             ))}
           </div>

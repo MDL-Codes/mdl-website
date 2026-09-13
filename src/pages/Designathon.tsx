@@ -16,9 +16,20 @@ import ApplicationsStatus from '../components/ApplicationsStatus'
  *
  * Below 1024 it stacks, heading above content, as it did before.
  */
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({
+  title,
+  id,
+  children,
+}: {
+  title: string
+  /** Set to make the section a link target — see Layout's hash handling. */
+  id?: string
+  children: ReactNode
+}) {
   return (
-    <section className="flex flex-col gap-[clamp(18px,2vw,28px)] min-[1024px]:grid min-[1024px]:grid-cols-[minmax(380px,1fr)_minmax(0,1.2fr)] min-[1024px]:gap-[clamp(48px,6vw,96px)]">
+    <section
+      id={id}
+      className="scroll-mt-[24px] flex flex-col gap-[clamp(18px,2vw,28px)] min-[1024px]:grid min-[1024px]:grid-cols-[minmax(380px,1fr)_minmax(0,1.2fr)] min-[1024px]:gap-[clamp(48px,6vw,96px)]">
       <h2 className="font-display text-[clamp(22px,2.4vw,32px)] font-bold uppercase leading-[1.185] text-white">
         {title}
       </h2>
@@ -54,7 +65,8 @@ export default function Designathon() {
           </p>
         </Section>
 
-        <Section title="Frequently Asked Questions">
+        {/* The footer's "faq" link lands here. */}
+        <Section id="faq" title="Frequently Asked Questions">
           <ul className="flex flex-col">
             {faqs.map((faq, i) => (
               <li key={faq.question} className={i > 0 ? 'border-t border-navy-600 pt-[22px]' : ''}>

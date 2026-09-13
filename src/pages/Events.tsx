@@ -16,7 +16,9 @@ export default function Events() {
               src={event.photo}
               alt={event.title}
               loading="lazy"
-              className="aspect-[4/3] w-full shrink-0 border border-navy-600 object-cover min-[720px]:w-[38%] min-[720px]:max-w-[320px]"
+              className={`aspect-[4/3] w-full shrink-0 border border-navy-600 min-[720px]:w-[38%] min-[720px]:max-w-[320px] ${
+                event.contain ? 'object-contain' : 'object-cover'
+              }`}
             />
             <div className="min-w-0 flex-1">
               <h2 className="font-display text-[clamp(18px,1.8vw,24px)] font-bold uppercase leading-[1.185] text-white">

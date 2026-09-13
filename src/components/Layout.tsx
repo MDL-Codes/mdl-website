@@ -28,9 +28,23 @@ export default function Layout({ children }: Props) {
 
   // Layout no longer owns a scroll container — the document scrolls — so reset
   // the window, not a panel. FullPage is exempt: it lands via scrollIntoView.
+  //
+  // A hash wins over the reset, otherwise a link like /designathon#faq would
+  // navigate and then immediately scroll away from what it asked for. This runs
+  // after the commit, so the target is already in the DOM.
   useEffect(() => {
-    if (location.pathname !== '/full') window.scrollTo(0, 0)
-  }, [location.pathname])
+    if (location.pathname === '/full') return
+
+    if (location.hash) {
+      const target = document.getElementById(location.hash.slice(1))
+      if (target) {
+        target.scrollIntoView()
+        return
+      }
+    }
+
+    window.scrollTo(0, 0)
+  }, [location.pathname, location.hash])
 
   return (
     <div className="flex min-h-screen flex-col bg-navy-900 font-plex">

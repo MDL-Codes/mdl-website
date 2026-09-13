@@ -278,13 +278,14 @@ export default function Hero() {
           {/* Wrapping is what stacks the buttons around 520; centred, each wrapped
               line centres on its own. They keep their natural width either way. */}
           <div className="mt-[29px] flex flex-wrap justify-center gap-[30px] min-[1024px]:justify-start">
-            {/* ponytail: the real waitlist destination is unknown — /designathon is a
-                stand-in until someone supplies the form URL. */}
+            {/* Labelled for the page it opens. It used to read "waitlist" and
+                point at /designathon as a stand-in for a form URL that never
+                arrived. */}
             <Link
               to="/designathon"
               className={`${BUTTON} border-navy-950 bg-paper-dim text-navy-950 [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim`}
             >
-              2027 designathon waitlist
+              2027 designathon
             </Link>
             <Link
               to="/events"
@@ -305,13 +306,26 @@ export default function Hero() {
             >=1024: absolute and right-anchored. Figma overhangs the frame's right
             border; Sanika's call is to pull it inside instead, by one --hero-inset
             so the gap reads as the same measure as the frame's own inset. Widths
-            are the drawn 59.1%/40% rescaled for the cropped viewBox (x 508/757). */}
+            are the drawn 59.1%/40% rescaled for the cropped viewBox (x 508/757).
+
+            Vertically it centres on the frame, as drawn — but only while that
+            leaves it clear of the title block, which owns the bottom-right
+            200x300 and shares the wing's whole x-range. The frame is flex-1 in a
+            100svh hero, so on a short screen (1280x700 lands the frame at ~486)
+            centring put the wing's bottom edge through the block's top border.
+            The min() caps the centre at 224px off the frame's bottom - the block
+            plus air - less half the wing. That half is in vw because the wing is
+            a percentage of frame width and CSS cannot ask an element how tall it
+            came out: at 26.9% it is ~3.1vw and at 39.7% ~4.7vw across every
+            width in range, so 3.3 and 4.8 are those rounded up. The max() is the
+            other end - it stops a very short frame lifting the wing off the top
+            edge - and never binds at ordinary heights. */}
         <img
           src={wing}
           alt=""
           width={509}
           height={132}
-          className="hidden min-h-0 w-full max-w-[56%] self-center object-contain min-[720px]:mt-[clamp(32px,6vw,72px)] min-[720px]:block min-[1024px]:mt-0 min-[1024px]:max-w-none min-[1024px]:self-auto min-[1024px]:absolute min-[1024px]:right-[var(--hero-inset)] min-[1024px]:top-1/2 min-[1024px]:h-auto min-[1024px]:w-[26.9%] min-[1024px]:-translate-y-1/2 min-[1280px]:w-[39.7%]"
+          className="hidden min-h-0 w-full max-w-[56%] self-center object-contain min-[720px]:mt-[clamp(32px,6vw,72px)] min-[720px]:block min-[1024px]:mt-0 min-[1024px]:max-w-none min-[1024px]:self-auto min-[1024px]:absolute min-[1024px]:right-[var(--hero-inset)] min-[1024px]:top-[max(3.3vw,min(50%,calc(100%_-_224px_-_3.3vw)))] min-[1024px]:h-auto min-[1024px]:w-[26.9%] min-[1024px]:-translate-y-1/2 min-[1280px]:top-[max(4.8vw,min(50%,calc(100%_-_224px_-_4.8vw)))] min-[1280px]:w-[39.7%]"
         />
 
         {/* CAD title block — flush to the frame's bottom-right inner corner */}

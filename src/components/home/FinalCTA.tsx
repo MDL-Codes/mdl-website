@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom'
  * Background is #1B2140 = navy-900 per the node, not the section map's plain
  * "navy" — three navies stay distinct per CLAUDE.md.
  *
- * Figma spells the button "2027 DESIGNATHON WAILIST". That is a typo in the
- * design, not an override, so it ships as WAITLIST.
+ * The button reads "2027 DESIGNATHON". Figma drew it as "2027 DESIGNATHON
+ * WAILIST" — a typo for WAITLIST — but there is no waitlist to point at, and
+ * the link goes to /designathon, so the label names the page it opens.
  *
  * Content-sized, no min-h floor (same as Events/Recap/Sponsors). At 1440 the
  * copy column is 85px tall and the padding clamps land the band back on
@@ -54,7 +55,7 @@ export default function FinalCTA() {
           to="/designathon"
           className="shrink-0 border-2 border-navy-900 bg-paper px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-950 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-paper [@media(hover:hover)]:hover:border-paper [@media(hover:hover)]:hover:bg-transparent [@media(hover:hover)]:hover:text-paper"
         >
-          2027 designathon waitlist
+          2027 designathon
         </Link>
       </div>
     </section>

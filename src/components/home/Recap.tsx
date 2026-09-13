@@ -11,7 +11,7 @@ import gallery7 from '../../assets/gallery7.webp'
 /**
  * Recap — Figma 5:115, named `section/gallery` (the REAL gallery node — do not
  * confuse with 74:203, which stole that name for About us). Renders as
- * "2026 DESIGNATHON RECAP", navy-900 (the fetched node background is #1B2140,
+ * "2025-2026 SEASON RECAP", navy-900 (the fetched node background is #1B2140,
  * same ink as About us; the section map's plain "navy" label undersells it —
  * three navies stay distinct per CLAUDE.md).
  *
@@ -41,20 +41,60 @@ import gallery7 from '../../assets/gallery7.webp'
  * copy column.
  */
 
-const PARAGRAPH =
-  "This is a paragraph of placeholder text that describes what's going on in the picture. The purpose of this section is to be an image gallery, and showcase our past events. Adding an extra sentence here just to make this section longer."
-
-// ponytail: one shared paragraph for all seven slides rather than seven
-// near-identical copies — the brief only asks the subtitle to vary, and the
-// paragraph is placeholder voice anyway.
+/**
+ * The season's slides, each with its own caption.
+ *
+ * Figma carried one placeholder paragraph shared across all seven — the brief
+ * only asked the subtitle to vary. With real photographs that no longer holds:
+ * the point of a recap is that each frame is a different thing that happened,
+ * and one paragraph describing all of them says nothing about any of them.
+ *
+ * Five of these are from the 2026 Designathon, one from CAD-APULT and one from
+ * Welcome Week, which is why the heading is the season rather than the event.
+ */
 const SLIDES = [
-  { photo: gallery1, subtitle: 'THE OPENING CEREMONY' },
-  { photo: gallery2, subtitle: 'PLACEHOLDER SUBTITLE' },
-  { photo: gallery3, subtitle: 'PLACEHOLDER SUBTITLE' },
-  { photo: gallery4, subtitle: 'PLACEHOLDER SUBTITLE' },
-  { photo: gallery5, subtitle: 'PLACEHOLDER SUBTITLE' },
-  { photo: gallery6, subtitle: 'PLACEHOLDER SUBTITLE' },
-  { photo: gallery7, subtitle: 'PLACEHOLDER SUBTITLE' },
+  {
+    photo: gallery1,
+    subtitle: 'THE INTERVIEWS',
+    caption:
+      'Going round the room through the weekend to hear what people are building, how far they have got, and what has gone wrong since the last time we asked.',
+  },
+  {
+    photo: gallery2,
+    subtitle: 'DUO CAD CHALLENGE',
+    caption:
+      'Teams of two take on one timed model. One person works from the drawing and calls out the geometry; the other never sees it and builds it in CAD.',
+  },
+  {
+    photo: gallery3,
+    subtitle: 'DESCRIBE, THEN MODEL',
+    caption:
+      'The room mid-round, split between the people describing and the people modelling.',
+  },
+  {
+    photo: gallery4,
+    subtitle: 'THE OPENING CEREMONY',
+    caption:
+      'Doors open, the problem statements go up, and thirty-six hours start counting down.',
+  },
+  {
+    photo: gallery5,
+    subtitle: 'CAD-APULT',
+    caption:
+      'Our first-year mini event. Teams design and build a catapult from the materials in front of them, then compete to see whose throws furthest.',
+  },
+  {
+    photo: gallery6,
+    subtitle: 'WELCOME WEEK 2025',
+    caption:
+      'First week of term, first workshop of the year — a room full of people opening CAD software for the first time.',
+  },
+  {
+    photo: gallery7,
+    subtitle: 'TAKING A BREAK',
+    caption:
+      'Thirty-six hours is a long time. Face paint, balloon animals and a while away from the screen, somewhere in the middle of it.',
+  },
 ]
 
 const AUTOPLAY_MS = 5000
@@ -109,7 +149,7 @@ export default function Recap() {
       </p>
 
       <h2 className="mt-[clamp(8px,0.97vw,14px)] font-display text-[clamp(32px,3.89vw,56px)] font-bold uppercase leading-none text-paper-dim">
-        2026 designathon recap
+        2025-2026 season recap
       </h2>
 
       <div
@@ -138,7 +178,7 @@ export default function Recap() {
             <img
               key={s.photo}
               src={s.photo}
-              alt=""
+              alt={s.subtitle}
               aria-hidden={i !== index}
               loading={i === 0 ? undefined : 'lazy'}
               decoding="async"
@@ -192,8 +232,11 @@ export default function Recap() {
           >
             {slide.subtitle}
           </h3>
-          <p className="mt-[clamp(14px,1.53vw,22px)] font-display text-[16px] leading-normal tracking-[1.8px] text-paper-dim">
-            {PARAGRAPH}
+          <p
+            key={`caption-${index}`}
+            className="page-fade mt-[clamp(14px,1.53vw,22px)] font-display text-[16px] leading-normal tracking-[1.8px] text-paper-dim motion-reduce:animate-none"
+          >
+            {slide.caption}
           </p>
           <Link
             to="/gallery"

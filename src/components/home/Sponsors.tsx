@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import { homeSponsors, type Tier } from '../../data/sponsorsData'
+import { sponsors, TIERS, type Sponsor } from '../../data/sponsorsData'
 
 /**
  * Our sponsors — Figma `section/sponsors`, node **84:317** (1440x900, paper +
@@ -51,26 +50,50 @@ const TILE =
 const STAMP =
   'absolute left-[8px] top-[6px] font-plex text-[11px] leading-none tracking-[1.54px] uppercase text-navy-400'
 
-// Figma draws the tiles empty — the logos are placeholders that do not exist
-// yet. Rather than seven blank rectangles, each carries its placeholder name
-// and a tier stamp, which is the bill-of-materials idiom the design is after
-// and also gives the section something to say to a screen reader.
-function Tile({ name, tier, className = '' }: { name: string; tier: Tier; className?: string }) {
+// Figma drew the tiles empty — the logos did not exist yet. They do now, so
+// the plate holds the logo and keeps the tier stamp in the corner. The logo is
+// object-contain inside the drawn plate, never the other way round: they arrive
+// at very different aspects (SolidWorks 876x200, Print and Play square) and the
+// plate's shape is the design.
+function Tile({ sponsor, className = '' }: { sponsor: Sponsor; className?: string }) {
   return (
     <div className={`relative ${TILE} ${className}`}>
       <span aria-hidden className={STAMP}>
-        {tier}
+        {sponsor.tier}
       </span>
-      <span className="font-plex text-[clamp(11px,0.97vw,14px)] uppercase leading-none tracking-[1.54px] text-navy-600">
-        {name}
-      </span>
+      <img
+        src={sponsor.logo}
+        alt={sponsor.name}
+        loading="lazy"
+        decoding="async"
+        className="max-h-full max-w-full object-contain"
+      />
     </div>
   )
 }
 
-const [GOLD, ...REST] = homeSponsors
-const SILVER = REST.slice(0, 2)
-const BRONZE = REST.slice(2)
+/**
+ * Sponsors ranked by tier, then poured into the drawn slots.
+ *
+ * The slots do not move. Figma drew 1 gold / 2 silver / 4 bronze and the tier
+ * names doubled as the slot names; with five real tiers that has to come apart,
+ * so rank picks the slot and `sponsor.tier` prints the stamp. GoEngineer takes
+ * the lead plate as the top tier without the plate needing to be called "gold".
+ */
+const RANKED = [...sponsors].sort((a, b) => TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier))
+const [LEAD, ...REST] = RANKED
+const FLANK = REST.slice(0, 2)
+const BAND = REST.slice(2)
+
+// The band is drawn four across; with fewer it takes that many columns so the
+// row stays flush right rather than ending in a hole. Static strings because
+// Tailwind only ships classes it can see in the source.
+const BAND_COLS: Record<number, string> = {
+  1: 'min-[640px]:grid-cols-1',
+  2: 'min-[640px]:grid-cols-2',
+  3: 'min-[640px]:grid-cols-3',
+  4: 'min-[640px]:grid-cols-4',
+}
 
 export default function Sponsors() {
   return (
@@ -99,11 +122,10 @@ export default function Sponsors() {
 
             {/* Roboto Regular 18 / 1.8px at 80% — the same "body copy is Roboto,
                 not Plex" override About us, Events and Recap all carry. Figma's
-                614px measure kept as a max, fluid below it. Copy is Figma's
-                placeholder verbatim, lowercase "it" and all. */}
+                614px measure kept as a max, fluid below it. */}
             <p className="mt-[clamp(8px,0.76vw,11px)] max-w-[clamp(320px,42.6vw,614px)] font-display text-[clamp(15px,1.25vw,18px)] font-normal leading-normal tracking-[clamp(1.5px,0.125vw,1.8px)] text-navy-800/80">
-              This is a placeholder paragraph that describes how much we thank our sponsors of the
-              2026 designathon. it wouldn&rsquo;t have been possible without them.
+              Designathon, the workshops and the prizes that come with them are all made
+              possible by the companies below. Thank you for backing what our students build.
             </p>
           </div>
 
@@ -114,12 +136,15 @@ export default function Sponsors() {
             {/* Border and ink are navy-800 here, NOT the navy-600 Events' button
                 uses — per-node value, and on this heavier header it is the
                 deliberate one. px-32/py-18 as drawn. */}
-            <Link
-              to="/sponsors"
+            {/* mailto, not a route: /sponsors does not exist, and the ask here is
+                for someone to send us something rather than to go and read a
+                page. The subject is prefilled so the replies arrive sorted. */}
+            <a
+              href="mailto:mdlmcmaster@gmail.com?subject=Sponsorship%20package%20request"
               className="border border-navy-800 px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-800 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-800 [@media(hover:hover)]:hover:bg-navy-800 [@media(hover:hover)]:hover:text-paper"
             >
               request sponsorship package
-            </Link>
+            </a>
 
             <p className="mt-[clamp(8px,0.69vw,10px)] font-plex text-[11px] leading-none tracking-[1.54px] uppercase text-navy-600">
               tier details + past partners
@@ -145,8 +170,7 @@ export default function Sponsors() {
               Figma's silver height, derived rather than hardcoded. */}
           <div className={`grid ${GAP} min-[1024px]:grid-cols-[425fr_750fr]`}>
             <Tile
-              name={GOLD.name}
-              tier="gold"
+              sponsor={LEAD}
               className="aspect-[750/406] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
             />
 
@@ -158,8 +182,8 @@ export default function Sponsors() {
             <div
               className={`grid ${GAP} grid-cols-1 min-[640px]:grid-cols-2 min-[1024px]:col-start-1 min-[1024px]:row-start-1 min-[1024px]:grid-cols-1 min-[1024px]:grid-rows-2`}
             >
-              {SILVER.map(s => (
-                <Tile key={s.name} name={s.name} tier="silver" className="aspect-[425/191]" />
+              {FLANK.map(sponsor => (
+                <Tile key={sponsor.name} sponsor={sponsor} className="aspect-[425/191]" />
               ))}
             </div>
           </div>
@@ -169,12 +193,11 @@ export default function Sponsors() {
               across the row is what Figma's flat 120 was approximating. Two-up
               below 640, where a quarter-width tile is under 90px and the name
               stops fitting. */}
-          <div className={`grid grid-cols-2 ${GAP} min-[640px]:grid-cols-4`}>
-            {BRONZE.map(s => (
+          <div className={`grid grid-cols-2 ${GAP} ${BAND_COLS[Math.min(BAND.length, 4)] ?? ''}`}>
+            {BAND.map(sponsor => (
               <Tile
-                key={s.name}
-                name={s.name}
-                tier="bronze"
+                key={sponsor.name}
+                sponsor={sponsor}
                 className="h-[clamp(72px,8.33vw,120px)]"
               />
             ))}

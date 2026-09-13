@@ -3,7 +3,7 @@
  *
  * Lead names and subteams come from the Notion "Team Leads" table.
  * General members come from MDL Internal Teamspace > Databases > People.
- * Subteam descriptions are transcribed from the Instagram subteam posts.
+ * Subteam descriptions started from the Instagram subteam posts.
  *
  * Anything marked TODO still needs confirming before this goes live.
  */
@@ -30,7 +30,7 @@ export type Lead = {
   subteam: string
   name: string
   role: string
-  /** One or two sentences on what this person actually does. */
+  /** What this lead's subteam does — see SUBTEAM_BLURBS; not per person. */
   blurb: string
   /** Optional headshot. Leave it out and the card shows initials instead. */
   photo?: string
@@ -79,21 +79,51 @@ const RAMP = [
  * `bg` is filled in automatically below, so adding or reordering someone
  * here never leaves two identical shades touching.
  */
-const roster: Omit<Lead, 'bg'>[] = [
+/**
+ * What each subteam does, in its own words rather than a list of duties.
+ *
+ * One entry per subteam, not per person: these describe the team, so co-leads
+ * used to carry the same paragraph twice and you read it twice in a row on the
+ * way down the stack. `leads` below hands each lead the entry for their team.
+ */
+const SUBTEAM_BLURBS: Record<string, string> = {
+  'MDL President':
+    'TODO: blurb',
+  'Internal Management':
+    'Internal Management is the team that looks after everyone else — running socials through the year and checking in with members across every subteam.',
+  'CAD Technical':
+    'CAD Technical is the team that teaches the CAD. They run the workshops and write the learning materials, set the Designathon problem statements and technical requirements, and keep the 3D printers going through the event.',
+  'Creative Manager':
+    'The Creative Manager holds the visual direction of the league together, from brand and campaign concepts through to the look and feel of every event.',
+  'Finance':
+    'Finance is the team that pays for it all. They manage the league budget, track what each subteam spends across the season, and handle the reimbursements and funding applications that get events paid for on time.',
+  'Graphics':
+    'Graphics is the team that draws everything you see — posters, banners and digital assets for every campaign, plus the sponsorship packages and the merch, shirts and stickers included.',
+  'Marketing':
+    'Marketing is the team that gets the word out. They run the campaigns that bring students in, answer whatever lands in the inbox and the DMs, and brainstorm and film the reels.',
+  'Media':
+    'Media is the team behind the camera. They shoot and edit the photo and video from every workshop and Designathon, and cut the recaps that show people what they missed.',
+  'Operations':
+    'Operations is the team that runs the day. They plan the logistics and coordinate everything on site, build the sign-in, sign-up and judging forms, and keep participant and team information straight so the event actually moves.',
+  'Software':
+    'Software is the team that builds the tools. They maintain CADie, the league’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
+  'Sponsorship':
+    'Sponsorship is the team that funds the thing. They connect with companies and secure the sponsors behind Designathon, build the package that goes out to employers, and organise the booths for the sponsorship fair and mini-industry night.',
+}
+
+const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   // ------------------------------------------------------------ president ---
   {
     subteam: 'MDL President',
     name: 'Tolu Agunbiade',
     photo: photoTolu,
     role: 'Co-President',
-    blurb: 'TODO: blurb',
   },
   {
     subteam: 'MDL President',
     name: 'Andy Duong',
     photo: photoAndy,
     role: 'Co-President',
-    blurb: 'TODO: blurb',
   },
 
   // ------------------------------------------------- internal management ---
@@ -102,23 +132,17 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Kai Qin',
     photo: photoKai,
     role: 'Internal Manager',
-    blurb:
-      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
   {
     subteam: 'Internal Management',
     name: "Regan O'Connor",
     photo: photoRegan,
     role: 'Internal Manager',
-    blurb:
-      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
   {
     subteam: 'Internal Management',
     name: 'Saloni Patel',
     role: 'Internal Manager',
-    blurb:
-      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
 
   // ------------------------------------------------------- cad technical ---
@@ -127,16 +151,12 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Ben Malkovich',
     photo: photoBen,
     role: 'CAD Technical Lead',
-    blurb:
-      'Develop and deliver CAD workshops for participants. Create supplementary learning materials, including sample models/references. Lead the development of Designathon problem statements and technical requirements. Support and manage 3D printing operations during events.',
   },
   {
     subteam: 'CAD Technical',
     name: 'Nila Natkunendiraan',
     photo: photoNila,
     role: 'CAD Technical Lead',
-    blurb:
-      'Develop and deliver CAD workshops for participants. Create supplementary learning materials, including sample models/references. Lead the development of Designathon problem statements and technical requirements. Support and manage 3D printing operations during events.',
   },
 
   // ------------------------------------------------------ creative ---
@@ -145,8 +165,6 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Alina Zeng',
     photo: photoAlina,
     role: 'Creative Manager',
-    blurb:
-      'Holds the visual direction of the league together, from brand and campaign concepts through to the look and feel of every event.',
   },
 
   // ------------------------------------------------------------- finance ---
@@ -155,16 +173,12 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Gokul Radheepan',
     photo: photoGokul,
     role: 'Finance Lead',
-    blurb:
-      'Manages the league budget and tracks what each subteam spends across the season.',
   },
   {
     subteam: 'Finance',
     name: 'Oliver Nell',
     photo: photoOliver,
     role: 'Finance Lead',
-    blurb:
-      'Handles reimbursements and funding applications so events get paid for on time.',
   },
 
   // ------------------------------------------------------------ graphics ---
@@ -173,16 +187,12 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Jessica Wang',
     photo: photoJessica,
     role: 'Graphics Lead',
-    blurb:
-      'Design marketing and promotional materials, including posters, banners, and digital assets. Drive creation of event graphics such as sponsorship packages and merchandise (shirts, stickers, etc.)! Conceptualize and produce visuals aligned with campaign and event needs.',
   },
   {
     subteam: 'Graphics',
     name: 'Yvonne Xu',
     photo: photoYvonne,
     role: 'Graphics Lead',
-    blurb:
-      'Design marketing and promotional materials, including posters, banners, and digital assets. Drive creation of event graphics such as sponsorship packages and merchandise (shirts, stickers, etc.)! Conceptualize and produce visuals aligned with campaign and event needs.',
   },
 
   // ----------------------------------------------------------- marketing ---
@@ -191,16 +201,12 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Avril Wang',
     photo: photoAvril,
     role: 'Marketing Lead',
-    blurb:
-      'Develop and execute marketing campaigns to increase brand awareness and student engagement. Respond to inquiries and manage community communications across platforms. Brainstorm and film fun new reels!',
   },
   {
     subteam: 'Marketing',
     name: 'Noor Sidhu',
     photo: photoNoor,
     role: 'Marketing Lead',
-    blurb:
-      'Develop and execute marketing campaigns to increase brand awareness and student engagement. Respond to inquiries and manage community communications across platforms. Brainstorm and film fun new reels!',
   },
 
   // --------------------------------------------------------------- media ---
@@ -209,15 +215,11 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Minaya Karunarathne',
     photo: photoMinaya,
     role: 'Media Lead',
-    blurb:
-      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
   },
   {
     subteam: 'Media',
     name: 'Ronit Patel',
     role: 'Media Lead',
-    blurb:
-      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
   },
 
   // ---------------------------------------------------------- operations ---
@@ -225,16 +227,12 @@ const roster: Omit<Lead, 'bg'>[] = [
     subteam: 'Operations',
     name: 'Leanne Yu',
     role: 'Operations Lead',
-    blurb:
-      'Own event logistics by planning and coordinating day-of execution. Create and manage event forms such as sign-in, sign-up, and judging materials. Collect, structure, and manage participant and team information to ensure successful event flow.',
   },
   {
     subteam: 'Operations',
     name: 'Maia Antolic',
     photo: photoMaia,
     role: 'Operations Lead',
-    blurb:
-      'Own event logistics by planning and coordinating day-of execution. Create and manage event forms such as sign-in, sign-up, and judging materials. Collect, structure, and manage participant and team information to ensure successful event flow.',
   },
 
   // ------------------------------------------------------------ software ---
@@ -242,8 +240,6 @@ const roster: Omit<Lead, 'bg'>[] = [
     subteam: 'Software',
     name: 'Kylie Gun',
     role: 'Software Lead',
-    blurb:
-      'Develop and maintain CADie on Discord using Python. Improve and maintain the MDL website using React, JavaScript, Tailwind, and Vercel. Support and troubleshoot software-related tools and systems used by the team.',
   },
 
   // --------------------------------------------------------- sponsorship ---
@@ -251,22 +247,19 @@ const roster: Omit<Lead, 'bg'>[] = [
     subteam: 'Sponsorship',
     name: 'Aarudra Ramanan',
     role: 'Sponsorship Lead',
-    blurb:
-      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
   },
   {
     subteam: 'Sponsorship',
     name: 'Michelle Nishidera',
     photo: photoMichelle,
     role: 'Sponsorship Lead',
-    blurb:
-      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
   },
 ]
 
 export const leads: Lead[] = roster.map((lead, i) => ({
   ...lead,
   bg: RAMP[i % RAMP.length],
+  blurb: SUBTEAM_BLURBS[lead.subteam] ?? '',
 }))
 
 /**

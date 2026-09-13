@@ -11,7 +11,15 @@ type Props = {
  * the name and role, with the blurb underneath.
  *
  * One layout at every width — the avatar and type just scale — so the card
- * behaves the same on a phone, a half-width window and a full laptop.
+ * behaves the same on a phone, a half-width window and a full laptop. Sizes are
+ * fluid clamp()s rather than stepped breakpoints, per CLAUDE.md, which is also
+ * why this file no longer carries sm:/md:/lg: variants: it and LeadStack were
+ * the only two in src/ using them.
+ *
+ * Square, on the palette, and headings in font-display — the card was drawn
+ * before it met the rest of the site, and was the only thing here with rounded
+ * corners, white-opacity washes, or a mono name.
+ *
  * Backgrounds are opaque so the cards read as solid layers when they stack.
  */
 function LeadCard({ lead }: Props) {
@@ -22,62 +30,57 @@ function LeadCard({ lead }: Props) {
   return (
     <article
       style={{ backgroundColor: lead.bg }}
-      className="
-        rounded-2xl md:rounded-3xl border border-white/15
-        shadow-[0_18px_50px_-12px_rgba(0,0,0,0.55)]
-        overflow-hidden
-      "
+      className="border border-navy-400 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.55)]"
     >
       {/* Subteam label */}
-      <header className="flex items-center gap-4 px-5 sm:px-8 md:px-10 pt-5 md:pt-7 pb-4 md:pb-5">
-        <span className="font-bold uppercase text-[11px] sm:text-sm tracking-[0.2em] sm:tracking-[0.28em] text-white/85">
+      <header className="flex items-center gap-[16px] px-[clamp(20px,2.8vw,40px)] pb-[clamp(16px,1.4vw,20px)] pt-[clamp(20px,1.9vw,28px)]">
+        <span className="font-plex text-[11px] font-semibold uppercase leading-none tracking-[1.54px] text-navy-200">
           {lead.subteam}
         </span>
-        <span aria-hidden="true" className="h-px flex-1 bg-white/20" />
+        <span aria-hidden="true" className="h-px flex-1 bg-navy-400/50" />
       </header>
 
-      <div className="px-5 sm:px-8 md:px-10 pb-6 md:pb-9">
+      <div className="px-[clamp(20px,2.8vw,40px)] pb-[clamp(24px,2.5vw,36px)]">
         {/* Avatar + name + role */}
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
-          <div
-            className="
-              shrink-0 overflow-hidden rounded-xl md:rounded-2xl border border-white/20
-              w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44
-            "
-          >
+        <div className="flex items-center gap-[clamp(16px,2.2vw,32px)]">
+          <div className="h-[clamp(80px,12.2vw,176px)] w-[clamp(80px,12.2vw,176px)] shrink-0 overflow-hidden border border-navy-400">
             {photoOk && lead.photo ? (
               <img
                 src={lead.photo}
                 alt={lead.name}
                 loading="lazy"
+                decoding="async"
                 onError={() => setPhotoOk(false)}
-                className="w-full h-full object-cover object-[center_18%]"
+                className="h-full w-full object-cover object-[center_18%]"
               />
             ) : (
               <div
                 aria-hidden="true"
-                className="flex w-full h-full items-center justify-center bg-white/10"
+                className="flex h-full w-full items-center justify-center bg-navy-950/40"
               >
-                <span className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/40">
+                <span className="font-display text-[clamp(20px,2.8vw,40px)] font-bold text-navy-400">
                   {initials(lead.name)}
                 </span>
               </div>
             )}
           </div>
 
-          <div className="min-w-0 flex-1 flex flex-col items-start gap-2 sm:gap-3">
-            <h3 className="font-bold uppercase leading-[1.05] text-xl sm:text-2xl md:text-3xl lg:text-4xl break-words">
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-[clamp(8px,0.9vw,13px)]">
+            <h3 className="break-words font-display text-[clamp(20px,2.6vw,36px)] font-bold uppercase leading-[1.05] text-white">
               {lead.name}
             </h3>
 
-            <span className="rounded-pill border border-white/30 bg-white/10 px-3 sm:px-3.5 py-1 text-[10px] sm:text-xs uppercase tracking-widest">
+            {/* Border and ink, no fill — the same outlined-chip idiom Events
+                uses for its flagship label, which reads on every shade in the
+                ramp without needing a per-card fill. */}
+            <span className="border border-navy-400 px-[12px] py-[5px] font-plex text-[11px] uppercase leading-none tracking-[1.54px] text-navy-200">
               {lead.role}
             </span>
           </div>
         </div>
 
         {lead.blurb && (
-          <p className="mt-5 md:mt-7 text-sm sm:text-base leading-relaxed text-white/85 max-w-[68ch]">
+          <p className="mt-[clamp(20px,2vw,28px)] max-w-[68ch] font-plex text-[clamp(13px,1vw,14px)] leading-[1.75] text-navy-200">
             {lead.blurb}
           </p>
         )}

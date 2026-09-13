@@ -216,7 +216,7 @@ export default function LeadStack({ leads }: Props) {
                   shadeRefs.current[i] = el
                 }}
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-2xl md:rounded-3xl bg-black"
+                className="pointer-events-none absolute inset-0 bg-black"
                 style={{ opacity: 0 }}
               />
             </div>

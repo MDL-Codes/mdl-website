@@ -42,28 +42,24 @@ export type Member = {
 }
 
 /**
- * Monochromatic navy ramp, derived from the site's base navy (#2B3455).
- * Cards cycle through it so no two neighbours share a shade.
- * All of these pass AA contrast with white text.
+ * Card backgrounds, straight off the palette in tailwind.config.js rather than
+ * a second set of navies invented here. Cards cycle through them so no two
+ * neighbours share a shade.
+ *
+ * These four, and not the lighter end of the ramp: the card's body copy is
+ * navy-200, and against navy-600 that is 4.1:1 — under AA. The three shades
+ * this replaced (#525DA0, #47528A, #39426E) were picked against white text and
+ * two of them fail the same way. All four below clear 6.6:1.
  */
 export const CARD_SHADES = {
-  ink: '#191F38',
-  slate: '#39426E',
-  deep: '#212949',
-  periwinkle: '#47528A',
-  base: '#2B3455',
-  lift: '#525DA0',
+  ink: '#12162B', // navy-950
+  deep: '#1B2140', // navy-900
+  slate: '#232B4D', // navy-800
+  base: '#2B3455', // navy
 } as const
 
 /** The order shades are handed out, so neighbouring cards always differ. */
-const RAMP = [
-  CARD_SHADES.ink,
-  CARD_SHADES.slate,
-  CARD_SHADES.deep,
-  CARD_SHADES.periwinkle,
-  CARD_SHADES.base,
-  CARD_SHADES.lift,
-]
+const RAMP = [CARD_SHADES.ink, CARD_SHADES.slate, CARD_SHADES.deep, CARD_SHADES.base]
 
 /**
  * The leads, in the order they appear on the page: presidents first, then

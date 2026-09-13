@@ -26,6 +26,8 @@ const MAX_SHADE = 0.28
 
 type Props = {
   leads: Lead[]
+  /** Subteam -> general members, rendered on that subteam's last lead card. */
+  members: Record<string, string[]>
 }
 
 /**
@@ -40,7 +42,7 @@ type Props = {
  * Transforms are written straight to the DOM rather than held in state —
  * scroll fires ~60x a second, and re-rendering every card that often stutters.
  */
-export default function LeadStack({ leads }: Props) {
+export default function LeadStack({ leads, members }: Props) {
   const wrapRefs = useRef<(HTMLDivElement | null)[]>([])
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const shadeRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -208,7 +210,12 @@ export default function LeadStack({ leads }: Props) {
                 willChange: stacked ? 'transform' : undefined,
               }}
             >
-              <LeadCard lead={lead} />
+              {/* Only the last lead of a subteam carries the members, so a
+                  two-lead subteam lists its people once rather than twice. */}
+              <LeadCard
+                lead={lead}
+                members={leads[i + 1]?.subteam === lead.subteam ? undefined : members[lead.subteam]}
+              />
 
               {/* Deepens the card as it slides behind the incoming one. */}
               <div

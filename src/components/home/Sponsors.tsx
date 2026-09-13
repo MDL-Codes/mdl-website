@@ -51,11 +51,11 @@ const TILE =
 const STAMP =
   'absolute left-[8px] top-[6px] font-plex text-[11px] leading-none tracking-[1.54px] uppercase text-navy-400'
 
-// Figma drew the tiles empty — the logos did not exist yet. They do now, so the
-// plate holds the logo on object-contain and the tier stamp stays in the
-// corner. The logos arrive at very different aspects (SolidWorks 876x200, Print
-// and Play square), which is exactly why the tile keeps its own drawn shape and
-// the logo fits inside it rather than the other way round.
+// Figma drew the tiles empty — the logos did not exist yet. They do now, so
+// the plate holds the logo and keeps the tier stamp in the corner. The logo is
+// object-contain inside the drawn plate, never the other way round: they arrive
+// at very different aspects (SolidWorks 876x200, Print and Play square) and the
+// plate's shape is the design.
 function Tile({ sponsor, className = '' }: { sponsor: Sponsor; className?: string }) {
   return (
     <div className={`relative ${TILE} ${className}`}>
@@ -74,27 +74,21 @@ function Tile({ sponsor, className = '' }: { sponsor: Sponsor; className?: strin
 }
 
 /**
- * Sponsors ranked by tier, then poured into the drawn slots: the big plate, the
- * two beside it, and the band underneath.
+ * Sponsors ranked by tier, then poured into the drawn slots.
  *
- * The slots are the design and they do not move — what changes is who lands in
- * them. Figma drew 1 gold / 2 silver / 4 bronze and the tier names were the
- * slot names; with five real tiers over six sponsors those two ideas have to
- * come apart. Rank decides position, `sponsor.tier` decides the stamp, so
- * GoEngineer takes the big plate as the top tier without the plate having to be
- * called "gold" any more.
+ * The slots do not move. Figma drew 1 gold / 2 silver / 4 bronze and the tier
+ * names doubled as the slot names; with five real tiers that has to come apart,
+ * so rank picks the slot and `sponsor.tier` prints the stamp. GoEngineer takes
+ * the lead plate as the top tier without the plate needing to be called "gold".
  */
 const RANKED = [...sponsors].sort((a, b) => TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier))
 const [LEAD, ...REST] = RANKED
 const FLANK = REST.slice(0, 2)
 const BAND = REST.slice(2)
 
-/**
- * The band is drawn as four tiles across. With fewer than four it takes that
- * many columns instead, so the row stays a packed block with a flush right edge
- * — Sanika's brief — rather than three tiles and a hole. Static strings because
- * Tailwind only ships classes it can see.
- */
+// The band is drawn four across; with fewer it takes that many columns so the
+// row stays flush right rather than ending in a hole. Static strings because
+// Tailwind only ships classes it can see in the source.
 const BAND_COLS: Record<number, string> = {
   1: 'min-[640px]:grid-cols-1',
   2: 'min-[640px]:grid-cols-2',
@@ -168,61 +162,42 @@ export default function Sponsors() {
             layout needs to reorder anything. */}
         <div className={`mt-[clamp(20px,2.57vw,37px)] flex flex-col ${GAP}`}>
           {/* Top block. Above 1024 it is Figma's 425 : 750 split as a ratio
-              rather than two pinned widths, so the lead plate stays the widest
-              tile at every width. Its aspect-ratio is what sets the row height;
-              the silver column is a grid item, so it stretches to that height
-              and its two 1fr rows split it.
-
-              750/340, not the drawn 750/406. The split is a ratio with no
-              ceiling, so the plate grows with the window — at 1440 it reached
-              802x434 and read as a white slab with more presence than the
-              section around it. Shortening it is what shrinks the block while
-              keeping it full-bleed to the gutters: a max-width would have left
-              a band of bare paper down the right, with the header still running
-              the full width above it. The silvers ride the change, landing a
-              little flatter than their drawn 425/191. */}
+              rather than two pinned widths, so gold stays the widest tile at
+              every width. Gold's aspect-ratio is what sets the row height; the
+              silver column is a grid item, so it stretches to that height and
+              its two 1fr rows land at (H - gap) / 2 = 191 at 1440 — exactly
+              Figma's silver height, derived rather than hardcoded. */}
           <div className={`grid ${GAP} min-[1024px]:grid-cols-[425fr_750fr]`}>
             <Tile
               sponsor={LEAD}
-              className="aspect-[750/340] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
+              className="aspect-[750/406] min-[1024px]:col-start-2 min-[1024px]:row-start-1"
             />
 
-            {/* aspect-[425/191] shapes each tile only while the rows are auto —
-                below 1024. From there the wrapper has a definite height off the
-                lead plate and the two 1fr rows are definite with it, so the
-                tiles drop the ratio and fill their rows.
-
-                They have to be told to. A grid item does stretch to its row by
-                default, but an aspect-ratio with a definite width beats the
-                stretch, so each tile held its drawn 425/191 inside a much taller
-                row and left ~90px of dead paper under itself — two ragged gaps
-                down the left column against an even 24 everywhere else. */}
+            {/* aspect-[425/191] governs each silver tile only while the rows are
+                auto — below 1024. Above it the wrapper has a definite height
+                from the row, the 1fr rows are definite too, and a stretched
+                grid item's definite height wins over aspect-ratio. That is why
+                the same class works at all three widths without a reset. */}
             <div
               className={`grid ${GAP} grid-cols-1 min-[640px]:grid-cols-2 min-[1024px]:col-start-1 min-[1024px]:row-start-1 min-[1024px]:grid-cols-1 min-[1024px]:grid-rows-2`}
             >
               {FLANK.map(sponsor => (
-                <Tile
-                  key={sponsor.name}
-                  sponsor={sponsor}
-                  className="aspect-[425/191] min-[1024px]:aspect-auto"
-                />
+                <Tile key={sponsor.name} sponsor={sponsor} className="aspect-[425/191]" />
               ))}
             </div>
           </div>
 
-          {/* Bronze. Fixed band depth rather than an aspect ratio: these are
-              one row of identical plates, and a band that holds its depth
-              across the row is what Figma's flat 120 was approximating. The
-              ceiling is 160 rather than that 120 — the block above it scales
-              with the viewport and has no ceiling at all, so a band that stopped
-              growing at 1440 read as a thin strip under it on a wide screen.
-              Two-up below 640, where a third of the width is under 90px. */}
+          {/* Bronze. Fixed band depth rather than an aspect ratio: the four are
+              one row of identical plates, and a band that stays the same depth
+              across the row is what Figma's flat 120 was approximating. Two-up
+              below 640, where a quarter-width tile is under 90px and the name
+              stops fitting. */}
           <div className={`grid grid-cols-2 ${GAP} ${BAND_COLS[Math.min(BAND.length, 4)] ?? ''}`}>
             {BAND.map(sponsor => (
               <Tile
                 key={sponsor.name}
                 sponsor={sponsor}
-                className="h-[clamp(72px,8.33vw,160px)]"
+                className="h-[clamp(72px,8.33vw,120px)]"
               />
             ))}
           </div>

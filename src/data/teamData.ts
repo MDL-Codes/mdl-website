@@ -92,9 +92,9 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Internal Management':
     'Internal Management is the team that looks after everyone else — running socials through the year and checking in with members across every subteam.',
   'CAD Technical':
-    'CAD Technical is the team that teaches the CAD. They run the workshops and write the learning materials, set the Designathon problem statements and technical requirements, and keep the 3D printers going through the event.',
+    'CAD Technical is the team that teaches people to model. They run the workshops and write the learning materials, set the Designathon problem statements and technical requirements, and keep the 3D printers going through the event.',
   'Creative Manager':
-    'The Creative Manager holds the visual direction of the league together, from brand and campaign concepts through to the look and feel of every event.',
+    'The Creative Manager holds the visual direction of MDL together, from brand and campaign concepts through to the look and feel of every event.',
   'Finance':
     'Finance is the team that pays for it all. They manage the league budget, track what each subteam spends across the season, and handle the reimbursements and funding applications that get events paid for on time.',
   'Graphics':
@@ -108,7 +108,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Software':
     'Software is the team that builds the tools. They maintain CADie, the league’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
   'Sponsorship':
-    'Sponsorship is the team that funds the thing. They connect with companies and secure the sponsors behind Designathon, build the package that goes out to employers, and organise the booths for the sponsorship fair and mini-industry night.',
+    'Sponsorship is the team that brings the money in. They connect with companies and secure the sponsors behind Designathon, build the package that goes out to employers, and organise the booths for the sponsorship fair and mini-industry night.',
 }
 
 const roster: Omit<Lead, 'bg' | 'blurb'>[] = [

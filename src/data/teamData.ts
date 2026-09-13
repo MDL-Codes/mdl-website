@@ -87,9 +87,8 @@ const RAMP = [
  * way down the stack. `leads` below hands each lead the entry for their team.
  */
 const SUBTEAM_BLURBS: Record<string, string> = {
-  // Blank until the presidents write theirs; LeadCard omits the paragraph
-  // entirely rather than leaving a gap where it would have been.
-  'MDL President': '',
+  'MDL President':
+    'The presidents are the ones running the show. This year they are taking MDL to new levels on three fronts: application-focused learning, helping engineering students learn by actually building projects; community design, making MDL the central hub of design at McMaster; and team infrastructure, opening up communication channels so every subteam gets a say.',
   'Internal Management':
     'Internal Management is the team that looks after everyone else — running socials through the year and checking in with members across every subteam.',
   'CAD Technical':

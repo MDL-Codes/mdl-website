@@ -63,17 +63,17 @@ const RAMP = [
  * here never leaves two identical shades touching.
  */
 const roster: Omit<Lead, 'bg'>[] = [
-  // ----------------------------------------------------------- executive ---
+  // ------------------------------------------------------------ president ---
   {
-    subteam: 'Executive',
+    subteam: 'MDL President',
     name: 'Tolu Agunbiade',
-    role: 'President',
+    role: 'Co-President',
     blurb: 'TODO: blurb',
   },
   {
-    subteam: 'Executive',
+    subteam: 'MDL President',
     name: 'Andy Duong',
-    role: 'President',
+    role: 'Co-President',
     blurb: 'TODO: blurb',
   },
 
@@ -247,7 +247,7 @@ export const members: Member[] = [
   { name: 'Meet Bhagat', subteam: 'CAD Technical' },
   { name: 'Hasib Tabassum', subteam: 'CAD Technical' },
   { name: 'Julia Di Liso', subteam: 'CAD Technical' },
-  { name: 'Owen', subteam: 'CAD Technical' }, // TODO: no last name in Notion
+  { name: 'Owen Loh', subteam: 'CAD Technical' },
   { name: 'Prem Nayak', subteam: 'CAD Technical' },
   { name: 'William Cheung', subteam: 'CAD Technical' },
   { name: 'Zach McKay', subteam: 'CAD Technical' },

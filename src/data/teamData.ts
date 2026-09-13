@@ -106,7 +106,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Operations':
     'Operations is the team that runs the day. They plan the logistics and coordinate everything on site, keeping the whole event moving from doors open to final judging.',
   'Software':
-    'Software is the team that builds the tools. They maintain CADie, MDL’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
+    'Software is the team that builds the tools. They maintain CADie, MDL’s Discord bot, in Python, this website in React and Tailwind on Vercel, and everything else MDL runs on.',
   'Sponsorship':
     'Sponsorship is the team that brings the money in. They connect with companies and secure the sponsors behind Designathon, build the package that goes out to employers, and organise the booths for the sponsorship fair and mini-industry night.',
 }

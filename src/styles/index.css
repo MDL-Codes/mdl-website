@@ -311,3 +311,46 @@ body {
 .page-fade {
   animation: fadeIn 280ms ease-out;
 }
+
+/* Team page member tickers — one row per subteam, names rolling sideways.
+   The track holds the names twice and travels exactly -50%, so the second copy
+   lands where the first began and the loop has no seam. Duration is set inline
+   per row, from how many names it has. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Pause under the pointer so a name can actually be read. Guarded, so it never
+   sticks on touch. */
+@media (hover: hover) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Degrade to the plain wrapped list it would otherwise have been: no motion, no
+   duplicate, and the fades come off since nothing runs past an edge. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .marquee-dupe,
+  .marquee-fade {
+    display: none;
+  }
+}

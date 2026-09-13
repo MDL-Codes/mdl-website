@@ -1,4 +1,5 @@
 import BackToTop from '../components/BackToTop'
+import MemberTicker from '../components/MemberTicker'
 import LeadStack from '../components/LeadStack'
 import PageShell from '../components/PageShell'
 import { leads, members } from '../data/teamData'
@@ -24,22 +25,12 @@ export default function Team() {
     >
       <LeadStack leads={leads} />
 
-      {/* The reduce above always grouped by subteam; the old markup then threw the
-          grouping away and printed one flat "name (subteam)" line per member. */}
-      <div className="mt-[clamp(48px,5vw,80px)] grid grid-cols-1 gap-[clamp(28px,3vw,44px)] min-[640px]:grid-cols-2 min-[1024px]:grid-cols-3">
-        {Object.entries(grouped).map(([subteam, names]) => (
-          <section key={subteam}>
-            <h2 className="border-b border-navy-600 pb-[10px] font-plex text-[11px] font-semibold uppercase leading-none tracking-[1.54px] text-white">
-              {subteam}
-            </h2>
-            <ul className="mt-[14px] flex flex-col gap-[6px]">
-              {names.map(name => (
-                <li key={name} className="font-plex text-[13px] leading-[1.7] text-navy-200">
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </section>
+      {/* One ticker row per subteam. The reduce above already groups them; the
+          old markup printed those groups as a static three-column list, which
+          was the only part of this page that did not move. */}
+      <div className="mt-[clamp(48px,5vw,80px)] flex flex-col">
+        {Object.entries(grouped).map(([subteam, names], i) => (
+          <MemberTicker key={subteam} subteam={subteam} names={names} reverse={i % 2 === 1} />
         ))}
       </div>
 

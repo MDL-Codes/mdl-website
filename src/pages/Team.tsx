@@ -17,7 +17,7 @@ export default function Team() {
       title="MDL Executive Team"
       /* Counted off the data rather than written down, so the masthead cannot
          go stale the next time someone joins or leaves. The member count is the
-         whole league, leads included — `members` is only everyone who is not a
+         whole of MDL, leads included — `members` is only everyone who is not a
          lead, which would read as though the club were 38 people. */
       meta={`${leads.length} leads · ${leads.length + members.length} members`}
       intro="The leads who plan the Designathon, teach the workshops, and chase the sponsors that pay for it — and the members on every subteam behind them."

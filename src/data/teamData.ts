@@ -96,7 +96,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Creative Manager':
     'The Creative Manager holds the visual direction of MDL together, from brand and campaign concepts through to the look and feel of every event.',
   'Finance':
-    'Finance is the team that pays for it all. They manage the league budget, track what each subteam spends across the season, and handle the reimbursements and funding applications that get events paid for on time.',
+    'Finance is the team that pays for it all. They manage the MDL budget, track what each subteam spends across the season, and handle the reimbursements and funding applications that get events paid for on time.',
   'Graphics':
     'Graphics is the team that draws everything you see — posters, banners and digital assets for every campaign, plus the sponsorship packages and the merch, shirts and stickers included.',
   'Marketing':
@@ -106,7 +106,7 @@ const SUBTEAM_BLURBS: Record<string, string> = {
   'Operations':
     'Operations is the team that runs the day. They plan the logistics and coordinate everything on site, build the sign-in, sign-up and judging forms, and keep participant and team information straight so the event actually moves.',
   'Software':
-    'Software is the team that builds the tools. They maintain CADie, the league’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
+    'Software is the team that builds the tools. They maintain CADie, MDL’s Discord bot, in Python, and this website in React and Tailwind on Vercel, plus whatever else MDL runs on.',
   'Sponsorship':
     'Sponsorship is the team that brings the money in. They connect with companies and secure the sponsors behind Designathon, build the package that goes out to employers, and organise the booths for the sponsorship fair and mini-industry night.',
 }

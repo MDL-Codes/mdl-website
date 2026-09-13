@@ -49,12 +49,11 @@ const PAD = 'px-[clamp(18px,1.94vw,28px)]'
 // next to a 30px Bold title, so this is 12 SemiBold. Sanika's call, not the node's.
 const LABEL = 'font-plex text-[12px] font-semibold leading-none tracking-[1.54px] uppercase'
 
-// Figma's placeholder copy, kept as placeholder. Two variants: the flagship card
-// carries the long one, the two behind it the short one.
-const LONG =
-  'This is a placeholder paragraph of some text that will eventually describe the event. It will have details like the purpose, date, location, and any other information that might be appealing for potential attendees.'
-const SHORT =
-  'This is a placeholder paragraph of some text that will eventually describe the event. It will have more details that might be appealing to potential attendees.'
+// The Designathon's own blurb. Figma's two placeholder paragraphs are gone: the
+// other two cards read their copy from eventsData like the Events page does, and
+// this card is the only one whose event is not in that file.
+const DESIGNATHON_BLURB =
+  'A weekend-long competition where you take on real design problems with CAD and 3D printing — generating solutions, building prototypes and presenting to judges, all in 36 hours. Grow your portfolio, meet industry partners, and build alongside students from across Ontario.'
 
 type CardProps = {
   item: number
@@ -66,7 +65,7 @@ type CardProps = {
 }
 
 // ponytail: one card with a `flagship` flag, not two components. The flagship
-// differs by three things — a redline top bar, a redline label with a waitlist
+// differs by three things — a redline top bar, a redline label with a details
 // chip, and a larger title — and every other measure is shared. Two files' worth
 // of near-duplicate JSX to avoid one boolean is the worse trade.
 function EventCard({ item, title, date, description, photo, flagship }: CardProps) {
@@ -111,13 +110,15 @@ function EventCard({ item, title, date, description, photo, flagship }: CardProp
 
           {/* Figma draws this as a bare outlined box; it is the only interactive
               thing on the card, so it is a real link. Hover inverts to the same
-              redline plate rather than introducing a fourth ink. */}
+              redline plate rather than introducing a fourth ink. It reads
+              "details" rather than "waitlist": there is no waitlist behind it,
+              and it goes to /designathon, which is where the details are. */}
           {flagship && (
             <Link
               to="/designathon"
               className={`${LABEL} border border-redline px-[12px] py-[4px] text-redline transition-colors duration-200 [@media(hover:hover)]:hover:bg-redline [@media(hover:hover)]:hover:text-paper`}
             >
-              waitlist &rarr;
+              details &rarr;
             </Link>
           )}
         </div>
@@ -157,12 +158,13 @@ function EventCard({ item, title, date, description, photo, flagship }: CardProp
 
 // Figma's card_2 and card_3 are eventsData[1] and [2] by title. The flagship is
 // not in that file — it is the Designathon, which no other page lists — so it
-// stays a local literal. Its date is the one real date in the section; the other
-// two cards show Figma's MM DD, YY • LOCATION placeholder, as drawn.
+// stays a local literal. It keeps a venue in its date line because it has one;
+// the other two now show their real dates from eventsData, with no venue, rather
+// than Figma's MM DD, YY • LOCATION placeholder.
 const FLAGSHIP = {
   title: 'Designathon 2027',
   date: 'JAN 16, 17 • PGCLL',
-  description: LONG,
+  description: DESIGNATHON_BLURB,
   photo: events[0].photo,
 }
 
@@ -203,8 +205,8 @@ export default function Events() {
               item={i + 2}
               title={event.title}
               photo={event.photo}
-              date="MM DD, YY • LOCATION"
-              description={SHORT}
+              date={event.date}
+              description={event.description}
             />
           ))}
         </div>

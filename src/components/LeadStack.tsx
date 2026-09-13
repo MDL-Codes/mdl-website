@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import LeadCard from './LeadCard'
+import MemberTicker from './MemberTicker'
 import SubteamIndex from './SubteamIndex'
 import type { Lead } from '../data/teamData'
 
@@ -210,12 +211,17 @@ export default function LeadStack({ leads, members }: Props) {
                 willChange: stacked ? 'transform' : undefined,
               }}
             >
-              {/* Only the last lead of a subteam carries the members, so a
-                  two-lead subteam lists its people once rather than twice. */}
-              <LeadCard
-                lead={lead}
-                members={leads[i + 1]?.subteam === lead.subteam ? undefined : members[lead.subteam]}
-              />
+              <LeadCard lead={lead} />
+
+              {/* The subteam's members, under the card rather than in it, and
+                  only on the subteam's last lead so a two-lead subteam lists
+                  its people once. Inside this div, so it pins, scales and gets
+                  covered along with the card it belongs to. */}
+              {leads[i + 1]?.subteam !== lead.subteam && members[lead.subteam]?.length > 0 && (
+                <div className="mt-[clamp(12px,1.2vw,18px)]">
+                  <MemberTicker names={members[lead.subteam]} />
+                </div>
+              )}
 
               {/* Deepens the card as it slides behind the incoming one. */}
               <div

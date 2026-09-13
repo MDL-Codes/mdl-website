@@ -1,15 +1,9 @@
 import { memo, useState } from 'react'
-import MemberTicker from './MemberTicker'
 import type { Lead } from '../data/teamData'
 import { initials } from '../data/teamData'
 
 type Props = {
   lead: Lead
-  /**
-   * The subteam's general members, set only on the last lead of each subteam so
-   * a two-lead subteam lists its people once, under the second card.
-   */
-  members?: string[]
 }
 
 /**
@@ -28,7 +22,7 @@ type Props = {
  *
  * Backgrounds are opaque so the cards read as solid layers when they stack.
  */
-function LeadCard({ lead, members }: Props) {
+function LeadCard({ lead }: Props) {
   // Flips to false if the photo file is missing, so a lead with no headshot
   // yet falls back to initials instead of showing a broken image.
   const [photoOk, setPhotoOk] = useState(Boolean(lead.photo))
@@ -89,12 +83,6 @@ function LeadCard({ lead, members }: Props) {
           <p className="mt-[clamp(20px,2vw,28px)] max-w-[68ch] font-plex text-[clamp(13px,1vw,14px)] leading-[1.75] text-navy-200">
             {lead.blurb}
           </p>
-        )}
-
-        {members && members.length > 0 && (
-          <div className="mt-[clamp(20px,2vw,28px)] border-t border-navy-400/60 pt-[clamp(14px,1.4vw,20px)]">
-            <MemberTicker names={members} fade={lead.bg} />
-          </div>
         )}
       </div>
     </article>

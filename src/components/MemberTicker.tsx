@@ -1,20 +1,17 @@
 type Props = {
   names: string[]
-  /**
-   * The surface behind the ticker, as a colour value. The edge fades have to be
-   * painted in it, and this sits on a lead card, whose background is a different
-   * shade of the ramp on every card.
-   */
-  fade: string
 }
 
 /**
- * A subteam's general members, rolling sideways along the foot of their
- * subteam's last lead card.
+ * A subteam's general members, rolling sideways under their subteam's last
+ * lead card.
  *
- * They used to be a static three-column list under the whole stack, which put
- * every subteam's people in one block a long way from the cards they belong to.
- * On the card, a name is next to the lead who runs that subteam.
+ * Under the card and not inside it: on the card's own fill the strip read as
+ * more card, another row of the same panel. Out on the page ground, below the
+ * border, it is plainly a separate thing that belongs to the card above it.
+ *
+ * It still travels with that card — it sits inside the sticky wrapper, so it
+ * pins, scales and gets covered along with it.
  *
  * Every row runs the same way. Alternating them looked livelier in principle
  * and was hard to read in practice — with rows going two directions there is no
@@ -28,7 +25,7 @@ type Props = {
  * Under prefers-reduced-motion the track stops, wraps and drops its duplicate —
  * see `.marquee-track` in index.css — so it degrades to a plain wrapped list.
  */
-export default function MemberTicker({ names, fade }: Props) {
+export default function MemberTicker({ names }: Props) {
   // ~6s per name, floored so a short subteam still crawls rather than darts.
   const seconds = Math.max(24, names.length * 6)
 
@@ -63,16 +60,14 @@ export default function MemberTicker({ names, fade }: Props) {
         </div>
 
         {/* Names run to the container's edge otherwise, which reads as clipped
-            rather than continuing. Painted in the card's own shade. */}
+            rather than continuing. navy-900 is the page ground. */}
         <span
           aria-hidden
-          style={{ backgroundImage: `linear-gradient(to right, ${fade}, transparent)` }}
-          className="marquee-fade pointer-events-none absolute inset-y-0 left-0 w-[clamp(14px,1.6vw,24px)]"
+          className="marquee-fade pointer-events-none absolute inset-y-0 left-0 w-[clamp(14px,1.6vw,24px)] bg-gradient-to-r from-navy-900 to-transparent"
         />
         <span
           aria-hidden
-          style={{ backgroundImage: `linear-gradient(to left, ${fade}, transparent)` }}
-          className="marquee-fade pointer-events-none absolute inset-y-0 right-0 w-[clamp(14px,1.6vw,24px)]"
+          className="marquee-fade pointer-events-none absolute inset-y-0 right-0 w-[clamp(14px,1.6vw,24px)] bg-gradient-to-l from-navy-900 to-transparent"
         />
       </div>
     </div>

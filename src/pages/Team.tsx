@@ -13,9 +13,12 @@ export default function Team() {
 
   return (
     <PageShell
-      eyebrow="who we are"
-      title="Our Team"
-      intro="The students who run the league — leads, and the subteams behind every event."
+      eyebrow="the roster"
+      title="Who Runs MDL"
+      /* Counted off the data rather than written down, so the masthead cannot
+         go stale the next time someone joins or leaves. */
+      meta={`${leads.length} leads · ${members.length} members`}
+      intro="The people writing Designathon problem statements, teaching the CAD workshops, chasing sponsors, and shooting the recap videos — across every subteam in the league."
     >
       <LeadStack leads={leads} />
 

@@ -1,11 +1,3 @@
-import { useEffect, useRef } from 'react'
-
-/**
- * Bar height, in px. LeadStack pins its cards below this, so the two numbers
- * have to agree — hence the export rather than a duplicated literal.
- */
-export const INDEX_H = 48
-
 type Group = {
   subteam: string
   /** Index into `leads` of the first lead on this subteam. */
@@ -14,86 +6,66 @@ type Group = {
 
 type Props = {
   groups: Group[]
-  /** Index of the lead currently pinned, so the matching chip can light up. */
+  /** Index of the lead currently pinned, so the matching row can light up. */
   active: number
+  /** Sticky offset, shared with the cards so the rail and the pin line agree. */
+  top: number
   onJump: (index: number) => void
 }
 
 /**
- * The subteam index: a sticky strip of chips above the lead stack.
+ * The subteam index: a drawing index for the lead stack.
  *
  * The stack is 21 cards deep, so without this the only way to find out who is
- * on Sponsorship is to scroll past everyone else. The strip doubles as a table
- * of contents — every subteam is legible before you scroll at all — and as a
- * position readout, since the chip for whichever card is pinned stays lit.
+ * on Sponsorship is to scroll past everyone else. All eleven subteams are
+ * listed at once and stay listed — it is a contents page, a set of jump
+ * targets, and a position readout, since the row for whichever card is pinned
+ * keeps its redline tick.
  *
- * It sticks to the very top of the viewport because Layout's nav is in normal
- * flow and has already scrolled away by the time the stack starts.
+ * From 1024 it pins in its own column beside the cards, which is the whole
+ * point: eleven rows fit vertically with room to spare, so nothing is ever
+ * hidden off an edge. Below that it wraps into rows above the stack, still
+ * showing every subteam, still not scrolling sideways.
  */
-export default function SubteamIndex({ groups, active, onJump }: Props) {
-  const railRef = useRef<HTMLDivElement | null>(null)
-  const chipRefs = useRef<(HTMLButtonElement | null)[]>([])
-
+export default function SubteamIndex({ groups, active, top, onJump }: Props) {
   // Which group owns the pinned card: the last one that starts at or before it.
   let current = 0
   groups.forEach((group, i) => {
     if (group.index <= active) current = i
   })
 
-  // Keep the lit chip in view. Only ~3 fit on a phone, so without this the
-  // readout is useless exactly where the page is longest.
-  useEffect(() => {
-    const rail = railRef.current
-    const chip = chipRefs.current[current]
-    if (!rail || !chip) return
-
-    // Horizontal only — never scrollIntoView, which would also move the page.
-    rail.scrollTo({
-      left: chip.offsetLeft - rail.clientWidth / 2 + chip.clientWidth / 2,
-      behavior: 'smooth',
-    })
-  }, [current])
-
   return (
     <nav
       aria-label="Subteams"
-      className="sticky top-0 z-10 border-b border-navy-600 bg-navy-900"
-      style={{ height: INDEX_H }}
+      className="min-[1024px]:sticky min-[1024px]:self-start"
+      style={{ top }}
     >
-      {/* Eleven subteams do not fit the 1180px column, so the rail scrolls.
-          The fade is the only thing telling you there is more to the right —
-          the scrollbar itself is hidden. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[40px] bg-gradient-to-l from-navy-900 to-transparent"
-      />
+      <p className="font-plex text-[11px] uppercase leading-none tracking-[2.42px] text-navy-400">
+        subteams
+      </p>
 
-      <div
-        ref={railRef}
-        className="flex h-full items-center gap-[8px] overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
+      {/* Wrapped rows below 1024, one column from there. */}
+      <ul className="mt-[14px] flex flex-wrap gap-x-[6px] gap-y-[4px] min-[1024px]:flex-col min-[1024px]:flex-nowrap min-[1024px]:gap-0">
         {groups.map((group, i) => {
           const lit = i === current
           return (
-            <button
-              key={group.subteam}
-              ref={el => {
-                chipRefs.current[i] = el
-              }}
-              type="button"
-              onClick={() => onJump(group.index)}
-              aria-current={lit ? 'true' : undefined}
-              className={`shrink-0 border px-[12px] py-[6px] font-plex text-[11px] uppercase leading-none tracking-[1.54px] transition-colors duration-150 ${
-                lit
-                  ? 'border-navy-200 bg-navy-800 text-white'
-                  : 'border-navy-600 text-navy-200 [@media(hover:hover)]:hover:border-navy-400 [@media(hover:hover)]:hover:text-white'
-              }`}
-            >
-              {group.subteam}
-            </button>
+            <li key={group.subteam} className="min-[1024px]:w-full">
+              <button
+                type="button"
+                onClick={() => onJump(group.index)}
+                aria-current={lit ? 'true' : undefined}
+                className={`w-full whitespace-nowrap border-l-2 py-[7px] pl-[10px] pr-[10px] text-left font-plex text-[11px] uppercase leading-none tracking-[1.54px] transition-colors duration-150 ${
+                  lit
+                    ? 'border-redline text-white'
+                    : 'border-navy-600 text-navy-200 [@media(hover:hover)]:hover:border-navy-400 [@media(hover:hover)]:hover:text-white'
+                }`}
+              >
+                {group.subteam}
+              </button>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </nav>
   )
 }

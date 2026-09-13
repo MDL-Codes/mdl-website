@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import LeadCard from './LeadCard'
-import SubteamIndex, { INDEX_H } from './SubteamIndex'
+import SubteamIndex from './SubteamIndex'
 import type { Lead } from '../data/teamData'
 
 /**
- * Where a card pins, and what the subteam jumps aim for.
+ * Where a card pins, where the subteam rail pins, and what the jumps aim for.
  *
  * Layout's nav is in normal flow, not sticky, so it has scrolled away long
- * before the stack starts and there is nothing there to clear. The only thing
- * a pinned card sits under is the subteam index — plus a little air.
+ * before the stack starts and there is nothing above to clear. This is just
+ * breathing room against the top of the viewport.
  */
-const STICKY_TOP = INDEX_H + 16
+const STICKY_TOP = 32
 /**
  * Scroll distance between one card pinning and the next one covering it.
  * With 21 leads this is what controls how long the whole section feels —
@@ -34,8 +34,8 @@ type Props = {
  * from below and covers it, the one behind scales to 90% and lifts slightly.
  *
  * Falls back to a plain vertical list on narrow screens and whenever the
- * visitor has asked for reduced motion. The subteam index rides above it in
- * both modes — it is navigation, not decoration, so it does not get dropped.
+ * visitor has asked for reduced motion. The subteam index stays in both modes —
+ * it is navigation, not decoration, so it does not get dropped.
  *
  * Transforms are written straight to the DOM rather than held in state —
  * scroll fires ~60x a second, and re-rendering every card that often stutters.
@@ -169,14 +169,21 @@ export default function LeadStack({ leads }: Props) {
   }
 
   return (
-    <div className="relative">
-      <SubteamIndex groups={groups} active={active} onJump={jumpTo} />
+    // From 1024 the rail gets its own column and pins there; `items-start` is
+    // what lets it, since a stretched grid item has no room to stick in.
+    //
+    // The rail track is `auto`, not a fixed width: at 11px on 1.54px tracking
+    // "INTERNAL MANAGEMENT" measures ~177px, so any round number to hand sits
+    // within a pixel or two of wrapping. Sizing to content means a renamed
+    // subteam cannot quietly break the column.
+    <div className="relative min-[1024px]:grid min-[1024px]:grid-cols-[auto_minmax(0,1fr)] min-[1024px]:items-start min-[1024px]:gap-[clamp(32px,4vw,64px)]">
+      <SubteamIndex groups={groups} active={active} top={STICKY_TOP} onJump={jumpTo} />
 
       {/* `isolate` keeps the cards' z-indices in their own stacking context, so
-          card 21 cannot paint over the index bar sitting above it. */}
+          no card can paint over anything outside the stack. */}
       <div
         ref={listRef}
-        className="relative isolate mt-[24px] flex flex-col"
+        className="relative isolate mt-[32px] flex flex-col min-[1024px]:mt-0"
         style={{ gap: stacked ? STEP : '1.5rem' }}
       >
         {leads.map((lead, i) => (

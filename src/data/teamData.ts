@@ -1,8 +1,8 @@
 /**
  * MDL 2026 roster.
  *
- * Lead names come from the Discord "Team Leads" role list.
- * Subteams come from MDL Internal Teamspace > Databases > People.
+ * Lead names and subteams come from the Notion "Team Leads" table.
+ * General members come from MDL Internal Teamspace > Databases > People.
  * Subteam descriptions are transcribed from the Instagram subteam posts.
  *
  * Anything marked TODO still needs confirming before this goes live.
@@ -51,36 +51,50 @@ const RAMP = [
 ]
 
 /**
- * The leads, in the order they appear on the page. Co-leads of the same
+ * The leads, in the order they appear on the page: presidents first, then
+ * internal management, then the subteams alphabetically. Co-leads of the same
  * subteam sit next to each other.
+ *
+ * Names, and the subteam each person belongs to, come from the Teams column of
+ * the Notion "Team Leads" table (21 rows). Presidents and internal managers
+ * carry no team there, so those two groupings are ours.
  *
  * `bg` is filled in automatically below, so adding or reordering someone
  * here never leaves two identical shades touching.
  */
 const roster: Omit<Lead, 'bg'>[] = [
-  // ---------------------------------------------------------------- exec ---
-  // TODO: these three are in the Discord lead list but have no team in
-  // Notion. Ask Kylie for their real titles.
+  // ----------------------------------------------------------- executive ---
   {
-    subteam: 'Management',
+    subteam: 'Executive',
+    name: 'Tolu Agunbiade',
+    role: 'President',
+    blurb: 'TODO: blurb',
+  },
+  {
+    subteam: 'Executive',
+    name: 'Andy Duong',
+    role: 'President',
+    blurb: 'TODO: blurb',
+  },
+
+  // ------------------------------------------------- internal management ---
+  {
+    subteam: 'Internal Management',
     name: 'Kai Qin',
-    role: 'Internal Management',
-    blurb:
-      'need to find out role',
+    role: 'Internal Manager',
+    blurb: 'TODO: blurb',
   },
   {
-    subteam: 'Sponsorship',
-    name: 'Michelle Nishidera',
-    role: 'Sponsorship Lead',
-    blurb:
-      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
+    subteam: 'Internal Management',
+    name: "Regan O'Connor",
+    role: 'Internal Manager',
+    blurb: 'TODO: blurb',
   },
   {
-    subteam: 'Sponsorship',
-    name: 'Aarudra Ramanan',
-    role: 'Sponsorship Lead',
-    blurb:
-      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
+    subteam: 'Internal Management',
+    name: 'Saloni Patel',
+    role: 'Internal Manager',
+    blurb: 'TODO: blurb',
   },
 
   // ------------------------------------------------------- cad technical ---
@@ -94,29 +108,37 @@ const roster: Omit<Lead, 'bg'>[] = [
   {
     subteam: 'CAD Technical',
     name: 'Nila Natkunendiraan',
-    role: 'Technical Lead',
+    role: 'CAD Technical Lead',
     blurb:
       'Develop and deliver CAD workshops for participants. Create supplementary learning materials, including sample models/references. Lead the development of Designathon problem statements and technical requirements. Support and manage 3D printing operations during events.',
   },
 
-  // ------------------------------------------------------------ software ---
+  // ------------------------------------------------------ creative ---
   {
-    subteam: 'Software',
-    name: 'Kylie Gun',
-    role: 'Software Lead',
-    blurb:
-      'Develop and maintain CADie on Discord using Python. Improve and maintain the MDL website using React, JavaScript, Tailwind, and Vercel. Support and troubleshoot software-related tools and systems used by the team.',
-  },
-
-  // ------------------------------------------------------------ graphics ---
-  // ------------------------------------------------------------ creative ---
-  {
-    subteam: 'Graphics',
+    subteam: 'Creative Manager',
     name: 'Alina Zeng',
     role: 'Creative Manager',
     blurb:
       'Holds the visual direction of the league together, from brand and campaign concepts through to the look and feel of every event.',
   },
+
+  // ------------------------------------------------------------- finance ---
+  {
+    subteam: 'Finance',
+    name: 'Gokul Radheepan',
+    role: 'Finance Lead',
+    blurb:
+      'Manages the league budget and tracks what each subteam spends across the season.',
+  },
+  {
+    subteam: 'Finance',
+    name: 'Oliver Nell',
+    role: 'Finance Lead',
+    blurb:
+      'Handles reimbursements and funding applications so events get paid for on time.',
+  },
+
+  // ------------------------------------------------------------ graphics ---
   {
     subteam: 'Graphics',
     name: 'Jessica Wang',
@@ -130,22 +152,6 @@ const roster: Omit<Lead, 'bg'>[] = [
     role: 'Graphics Lead',
     blurb:
       'Design marketing and promotional materials, including posters, banners, and digital assets. Drive creation of event graphics such as sponsorship packages and merchandise (shirts, stickers, etc.)! Conceptualize and produce visuals aligned with campaign and event needs.',
-  },
-
-  // --------------------------------------------------------------- media ---
-  {
-    subteam: 'Media',
-    name: 'Minaya Karunarathne',
-    role: 'Media Lead',
-    blurb:
-      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
-  },
-  {
-    subteam: 'Media',
-    name: 'Ronit Patel',
-    role: 'Media Lead',
-    blurb:
-      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
   },
 
   // ----------------------------------------------------------- marketing ---
@@ -164,6 +170,22 @@ const roster: Omit<Lead, 'bg'>[] = [
       'Develop and execute marketing campaigns to increase brand awareness and student engagement. Respond to inquiries and manage community communications across platforms. Brainstorm and film fun new reels!',
   },
 
+  // --------------------------------------------------------------- media ---
+  {
+    subteam: 'Media',
+    name: 'Minaya Karunarathne',
+    role: 'Media Lead',
+    blurb:
+      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
+  },
+  {
+    subteam: 'Media',
+    name: 'Ronit Patel',
+    role: 'Media Lead',
+    blurb:
+      'Capture and produce photo and video content through videography, photography, and editing. Create recap videos for workshops and designathons. Edit and refine visual content for work and storytelling purposes.',
+  },
+
   // ---------------------------------------------------------- operations ---
   {
     subteam: 'Operations',
@@ -180,39 +202,29 @@ const roster: Omit<Lead, 'bg'>[] = [
       'Own event logistics by planning and coordinating day-of execution. Create and manage event forms such as sign-in, sign-up, and judging materials. Collect, structure, and manage participant and team information to ensure successful event flow.',
   },
 
-  // ------------------------------------------------------------- finance ---
+  // ------------------------------------------------------------ software ---
   {
-    subteam: 'Finance',
-    // TODO: Discord name is "Goku!" — confirm this is Gokul Radheepan.
-    name: 'Gokul Radheepan',
-    role: 'Finance Lead',
+    subteam: 'Software',
+    name: 'Kylie Gun',
+    role: 'Software Lead',
     blurb:
-      'Manages the league budget and tracks what each subteam spends across the season.',
-  },
-  {
-    subteam: 'Finance',
-    name: 'Oliver Nell',
-    role: 'Finance Lead',
-    blurb:
-      'Handles reimbursements and funding applications so events get paid for on time.',
+      'Develop and maintain CADie on Discord using Python. Improve and maintain the MDL website using React, JavaScript, Tailwind, and Vercel. Support and troubleshoot software-related tools and systems used by the team.',
   },
 
   // --------------------------------------------------------- sponsorship ---
-  // TODO: neither of these has a team in Notion. Sponsorship is the only
-  // subteam with nobody assigned, so they're probably here — confirm.
   {
     subteam: 'Sponsorship',
-    name: "Regan O'Connor",
-    role: 'TODO: confirm subteam and title',
+    name: 'Aarudra Ramanan',
+    role: 'Sponsorship Lead',
     blurb:
-      'Connects with companies and secures the sponsors that fund and elevate Designathon.',
+      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
   },
   {
     subteam: 'Sponsorship',
-    name: 'Saloni Patel',
-    role: 'TODO: confirm subteam and title',
+    name: 'Michelle Nishidera',
+    role: 'Sponsorship Lead',
     blurb:
-      'Builds the sponsorship package for potential employers and organizes booths for the sponsorship fair and mini-industry night.',
+      'Responsible for connecting with companies and securing sponsors to help fund and elevate the experience of Designathon, build the sponsorship package for potential employers, provide sponsors with necessary information and resources they need on the day of Designathon, and organize booths for the sponsorship fair and mini-industry night during Designathon.',
   },
 ]
 
@@ -222,22 +234,23 @@ export const leads: Lead[] = roster.map((lead, i) => ({
 }))
 
 /**
- * General members, from the Notion People table minus anyone above.
- *
- * TODO: the Notion table says 59 people and only ~46 were visible in the
- * screenshots, so Sponsorship members and part of Software are missing.
- * Open the People database, group by Teams, and fill in the gaps.
+ * General members, from the Notion People table minus the leads above.
+ * Names are First Name + Last Name; the subteam is the Teams column, which is
+ * not the Program column — several people study Management or Software and
+ * sit on a different subteam entirely.
  */
 export const members: Member[] = [
   { name: 'Aliya Sourivong', subteam: 'CAD Technical' },
   { name: 'Ava Walker', subteam: 'CAD Technical' },
+  // Notion's First Name cell reads "Bhagat"; the Person title reads "Meet
+  // Bhagat", which is what we use. Worth fixing at the source.
   { name: 'Meet Bhagat', subteam: 'CAD Technical' },
-  { name: 'Hasib M Tabassum', subteam: 'CAD Technical' },
+  { name: 'Hasib Tabassum', subteam: 'CAD Technical' },
   { name: 'Julia Di Liso', subteam: 'CAD Technical' },
-  { name: 'Owen', subteam: 'CAD Technical' }, // TODO: last name missing in Notion
+  { name: 'Owen', subteam: 'CAD Technical' }, // TODO: no last name in Notion
   { name: 'Prem Nayak', subteam: 'CAD Technical' },
   { name: 'William Cheung', subteam: 'CAD Technical' },
-  { name: 'Zachary McKay', subteam: 'CAD Technical' },
+  { name: 'Zach McKay', subteam: 'CAD Technical' },
 
   { name: 'Attiya Zaheer', subteam: 'Graphics' },
   { name: 'Elizabeth Wu', subteam: 'Graphics' },
@@ -266,6 +279,13 @@ export const members: Member[] = [
   { name: 'Wendy Zheng', subteam: 'Operations' },
 
   { name: 'Nabiha Sartaj', subteam: 'Software' },
+  { name: 'Sanika Surose', subteam: 'Software' },
+  { name: 'Taniya Jeevanayagam', subteam: 'Software' },
+
+  { name: 'Emily Robillard', subteam: 'Sponsorship' },
+  { name: 'Kisha Rawal', subteam: 'Sponsorship' },
+  { name: 'Reema Poonawalla', subteam: 'Sponsorship' },
+  { name: 'Tristan Chan', subteam: 'Sponsorship' },
 ]
 
 /** "Avril Wang" -> "AW". Used on cards with no headshot yet. */

@@ -11,11 +11,11 @@ export type EventItem = {
 
 export const events: EventItem[] = [
   {
-    title: 'Clubfest Booth',
-    // TODO: confirm the date off the Instagram announcement.
-    date: 'Fall 2026',
+    title: 'MDL @ Club Fest',
+    date: 'September 14, 2026',
     description:
-      'Come find our booth at Clubfest and meet the team. We will be there to talk about what MDL runs through the year — the workshops, the Designathon, and how to get involved — and to answer whatever you want to ask.',
+      'Find us on the JHE field at table #9, 4:30 to 7:30 PM. Come say hello, ask about the workshops and the Designathon, and find out how to get on a subteam.',
+    // TODO: swap in the Club Fest poster.
     photo: events1,
   },
   {

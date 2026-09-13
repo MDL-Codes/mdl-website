@@ -70,7 +70,22 @@ export const galleryGroups: GalleryGroup[] = [
   },
 ]
 
-/** Flat, in group order — what the grid renders. */
-export const galleryPhotos = galleryGroups.flatMap(group =>
-  group.photos.map(src => ({ src, alt: group.event }))
-)
+/**
+ * Flat, and dealt round-robin rather than group by group — what the grid
+ * renders.
+ *
+ * In group order the page read as four solid blocks: nine near-identical
+ * Welcome Week shots, then two workshop ones, and so on. Taking one photo from
+ * each event in turn mixes them so the grid looks like an archive instead of
+ * four contact sheets stacked up.
+ *
+ * Deterministic, not shuffled: a random order would deal a different grid on
+ * every render, and nobody could point at a photo and find it again.
+ */
+export const galleryPhotos = Array.from(
+  { length: Math.max(...galleryGroups.map(g => g.photos.length)) },
+  (_, round) =>
+    galleryGroups
+      .filter(group => group.photos.length > round)
+      .map(group => ({ src: group.photos[round], alt: group.event }))
+).flat()

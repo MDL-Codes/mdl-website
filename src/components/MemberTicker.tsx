@@ -1,8 +1,6 @@
 type Props = {
   subteam: string
   names: string[]
-  /** Every other row runs the other way, so the block reads as weave, not drift. */
-  reverse?: boolean
 }
 
 /**
@@ -11,6 +9,11 @@ type Props = {
  * The roster was a static three-column list — the flattest thing on a page
  * whose whole top half moves. As a row per subteam it reads like credits: the
  * subteam holds still on the left and its people run past it.
+ *
+ * Every row runs the same way. Alternating them looked livelier in principle
+ * and was hard to read in practice — with seven rows going two directions there
+ * is no single drift for the eye to settle into, so each row has to be tracked
+ * on its own.
  *
  * The track holds the names twice and travels exactly -50%, so the second copy
  * is where the first was when the animation restarts and the loop has no seam.
@@ -22,14 +25,14 @@ type Props = {
  * see `.marquee-track` in index.css — so it degrades to the plain wrapped list
  * it would otherwise have been.
  */
-export default function MemberTicker({ subteam, names, reverse }: Props) {
+export default function MemberTicker({ subteam, names }: Props) {
   // ~6s per name, floored so a one-name subteam still crawls rather than darts.
   const seconds = Math.max(24, names.length * 6)
 
   const run = names.map(name => (
     <li
       key={name}
-      className="flex shrink-0 items-center gap-[clamp(18px,2.2vw,32px)] font-plex text-[13px] leading-none text-navy-200"
+      className="flex shrink-0 items-center gap-[clamp(18px,2.2vw,32px)] font-plex text-[13px] leading-[1.7] text-navy-200"
     >
       {name}
       <span aria-hidden className="h-[3px] w-[3px] shrink-0 bg-navy-400" />
@@ -45,7 +48,7 @@ export default function MemberTicker({ subteam, names, reverse }: Props) {
       <div className="marquee relative min-w-0 flex-1 overflow-hidden">
         <div
           className="marquee-track flex w-max gap-[clamp(18px,2.2vw,32px)]"
-          style={{ animationDuration: `${seconds}s`, animationDirection: reverse ? 'reverse' : undefined }}
+          style={{ animationDuration: `${seconds}s` }}
         >
           <ul className="flex shrink-0 items-center gap-[clamp(18px,2.2vw,32px)]">{run}</ul>
           <ul aria-hidden className="marquee-dupe flex shrink-0 items-center gap-[clamp(18px,2.2vw,32px)]">

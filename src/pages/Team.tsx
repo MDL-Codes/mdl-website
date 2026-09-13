@@ -29,8 +29,8 @@ export default function Team() {
           old markup printed those groups as a static three-column list, which
           was the only part of this page that did not move. */}
       <div className="mt-[clamp(48px,5vw,80px)] flex flex-col">
-        {Object.entries(grouped).map(([subteam, names], i) => (
-          <MemberTicker key={subteam} subteam={subteam} names={names} reverse={i % 2 === 1} />
+        {Object.entries(grouped).map(([subteam, names]) => (
+          <MemberTicker key={subteam} subteam={subteam} names={names} />
         ))}
       </div>
 

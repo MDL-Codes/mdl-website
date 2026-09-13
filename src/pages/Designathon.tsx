@@ -19,17 +19,33 @@ import ApplicationsStatus from '../components/ApplicationsStatus'
 function Section({
   title,
   id,
+  wide,
   children,
 }: {
   title: string
   /** Set to make the section a link target — see Layout's hash handling. */
   id?: string
+  /**
+   * Heading above full-width content instead of beside it.
+   *
+   * The two-column split works for a section that is one paragraph: the copy
+   * sits at a readable measure and the heading fills the space opposite. It
+   * stops working as soon as the content is long, because the heading is three
+   * words and the empty column under it just grows — the FAQs ran nine entries
+   * down a 1.2fr ribbon with most of the left half blank.
+   */
+  wide?: boolean
   children: ReactNode
 }) {
   return (
     <section
       id={id}
-      className="scroll-mt-[24px] flex flex-col gap-[clamp(18px,2vw,28px)] min-[1024px]:grid min-[1024px]:grid-cols-[minmax(380px,1fr)_minmax(0,1.2fr)] min-[1024px]:gap-[clamp(48px,6vw,96px)]">
+      className={
+        wide
+          ? 'scroll-mt-[24px] flex flex-col gap-[clamp(18px,2vw,28px)]'
+          : 'scroll-mt-[24px] flex flex-col gap-[clamp(18px,2vw,28px)] min-[1024px]:grid min-[1024px]:grid-cols-[minmax(380px,1fr)_minmax(0,1.2fr)] min-[1024px]:gap-[clamp(48px,6vw,96px)]'
+      }
+    >
       <h2 className="font-display text-[clamp(22px,2.4vw,32px)] font-bold uppercase leading-[1.185] text-white">
         {title}
       </h2>
@@ -66,14 +82,19 @@ export default function Designathon() {
         </Section>
 
         {/* The footer's "faq" link lands here. */}
-        <Section id="faq" title="Frequently Asked Questions">
-          <ul className="flex flex-col">
-            {faqs.map((faq, i) => (
-              <li key={faq.question} className={i > 0 ? 'border-t border-navy-600 pt-[22px]' : ''}>
+        <Section id="faq" title="Frequently Asked Questions" wide>
+          {/* Two columns from 1024. Nine entries in one column is a long scroll
+              of short answers; paired up they read like a reference sheet and
+              the section is half the height. Every entry carries its own rule
+              rather than only the ones after the first, because in a grid the
+              "first" item is the first of each column, not of the list. */}
+          <ul className="grid grid-cols-1 gap-x-[clamp(32px,4.5vw,72px)] min-[1024px]:grid-cols-2">
+            {faqs.map(faq => (
+              <li key={faq.question} className="border-t border-navy-600 pb-[26px] pt-[18px]">
                 <p className="font-plex text-[13px] font-semibold uppercase leading-[1.5] tracking-[1.54px] text-white">
                   {faq.question}
                 </p>
-                <p className="mb-[22px] mt-[10px] font-plex text-[14px] leading-[1.75] text-navy-200">
+                <p className="mt-[10px] max-w-[62ch] font-plex text-[14px] leading-[1.75] text-navy-200">
                   {faq.answer}
                 </p>
               </li>

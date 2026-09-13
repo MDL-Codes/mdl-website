@@ -115,14 +115,14 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   // ------------------------------------------------------------ president ---
   {
     subteam: 'MDL President',
-    name: 'Tolu Agunbiade',
-    photo: photoTolu,
+    name: 'Andy Duong',
+    photo: photoAndy,
     role: 'Co-President',
   },
   {
     subteam: 'MDL President',
-    name: 'Andy Duong',
-    photo: photoAndy,
+    name: 'Tolu Agunbiade',
+    photo: photoTolu,
     role: 'Co-President',
   },
 

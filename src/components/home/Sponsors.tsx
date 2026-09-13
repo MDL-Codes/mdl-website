@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { sponsors, TIERS, type Sponsor } from '../../data/sponsorsData'
 
 /**
@@ -138,12 +137,15 @@ export default function Sponsors() {
             {/* Border and ink are navy-800 here, NOT the navy-600 Events' button
                 uses — per-node value, and on this heavier header it is the
                 deliberate one. px-32/py-18 as drawn. */}
-            <Link
-              to="/sponsors"
+            {/* mailto, not a route: /sponsors does not exist, and the ask here is
+                for someone to send us something rather than to go and read a
+                page. The subject is prefilled so the replies arrive sorted. */}
+            <a
+              href="mailto:mdlmcmaster@gmail.com?subject=Sponsorship%20package%20request"
               className="border border-navy-800 px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-800 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-800 [@media(hover:hover)]:hover:bg-navy-800 [@media(hover:hover)]:hover:text-paper"
             >
               request sponsorship package
-            </Link>
+            </a>
 
             <p className="mt-[clamp(8px,0.69vw,10px)] font-plex text-[11px] leading-none tracking-[1.54px] uppercase text-navy-600">
               tier details + past partners

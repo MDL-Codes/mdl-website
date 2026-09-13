@@ -29,8 +29,8 @@ const CENTRELINE =
   'repeating-linear-gradient(to right, #ECE9DF80 0 12px, #ECE9DF00 12px 15px, #ECE9DF80 15px 18px, #ECE9DF00 18px 21px)'
 
 // `to` = internal react-router route, `href` = external/placeholder.
-// Instagram + email are the real destinations already used by the frozen
-// src/components/Footer.tsx. Everything on `#` has no destination yet.
+// Instagram, email and LinkedIn are real destinations. Everything still on `#`
+// has no destination yet.
 const COLUMNS: { heading: string; items: { label: string; to?: string; href?: string }[] }[] = [
   {
     heading: 'explore',
@@ -47,7 +47,6 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
       { label: 'designathon', to: '/designathon' },
       { label: 'workshops', to: '/events' },
       { label: 'sponsors', href: '#' },
-      { label: 'interest form', href: '#' },
     ],
   },
   {
@@ -55,8 +54,7 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
     items: [
       { label: 'instagram', href: 'https://www.instagram.com/mdlmcmaster' },
       { label: 'email', href: 'mailto:mdlmcmaster@gmail.com' },
-      { label: 'discord', href: '#' },
-      { label: 'linkedin', href: 'https://www.linkedin.com/company/mcmasterdesignleague' },
+      { label: 'linkedin', href: 'https://www.linkedin.com/company/mcmaster-design-league/posts/' },
     ],
   },
 ]

@@ -11,15 +11,16 @@ export type EventItem = {
 
 export const events: EventItem[] = [
   {
-    title: 'My Placeholder Event',
-    date: 'August 2026',
+    title: 'Clubfest Booth',
+    // TODO: confirm the date off the Instagram announcement.
+    date: 'Fall 2026',
     description:
-      "This is a workshop we haven't figured out yet. If you're still reading this, you're either early or lost, but either way, we appreciate the dedication. More details coming soon.",
+      'Come find our booth at Clubfest and meet the team. We will be there to talk about what MDL runs through the year — the workshops, the Designathon, and how to get involved — and to answer whatever you want to ask.',
     photo: events1,
   },
   {
     title: 'CAD-APULT',
-    date: 'September 2026',
+    date: 'Fall 2025',
     description:
       'A mini-event designed for first-year engineering students. Participants work in teams to build a catapult using the provided materials, aiming to compete for challenges while creating bold ideas. Prizes are awarded to the winning teams at the end of the event.',
     photo: events2,

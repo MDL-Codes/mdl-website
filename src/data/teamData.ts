@@ -102,20 +102,23 @@ const roster: Omit<Lead, 'bg'>[] = [
     name: 'Kai Qin',
     photo: photoKai,
     role: 'Internal Manager',
-    blurb: 'TODO: blurb',
+    blurb:
+      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
   {
     subteam: 'Internal Management',
     name: "Regan O'Connor",
     photo: photoRegan,
     role: 'Internal Manager',
-    blurb: 'TODO: blurb',
+    blurb:
+      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
   {
     subteam: 'Internal Management',
     name: 'Saloni Patel',
     role: 'Internal Manager',
-    blurb: 'TODO: blurb',
+    blurb:
+      'Look after the wellbeing of the MDL team by running socials through the year and checking in with members across every subteam.',
   },
 
   // ------------------------------------------------------- cad technical ---

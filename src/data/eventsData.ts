@@ -27,14 +27,14 @@ export const events: EventItem[] = [
   },
   {
     title: 'Basic Assembly Workshop',
-    date: 'Fall 2025',
+    date: 'Fall 2024',
     description:
       "Ever wanted to put together a car engine without the grease? In this workshop, you'll dive into Autodesk Inventor's assembly tools to build a model of a Boxer! You'll learn how to place parts, use constraints, and assemble everything together — from engine to the chassis. By the end, you'll have a complete digital engine and a solid handle on assembly basics. No prior experience needed.",
     photo: events3,
   },
   {
     title: 'Advanced Assembly Workshop',
-    date: 'Fall 2025',
+    date: 'Fall 2024',
     description:
       'Take the next step in your assembly journey. In this workshop, learn advanced techniques to ship larger, more sophisticated CAD models — from complex constraints to motion studies and ergonomic considerations.',
     photo: events1,

@@ -38,7 +38,7 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
       { label: 'home', to: '/' },
       { label: 'mission', to: '/mission' },
       { label: 'team', to: '/team' },
-      { label: 'faq', href: '#' },
+      { label: 'faq', to: '/designathon#faq' },
     ],
   },
   {

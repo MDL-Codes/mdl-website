@@ -1,39 +1,43 @@
-import filler from '../assets/filler.webp'
+import charcShawarma from '../assets/sponsors/charc-shawarma.webp'
+import goengineer from '../assets/sponsors/goengineer.webp'
+import jenga from '../assets/sponsors/jenga.webp'
+import meritech from '../assets/sponsors/meritech.webp'
+import printandplay from '../assets/sponsors/printandplay.webp'
+import solidworks from '../assets/sponsors/solidworks.webp'
 
-export type Tier = 'gold' | 'silver' | 'bronze'
+/**
+ * Tiers, highest first. The order of this array IS the order the wall renders
+ * in and the size ladder it draws, so moving a tier here moves it on the page.
+ *
+ * Platinum sits above Diamond, which is MDL's own ranking rather than the
+ * commoner one — worth leaving alone unless someone says otherwise.
+ */
+export const TIERS = ['platinum', 'diamond', 'gold', 'silver', 'bronze'] as const
+
+export type Tier = (typeof TIERS)[number]
 
 export type Sponsor = {
   name: string
   logo: string
-  tier?: Tier
+  tier: Tier
 }
 
-export const sponsors: Sponsor[] = [
-  { name: 'McMaster University', logo: filler },
-  { name: 'Sponsor Two', logo: filler },
-  { name: 'Sponsor Three', logo: filler },
-  { name: 'Sponsor Four', logo: filler },
-]
-
 /**
- * The home page's sponsor wall — 1 gold, 2 silver, 4 bronze, all placeholder,
- * matching the seven tiles drawn in Figma 84:317.
+ * The 2026-2027 sponsors.
  *
- * ponytail: a SECOND export rather than seven entries appended to `sponsors`.
- * `sponsors` is rendered by Designathon.tsx, which is owned by a teammate and
- * must stay byte-identical on this branch (CLAUDE.md) — growing that array from
- * four to seven would silently add three tiles to their page. `tier` is optional
- * on Sponsor so it is additive for that page too.
+ * One array, not two. There used to be a second `homeSponsors` export because
+ * Designathon.tsx rendered `sponsors` and could not be touched; that page no
+ * longer imports this file at all, so the split had nothing left to protect —
+ * and the old comment named exactly this moment as the time to collapse it.
  *
- * Ceiling: when the real sponsor list lands and both pages want the same seven,
- * collapse these back into one array and give Designathon an explicit filter.
+ * Grouping is done at render time off `tier`, so adding a sponsor is one entry
+ * here and nothing else.
  */
-export const homeSponsors: Sponsor[] = [
-  { name: 'Sponsor 1', logo: filler, tier: 'gold' },
-  { name: 'Sponsor 2', logo: filler, tier: 'silver' },
-  { name: 'Sponsor 3', logo: filler, tier: 'silver' },
-  { name: 'Sponsor 4', logo: filler, tier: 'bronze' },
-  { name: 'Sponsor 5', logo: filler, tier: 'bronze' },
-  { name: 'Sponsor 6', logo: filler, tier: 'bronze' },
-  { name: 'Sponsor 7', logo: filler, tier: 'bronze' },
+export const sponsors: Sponsor[] = [
+  { name: 'GoEngineer', logo: goengineer, tier: 'platinum' },
+  { name: 'Print and Play', logo: printandplay, tier: 'diamond' },
+  { name: 'SolidWorks', logo: solidworks, tier: 'gold' },
+  { name: 'Meritech Engineering', logo: meritech, tier: 'silver' },
+  { name: 'Charc Shawarma', logo: charcShawarma, tier: 'silver' },
+  { name: 'JENGA', logo: jenga, tier: 'bronze' },
 ]

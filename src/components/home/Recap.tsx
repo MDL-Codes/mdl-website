@@ -63,13 +63,13 @@ const SLIDES = [
     photo: gallery2,
     subtitle: 'DUO CAD CHALLENGE',
     caption:
-      'One partner can see the part. The other has to model it. Nothing passes between them but words, which turns out to be the hard bit.',
+      'Teams of two take on one timed model. One person works from the drawing and calls out the geometry; the other never sees it and builds it in CAD.',
   },
   {
     photo: gallery3,
     subtitle: 'DESCRIBE, THEN MODEL',
     caption:
-      'The other half of the challenge — no reference, no glancing over, just whatever your partner managed to put into words.',
+      'The room mid-round, split between the people describing and the people modelling.',
   },
   {
     photo: gallery4,

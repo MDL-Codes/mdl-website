@@ -278,13 +278,14 @@ export default function Hero() {
           {/* Wrapping is what stacks the buttons around 520; centred, each wrapped
               line centres on its own. They keep their natural width either way. */}
           <div className="mt-[29px] flex flex-wrap justify-center gap-[30px] min-[1024px]:justify-start">
-            {/* ponytail: the real waitlist destination is unknown — /designathon is a
-                stand-in until someone supplies the form URL. */}
+            {/* Labelled for the page it opens. It used to read "waitlist" and
+                point at /designathon as a stand-in for a form URL that never
+                arrived. */}
             <Link
               to="/designathon"
               className={`${BUTTON} border-navy-950 bg-paper-dim text-navy-950 [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-navy-950 [@media(hover:hover)]:hover:text-paper-dim`}
             >
-              2027 designathon waitlist
+              2027 designathon
             </Link>
             <Link
               to="/events"

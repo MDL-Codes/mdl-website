@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import type { Lead } from '../data/teamData'
 import { initials } from '../data/teamData'
 
@@ -14,7 +14,7 @@ type Props = {
  * behaves the same on a phone, a half-width window and a full laptop.
  * Backgrounds are opaque so the cards read as solid layers when they stack.
  */
-export default function LeadCard({ lead }: Props) {
+function LeadCard({ lead }: Props) {
   // Flips to false if the photo file is missing, so a lead with no headshot
   // yet falls back to initials instead of showing a broken image.
   const [photoOk, setPhotoOk] = useState(Boolean(lead.photo))
@@ -83,3 +83,10 @@ export default function LeadCard({ lead }: Props) {
     </article>
   )
 }
+
+/**
+ * Memoised: the stack re-renders whenever the pinned subteam changes, and
+ * without this that re-renders all 21 cards. `lead` objects come straight off
+ * the module-level roster, so the identity check always holds.
+ */
+export default memo(LeadCard)

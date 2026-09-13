@@ -14,13 +14,13 @@ export default function Team() {
   return (
     <PageShell
       eyebrow="the roster"
-      title="Who Runs MDL"
+      title="The MDL Exec Team"
       /* Counted off the data rather than written down, so the masthead cannot
          go stale the next time someone joins or leaves. The member count is the
          whole league, leads included — `members` is only everyone who is not a
          lead, which would read as though the club were 38 people. */
       meta={`${leads.length} leads · ${leads.length + members.length} members`}
-      intro="The people writing Designathon problem statements, teaching the CAD workshops, chasing sponsors, and shooting the recap videos — across every subteam in the league."
+      intro="The leads who plan the Designathon, teach the workshops, and chase the sponsors that pay for it — and the members on every subteam behind them."
     >
       <LeadStack leads={leads} />
 

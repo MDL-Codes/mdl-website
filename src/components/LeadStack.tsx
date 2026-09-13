@@ -48,19 +48,14 @@ export default function LeadStack({ leads }: Props) {
   const [stacked, setStacked] = useState(false)
   const [active, setActive] = useState(0)
 
-  /** First lead of each subteam, in page order — the jump targets, plus the
-      headcount the index hangs off its right edge. */
+  /** First lead of each subteam, in page order — the jump targets. */
   const groups = useMemo(() => {
-    const at = new Map<string, number>()
-    const out: { subteam: string; index: number; count: number }[] = []
+    const seen = new Set<string>()
+    const out: { subteam: string; index: number }[] = []
     leads.forEach((lead, index) => {
-      const seen = at.get(lead.subteam)
-      if (seen === undefined) {
-        at.set(lead.subteam, out.length)
-        out.push({ subteam: lead.subteam, index, count: 1 })
-        return
-      }
-      out[seen].count += 1
+      if (seen.has(lead.subteam)) return
+      seen.add(lead.subteam)
+      out.push({ subteam: lead.subteam, index })
     })
     return out
   }, [leads])

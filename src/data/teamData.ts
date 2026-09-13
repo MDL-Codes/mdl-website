@@ -22,6 +22,7 @@ import photoNoor from '../assets/team/noor-sidhu.webp'
 import photoMinaya from '../assets/team/minaya-karunarathne.webp'
 import photoMaia from '../assets/team/maia-antolic.webp'
 import photoMichelle from '../assets/team/michelle-nishidera.webp'
+import photoAarudra from '../assets/team/aarudra-ramanan.webp'
 
 export type Lead = {
   /** Subteam label shown across the top of the card. */
@@ -240,6 +241,7 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   {
     subteam: 'Sponsorship',
     name: 'Aarudra Ramanan',
+    photo: photoAarudra,
     role: 'Sponsorship Lead',
   },
   {

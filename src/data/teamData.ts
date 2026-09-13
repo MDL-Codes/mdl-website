@@ -268,9 +268,7 @@ export const members: Member[] = [
   // Notion's First Name cell reads "Bhagat"; the Person title reads "Meet
   // Bhagat", which is what we use. Worth fixing at the source.
   { name: 'Meet Bhagat', subteam: 'CAD Technical' },
-  { name: 'Hasib Tabassum', subteam: 'CAD Technical' },
   { name: 'Julia Di Liso', subteam: 'CAD Technical' },
-  { name: 'Owen Loh', subteam: 'CAD Technical' },
   { name: 'Prem Nayak', subteam: 'CAD Technical' },
   { name: 'William Cheung', subteam: 'CAD Technical' },
   { name: 'Zach McKay', subteam: 'CAD Technical' },

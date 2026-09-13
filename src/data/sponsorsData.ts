@@ -20,6 +20,13 @@ export type Sponsor = {
   name: string
   logo: string
   tier: Tier
+  /**
+   * Set when the logo is drawn for a dark background — white or near-white ink
+   * on transparency, which disappears on the wall's white plates. That tile
+   * gets an inked plate instead. Ask for a dark-ink version before reaching for
+   * this; it is a workaround for the asset we were given, not a style.
+   */
+  onDark?: boolean
 }
 
 /**
@@ -38,6 +45,7 @@ export const sponsors: Sponsor[] = [
   { name: 'Print and Play', logo: printandplay, tier: 'diamond' },
   { name: 'SolidWorks', logo: solidworks, tier: 'gold' },
   { name: 'Meritech Engineering', logo: meritech, tier: 'silver' },
-  { name: 'Charc Shawarma', logo: charcShawarma, tier: 'silver' },
+  // Wordmark under the flame is white, invisible on a white plate.
+  { name: 'Charc Shawarma', logo: charcShawarma, tier: 'silver', onDark: true },
   { name: 'JENGA', logo: jenga, tier: 'bronze' },
 ]

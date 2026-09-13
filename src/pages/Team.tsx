@@ -14,7 +14,7 @@ export default function Team() {
   return (
     <PageShell
       eyebrow="2026-2027 season"
-      title="The MDL Executive Team"
+      title="MDL Executive Team"
       /* Counted off the data rather than written down, so the masthead cannot
          go stale the next time someone joins or leaves. The member count is the
          whole league, leads included — `members` is only everyone who is not a

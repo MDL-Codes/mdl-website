@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { events } from '../../data/eventsData'
+import designathonPhoto from '../../assets/events.webp'
 
 /**
  * Events at a glance — Figma 5:114 (1440x900, paper + iso-hatch).
@@ -61,6 +62,7 @@ type CardProps = {
   date: string
   description: string
   photo: string
+  contain?: boolean
   flagship?: boolean
 }
 
@@ -68,7 +70,7 @@ type CardProps = {
 // differs by three things — a redline top bar, a redline label with a details
 // chip, and a larger title — and every other measure is shared. Two files' worth
 // of near-duplicate JSX to avoid one boolean is the worse trade.
-function EventCard({ item, title, date, description, photo, flagship }: CardProps) {
+function EventCard({ item, title, date, description, photo, contain, flagship }: CardProps) {
   const ink = flagship ? 'text-redline' : 'text-navy-800'
   return (
     <article
@@ -96,7 +98,9 @@ function EventCard({ item, title, date, description, photo, flagship }: CardProp
         alt=""
         width={400}
         height={200}
-        className="h-[clamp(150px,13.9vw,200px)] w-full border-b border-navy-600 object-cover"
+        className={`h-[clamp(150px,13.9vw,200px)] w-full border-b border-navy-600 ${
+          contain ? 'object-contain' : 'object-cover'
+        }`}
       />
 
       <div className={`flex flex-1 flex-col pb-[clamp(20px,2.22vw,32px)] pt-[clamp(18px,1.74vw,25px)] ${PAD}`}>
@@ -165,7 +169,10 @@ const FLAGSHIP = {
   title: 'Designathon 2027',
   date: 'JAN 16, 17 • PGCLL',
   description: DESIGNATHON_BLURB,
-  photo: events[0].photo,
+  // Imported, not events[0].photo. That borrowed whatever happened to sit first
+  // in the array, so replacing the placeholder event there silently put the Club
+  // Fest poster on the Designathon card.
+  photo: designathonPhoto,
 }
 
 export default function Events() {
@@ -205,6 +212,7 @@ export default function Events() {
               item={i + 2}
               title={event.title}
               photo={event.photo}
+              contain={event.contain}
               date={event.date}
               description={event.description}
             />

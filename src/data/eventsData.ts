@@ -1,12 +1,19 @@
 import events1 from '../assets/events.webp'
 import events2 from '../assets/events2.webp'
 import events3 from '../assets/events3.webp'
+import clubfest from '../assets/clubfest-2026.webp'
 
 export type EventItem = {
   title: string
   date: string
   description: string
   photo: string
+  /**
+   * Set when `photo` is a poster rather than a photograph. Posters carry text
+   * to their own edges, so cropping one to the card's shape cuts the words off;
+   * these are letterboxed instead.
+   */
+  contain?: boolean
 }
 
 export const events: EventItem[] = [
@@ -15,8 +22,8 @@ export const events: EventItem[] = [
     date: 'September 14, 2026',
     description:
       'Find us on the JHE field at table #9, 4:30 to 7:30 PM. Come say hello, ask about the workshops and the Designathon, and find out how to get on a subteam.',
-    // TODO: swap in the Club Fest poster.
-    photo: events1,
+    photo: clubfest,
+    contain: true,
   },
   {
     title: 'CAD-APULT',

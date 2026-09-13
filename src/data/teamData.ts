@@ -4,8 +4,6 @@
  * Lead names and subteams come from the Notion "Team Leads" table.
  * General members come from MDL Internal Teamspace > Databases > People.
  * Subteam descriptions started from the Instagram subteam posts.
- *
- * Anything marked TODO still needs confirming before this goes live.
  */
 
 import photoTolu from '../assets/team/tolu-agunbiade.webp'

@@ -122,11 +122,10 @@ export default function Sponsors() {
 
             {/* Roboto Regular 18 / 1.8px at 80% — the same "body copy is Roboto,
                 not Plex" override About us, Events and Recap all carry. Figma's
-                614px measure kept as a max, fluid below it. Copy is Figma's
-                placeholder verbatim, lowercase "it" and all. */}
+                614px measure kept as a max, fluid below it. */}
             <p className="mt-[clamp(8px,0.76vw,11px)] max-w-[clamp(320px,42.6vw,614px)] font-display text-[clamp(15px,1.25vw,18px)] font-normal leading-normal tracking-[clamp(1.5px,0.125vw,1.8px)] text-navy-800/80">
-              This is a placeholder paragraph that describes how much we thank our sponsors of the
-              2026 designathon. it wouldn&rsquo;t have been possible without them.
+              The Designathon, the workshops and the prizes that come with them are all made
+              possible by the companies below. Thank you for backing what our students build.
             </p>
           </div>
 

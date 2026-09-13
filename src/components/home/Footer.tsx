@@ -28,9 +28,8 @@ import mdlWhite from '../../assets/MDL_white.svg'
 const CENTRELINE =
   'repeating-linear-gradient(to right, #ECE9DF80 0 12px, #ECE9DF00 12px 15px, #ECE9DF80 15px 18px, #ECE9DF00 18px 21px)'
 
-// `to` = internal react-router route, `href` = external/placeholder.
-// Instagram, email and LinkedIn are real destinations. Everything still on `#`
-// has no destination yet.
+// `to` = internal react-router route, `href` = external. Every entry here goes
+// somewhere real; nothing is left on a `#`.
 const COLUMNS: { heading: string; items: { label: string; to?: string; href?: string }[] }[] = [
   {
     heading: 'explore',
@@ -46,7 +45,6 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
     items: [
       { label: 'designathon', to: '/designathon' },
       { label: 'workshops', to: '/events' },
-      { label: 'sponsors', href: '#' },
     ],
   },
   {

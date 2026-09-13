@@ -1,4 +1,5 @@
 import LeadStack from '../components/LeadStack'
+import PageShell from '../components/PageShell'
 import { leads, members } from '../data/teamData'
 
 export default function Team() {
@@ -10,44 +11,31 @@ export default function Team() {
   }, {})
 
   return (
-    <section className="flex flex-col gap-16 md:gap-24">
-      {/* Page title */}
-      <header className="flex flex-col gap-4">
-        <h1 className="font-mono font-bold uppercase leading-[1.05] text-4xl sm:text-5xl md:text-6xl">
-          Meet the Leads!
-        </h1>
-        <p className="max-w-xl text-sm sm:text-base leading-relaxed text-white/85">
-          The people who plan the Designathon, teach the workshops, and keep the
-          league running. Scroll to work through each subteam.
-        </p>
-      </header>
-
+    <PageShell
+      eyebrow="who we are"
+      title="Our Team"
+      intro="The students who run the league — leads, and the subteams behind every event."
+    >
       <LeadStack leads={leads} />
 
-      {/* General members */}
-      <div className="flex flex-col gap-8">
-        <div className="flex items-center gap-4">
-          <h2 className="font-bold uppercase text-xs sm:text-sm tracking-[0.28em] text-white/85">
-            General Members
-          </h2>
-          <span aria-hidden="true" className="h-px flex-1 bg-white/20" />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Object.entries(grouped).map(([subteam, names]) => (
-            <div key={subteam} className="flex flex-col gap-3">
-              <span className="rounded-pill border border-white/30 bg-white/10 px-3.5 py-1 text-[11px] uppercase tracking-widest self-start">
-                {subteam}
-              </span>
-              <ul className="flex flex-col gap-1.5 text-sm sm:text-base text-white/85">
-                {names.map((name, i) => (
-                  <li key={`${subteam}-${name}-${i}`}>{name}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+      {/* The reduce above always grouped by subteam; the old markup then threw the
+          grouping away and printed one flat "name (subteam)" line per member. */}
+      <div className="mt-[clamp(48px,5vw,80px)] grid grid-cols-1 gap-[clamp(28px,3vw,44px)] min-[640px]:grid-cols-2 min-[1024px]:grid-cols-3">
+        {Object.entries(grouped).map(([subteam, names]) => (
+          <section key={subteam}>
+            <h2 className="border-b border-navy-600 pb-[10px] font-plex text-[11px] font-semibold uppercase leading-none tracking-[1.54px] text-white">
+              {subteam}
+            </h2>
+            <ul className="mt-[14px] flex flex-col gap-[6px]">
+              {names.map(name => (
+                <li key={name} className="font-plex text-[13px] leading-[1.7] text-navy-200">
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
-    </section>
+    </PageShell>
   )
 }

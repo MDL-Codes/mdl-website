@@ -1,78 +1,43 @@
-import { useEffect, useState, type ReactNode } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import Footer from './Footer'
-import MDLLogo from './MDLLogo'
+import { useEffect, type ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
+import Nav from './home/Nav'
+import Footer from './home/Footer'
 
 type Props = {
   children: ReactNode
 }
 
+/**
+ * The single page shell. Every route renders through this now, Home included —
+ * Home used to bypass it and hand-roll its own Nav/Footer, which is how the site
+ * ended up with two navigations (different labels, no Gallery link, hamburger at
+ * 768 here and 720 there) and two footers.
+ *
+ * Deliberately full-bleed: no max-width and no horizontal padding. Sections own
+ * their own gutters, which is what lets a page paint edge-to-edge bands — the
+ * old `max-w-6xl mx-auto px-5…` boxed Mission's full-width cream band into a
+ * 1152px card floating in navy. Pages that want a measured column wrap their
+ * content in <PageShell> instead.
+ *
+ * Footer sits in normal flow at the end of a min-h-screen column rather than
+ * `fixed`, so short pages push it to the bottom and long ones scroll past it.
+ * The old fixed 32px bar overlapped content at the bottom of every page.
+ */
 export default function Layout({ children }: Props) {
   const location = useLocation()
-  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
+  // Layout no longer owns a scroll container — the document scrolls — so reset
+  // the window, not a panel. FullPage is exempt: it lands via scrollIntoView.
   useEffect(() => {
-    setMobileNavOpen(false)
-    const panel = document.getElementById('content-scroll')
-    if (panel) panel.scrollTop = 0
+    if (location.pathname !== '/full') window.scrollTo(0, 0)
   }, [location.pathname])
 
   return (
-    <div className="relative min-h-screen pb-8">
-      {/* Background: center glow + grain */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_30%,rgba(0,0,0,0.4)_100%)]" />
-        <div className="bg-grain absolute inset-0" />
-      </div>
-      {/* Desktop top navbar */}
-      <header className="hidden md:block sticky top-0 z-20 bg-navy/95 backdrop-blur-lg border-b border-white/10">
-        <div className="flex items-center gap-8 px-6 lg:px-10 py-3.5">
-          <Link
-            to="/"
-            aria-label="Home"
-            className="text-white hover:text-white transition-colors shrink-0"
-          >
-            <MDLLogo className="w-14 h-9" />
-          </Link>
-          <Sidebar />
-        </div>
-      </header>
-
-      {/* Mobile menu button */}
-      <button
-        type="button"
-        onClick={() => setMobileNavOpen((s) => !s)}
-        className="md:hidden fixed top-3 right-4 text-white border border-border rounded-pill px-3 py-1 text-xs z-20 bg-navy"
-        aria-label="Toggle navigation"
-        aria-expanded={mobileNavOpen}
-      >
-        {mobileNavOpen ? 'CLOSE' : 'MENU'}
-      </button>
-
-      {/* Mobile drawer */}
-      {mobileNavOpen && (
-        <div className="md:hidden fixed top-12 left-0 right-0 bg-navy border-t border-border/30 px-5 py-4 z-10">
-          <Sidebar onNavigate={() => setMobileNavOpen(false)} vertical />
-        </div>
-      )}
-
-      {/* Main content area */}
-      <main
-        id="content-scroll"
-        key={location.pathname}
-        className="relative z-10 page-fade max-w-6xl mx-auto px-5 sm:px-8 md:px-10 lg:px-14 pt-10 md:pt-12 pb-12"
-      >
+    <div className="flex min-h-screen flex-col bg-navy-900 font-plex">
+      <Nav />
+      <main key={location.pathname} className="page-fade flex-1">
         {children}
       </main>
-
-      {/* Mobile-only logo */}
-      <div className="md:hidden flex justify-start px-5 pb-4">
-        <Link to="/" aria-label="Home" className="text-white/85 hover:text-white transition-colors">
-          <MDLLogo className="w-16 h-10" />
-        </Link>
-      </div>
-
       <Footer />
     </div>
   )

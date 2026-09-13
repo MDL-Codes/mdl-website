@@ -1,6 +1,6 @@
-import events1 from '../assets/events.png'
-import events2 from '../assets/events2.png'
-import events3 from '../assets/events3.png'
+import events1 from '../assets/events.webp'
+import events2 from '../assets/events2.webp'
+import events3 from '../assets/events3.webp'
 
 export type EventItem = {
   title: string
@@ -18,7 +18,7 @@ export const events: EventItem[] = [
     photo: events1,
   },
   {
-    title: 'CAD-aplt',
+    title: 'CAD-APULT',
     date: 'September 2026',
     description:
       'A mini-event designed for first-year engineering students. Participants work in teams to build a catapult using the provided materials, aiming to compete for challenges while creating bold ideas. Prizes are awarded to the winning teams at the end of the event.',

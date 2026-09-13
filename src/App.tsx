@@ -27,6 +27,9 @@ export default function App() {
     document.title = PAGE_TITLES[location.pathname] ?? 'McMaster Design League'
   }, [location.pathname])
 
+  // Every route shares one shell. Home used to sit outside Layout because Layout
+  // boxed its children in a 1152px column; Layout is full-bleed now, so the
+  // exception (and the duplicate nav/footer it forced) is gone.
   return (
     <Layout>
       <Routes>

@@ -2,7 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Google's crawler wants a square icon it can fetch at a fixed URL, and it
+         does not read the SVG that modern browsers prefer. So: /favicon.ico at
+         the root for the crawler and old browsers, a PNG for everything in
+         between, the SVG last for tabs that will take it, and apple-touch-icon
+         for an iOS home screen. Google recrawls favicons on its own schedule —
+         expect the search result to keep the old mark for days or weeks. -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="McMaster Design League — Ontario's hub for CAD competition and workshop" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

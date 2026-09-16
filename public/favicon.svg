@@ -1,21 +1,22 @@
-<!-- The MDL wing, cropped to its centre and set on a navy plate.
+<!-- The wing, unchanged in shape from the mark used across the site — no plate,
+     no crop. What is new is that it picks its own ink.
 
-     Two things were wrong with the old favicon, which was the full-width
-     wordmark SVG reused as-is. It was white on transparent, so on Google's
-     white result row and on a light browser tab it was a white shape on white —
-     the faint squiggle in the search listing was its edges. And it is a 212x43
-     mark, five times wider than it is tall, so squeezed into a square tile it
-     rendered a few pixels deep.
+     It used to be `fill="white"` outright, which is right for a dark browser tab
+     and wrong everywhere else: on a light-theme tab, and in a Google result row,
+     a white mark on white is an invisible one. That is what put a faint squiggle
+     in the search listing. Navy is the default and white is the dark-scheme
+     override, so the tab looks exactly as it did before while light surfaces get
+     a mark they can actually show.
 
-     The plate fixes the first: the mark is now paper on navy, and carries its
-     own contrast wherever it is placed. The crop fixes the second — the wing's
-     long tapered tails run off both edges, which sacrifices the full silhouette
-     to give the central chevron enough size to read at 16px. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" fill="#2B3455"/>
-  <g transform="translate(32 32) scale(1.28) translate(-106 -21.5)">
-    <path d="M0 0H100.007L106 4.39688L111.993 0H212L119.851 6.63258L106 17.1404L92.1493 6.63258L0 0Z" fill="#F6F4EE"/>
-    <path d="M21.9915 3.72617L90.5099 10.0607L104.587 21.0492V43L96.1632 35.9203V27.3501L87.6832 19.1525L21.9915 3.72617Z" fill="#F6F4EE"/>
-    <path d="M190.009 3.72617L121.49 10.0607L107.413 21.0492V43L115.837 35.9203V27.3501L124.317 19.1525L190.009 3.72617Z" fill="#F6F4EE"/>
-  </g>
+     A plate was tried here and reverted — at tab size a filled navy square with
+     a cropped wing in it reads as a muddy block, and the bare silhouette is
+     cleaner at 16px than anything boxed. -->
+<svg width="212" height="43" viewBox="0 0 212 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  path { fill: #2B3455; }
+  @media (prefers-color-scheme: dark) { path { fill: #F6F4EE; } }
+</style>
+<path d="M0 0H100.007L106 4.39688L111.993 0H212L119.851 6.63258L106 17.1404L92.1493 6.63258L0 0Z"/>
+<path d="M21.9915 3.72617L90.5099 10.0607L104.587 21.0492V43L96.1632 35.9203V27.3501L87.6832 19.1525L21.9915 3.72617Z"/>
+<path d="M190.009 3.72617L121.49 10.0607L107.413 21.0492V43L115.837 35.9203V27.3501L124.317 19.1525L190.009 3.72617Z"/>
 </svg>

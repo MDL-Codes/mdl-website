@@ -1,6 +1,6 @@
+import appliedElectronics from '../assets/sponsors/applied-electronics.webp'
 import charcShawarma from '../assets/sponsors/charc-shawarma.webp'
 import goengineer from '../assets/sponsors/goengineer.webp'
-import jenga from '../assets/sponsors/jenga.webp'
 import meritech from '../assets/sponsors/meritech.webp'
 import printandplay from '../assets/sponsors/printandplay.webp'
 import solidworks from '../assets/sponsors/solidworks.webp'
@@ -41,5 +41,5 @@ export const sponsors: Sponsor[] = [
   // Their logo on its own dark ground — the transparent version's wordmark is
   // white and vanished on the plate.
   { name: 'Charc Shawarma', logo: charcShawarma, tier: 'silver' },
-  { name: 'JENGA', logo: jenga, tier: 'bronze' },
+  { name: 'Applied Electronics Limited', logo: appliedElectronics, tier: 'bronze' },
 ]

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { events } from '../../data/eventsData'
+import { events, isUpcoming } from '../../data/eventsData'
+import UpcomingTag from '../UpcomingTag'
 import designathonPhoto from '../../assets/events.webp'
 
 /**
@@ -63,6 +64,8 @@ type CardProps = {
   description: string
   photo: string
   contain?: boolean
+  register?: string
+  upcoming?: boolean
   flagship?: boolean
 }
 
@@ -70,7 +73,7 @@ type CardProps = {
 // differs by three things — a redline top bar, a redline label with a details
 // chip, and a larger title — and every other measure is shared. Two files' worth
 // of near-duplicate JSX to avoid one boolean is the worse trade.
-function EventCard({ item, title, date, description, photo, contain, flagship }: CardProps) {
+function EventCard({ item, title, date, description, photo, contain, register, upcoming, flagship }: CardProps) {
   const ink = flagship ? 'text-redline' : 'text-navy-800'
   return (
     <article
@@ -145,9 +148,14 @@ function EventCard({ item, title, date, description, photo, contain, flagship }:
         </h3>
 
         {/* mono/zone is 10px; same legibility problem as the eyebrow, so 12. */}
-        <p className="mt-[clamp(10px,1.11vw,16px)] font-plex text-[12px] leading-none tracking-[1px] text-navy-900">
-          {date}
-        </p>
+        <div className="mt-[clamp(10px,1.11vw,16px)] flex flex-wrap items-center gap-[10px]">
+          <p className="font-plex text-[12px] leading-none tracking-[1px] text-navy-900">{date}</p>
+
+          {/* The row mixes a date still to come with dates long gone and the
+              cards say nothing about which is which. Same chip as the Events
+              page rows, and only on the upcoming one. */}
+          {upcoming && <UpcomingTag />}
+        </div>
 
         {/* Roboto Regular 14 / 1.4px at 80% — the same "body copy is Roboto, not
             Plex" override About us carries. Per-node wins over CLAUDE.md's rule;
@@ -155,6 +163,24 @@ function EventCard({ item, title, date, description, photo, contain, flagship }:
         <p className="mt-[clamp(12px,1.32vw,19px)] font-display text-[clamp(13px,0.97vw,14px)] font-normal leading-[normal] tracking-[clamp(1.3px,0.097vw,1.4px)] text-navy-800/80">
           {description}
         </p>
+
+        {/* mt-auto, so on a row where the cards self-equalise the button sits on
+            the card's floor rather than floating wherever its own copy ended.
+            Same outline-on-paper button as the Sponsors CTA — the flagship's
+            `details` chip is the small inline variant of it, and a card can show
+            one or the other, never both. */}
+        {register && (
+          <div className="mt-auto flex pt-[clamp(16px,1.53vw,22px)]">
+            <a
+              href={register}
+              target="_blank"
+              rel="noreferrer"
+              className={`border border-navy-800 px-[clamp(14px,1.53vw,22px)] py-[12px] text-center ${LABEL} text-navy-800 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-800 [@media(hover:hover)]:hover:bg-navy-800 [@media(hover:hover)]:hover:text-paper`}
+            >
+              register &rarr;
+            </a>
+          </div>
+        )}
       </div>
     </article>
   )
@@ -206,13 +232,19 @@ export default function Events() {
             1024 with the flagship spanning both; one below 640. */}
         <div className="mt-[clamp(28px,3.26vw,47px)] grid grid-cols-1 gap-[clamp(24px,5.9vw,85px)] min-[640px]:grid-cols-2 min-[1024px]:grid-cols-[1.25fr_1fr_1fr]">
           <EventCard item={1} flagship {...FLAGSHIP} />
-          {events.slice(1, 3).map((event, i) => (
+          {/* The two newest events after the flagship. This was slice(1, 3),
+              which skipped whatever sat first in the array — fine while that
+              was a past Club Fest, wrong the moment an upcoming event was added
+              at the top and the home page was the one place not showing it. */}
+          {events.slice(0, 2).map((event, i) => (
             <EventCard
               key={event.title}
               item={i + 2}
               title={event.title}
               photo={event.photo}
               contain={event.contain}
+              register={event.register}
+              upcoming={isUpcoming(event)}
               date={event.date}
               description={event.description}
             />

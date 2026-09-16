@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
+import BackToTop from './BackToTop'
 import Nav from './home/Nav'
 import Footer from './home/Footer'
 
@@ -18,6 +19,11 @@ type Props = {
  * old `max-w-6xl mx-auto px-5…` boxed Mission's full-width cream band into a
  * 1152px card floating in navy. Pages that want a measured column wrap their
  * content in <PageShell> instead.
+ *
+ * BackToTop lives here rather than on the handful of pages that happen to be
+ * long. It only shows itself once the visitor is a screen down, so a page with
+ * nothing to scroll never renders a visible button — the threshold does the
+ * picking, and no page has to remember to opt in.
  *
  * Footer sits in normal flow at the end of a min-h-screen column rather than
  * `fixed`, so short pages push it to the bottom and long ones scroll past it.
@@ -53,6 +59,7 @@ export default function Layout({ children }: Props) {
         {children}
       </main>
       <Footer />
+      <BackToTop />
     </div>
   )
 }

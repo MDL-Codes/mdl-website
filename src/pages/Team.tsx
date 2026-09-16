@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import BackToTop from '../components/BackToTop'
 import LeadStack from '../components/LeadStack'
 import PageShell from '../components/PageShell'
 import { leads, members } from '../data/teamData'
@@ -59,8 +58,6 @@ export default function Team() {
           ))}
         </div>
       )}
-
-      <BackToTop />
     </PageShell>
   )
 }

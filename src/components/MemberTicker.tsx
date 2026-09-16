@@ -32,10 +32,15 @@ export default function MemberTicker({ names }: Props) {
   // leading-[1.7], not leading-none: a line box the height of the font leaves
   // nothing below the baseline, and the track's overflow-hidden then cuts the
   // tail off every g, p, y, j and q.
+  //
+  // Names sit above the `members` label in both size and brightness. At 12px in
+  // navy-200 they read as a caption on the label; the members are the point of
+  // the row, so they get the larger fluid size and the paper tone, and the
+  // label stays the small dim thing that introduces them.
   const run = names.map(name => (
     <li
       key={name}
-      className="flex shrink-0 items-center gap-[clamp(16px,1.8vw,26px)] font-plex text-[12px] leading-[1.7] text-navy-200"
+      className="flex shrink-0 items-center gap-[clamp(16px,1.8vw,26px)] font-plex text-[clamp(14px,1.15vw,17px)] leading-[1.7] text-paper-dim"
     >
       {name}
       <span aria-hidden className="h-[3px] w-[3px] shrink-0 bg-navy-400" />

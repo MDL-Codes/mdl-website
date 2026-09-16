@@ -354,3 +354,55 @@ body {
     display: none;
   }
 }
+
+/* The UPCOMING tag on an event that has not happened yet — a redline chip with
+   a live dot inside it. The dot is what animates, not the chip: a pulsing
+   border on a rectangle reads as a button asking to be pressed, and this is a
+   status, not a control.
+
+   Two layers on one element. The dot itself breathes between full and 55%
+   opacity; ::after is the halo ringing out of it — a ring that grows to 7px and
+   fades, the shape a radar sweep makes, which is the one piece of motion that
+   says "now" rather than "hello". 2.6s is slow enough to sit under reading
+   speed; anything near a second nags. */
+@keyframes upcoming-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes upcoming-halo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(192, 57, 43, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(192, 57, 43, 0);
+  }
+}
+
+.upcoming-dot {
+  animation: upcoming-dot 2.6s ease-in-out infinite;
+}
+
+.upcoming-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  animation: upcoming-halo 2.6s ease-out infinite;
+}
+
+/* Still a redline dot, just a steady one — the tag says what it needs to in
+   words, so nothing is lost by holding it still. */
+@media (prefers-reduced-motion: reduce) {
+  .upcoming-dot,
+  .upcoming-dot::after {
+    animation: none;
+  }
+}

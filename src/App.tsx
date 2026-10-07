@@ -6,6 +6,7 @@ import Mission from './pages/Mission'
 import Team from './pages/Team'
 import Events from './pages/Events'
 import Gallery from './pages/Gallery'
+import Designs from './pages/Designs'
 import FullPage from './pages/FullPage'
 import NotFound from './pages/NotFound'
 import { useEffect } from 'react'
@@ -17,6 +18,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/team': 'Our Team — McMaster Design League',
   '/events': 'Events — McMaster Design League',
   '/gallery': 'Gallery — McMaster Design League',
+  '/designs': 'CAD Designs — McMaster Design League',
   '/full': 'McMaster Design League',
 }
 
@@ -39,6 +41,9 @@ export default function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/events" element={<Events />} />
         <Route path="/gallery" element={<Gallery />} />
+        {/* Not in Nav's LINKS yet — this is a prototype you reach by typing the
+            URL, so it can be evaluated without shipping it to visitors. */}
+        <Route path="/designs" element={<Designs />} />
         <Route path="/full" element={<FullPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

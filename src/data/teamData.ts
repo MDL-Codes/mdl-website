@@ -23,6 +23,9 @@ import photoMinaya from '../assets/team/minaya-karunarathne.webp'
 import photoMaia from '../assets/team/maia-antolic.webp'
 import photoMichelle from '../assets/team/michelle-nishidera.webp'
 import photoAarudra from '../assets/team/aarudra-ramanan.webp'
+import photoRonit from '../assets/team/ronit-patel.webp'
+import photoLeanne from '../assets/team/leanne-yu.webp'
+import photoKylie from '../assets/team/kylie-gun.webp'
 
 export type Lead = {
   /** Subteam label shown across the top of the card. */
@@ -134,11 +137,6 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
     photo: photoRegan,
     role: 'Internal Manager',
   },
-  {
-    subteam: 'Internal Management',
-    name: 'Saloni Patel',
-    role: 'Internal Manager',
-  },
 
   // ------------------------------------------------------- cad technical ---
   {
@@ -214,6 +212,7 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   {
     subteam: 'Media',
     name: 'Ronit Patel',
+    photo: photoRonit,
     role: 'Media Lead',
   },
 
@@ -221,6 +220,7 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   {
     subteam: 'Operations',
     name: 'Leanne Yu',
+    photo: photoLeanne,
     role: 'Operations Lead',
   },
   {
@@ -234,6 +234,7 @@ const roster: Omit<Lead, 'bg' | 'blurb'>[] = [
   {
     subteam: 'Software',
     name: 'Kylie Gun',
+    photo: photoKylie,
     role: 'Software Lead',
   },
 
@@ -301,6 +302,7 @@ export const members: Member[] = [
   { name: 'Ravneet Sandhu', subteam: 'Operations' },
   { name: 'Wendy Zheng', subteam: 'Operations' },
 
+  { name: 'Michelle Wu', subteam: 'Software' },
   { name: 'Nabiha Sartaj', subteam: 'Software' },
   { name: 'Sanika Surose', subteam: 'Software' },
   { name: 'Taniya Jeevanayagam', subteam: 'Software' },

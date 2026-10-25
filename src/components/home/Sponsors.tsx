@@ -140,7 +140,7 @@ export default function Sponsors() {
                 for someone to send us something rather than to go and read a
                 page. The subject is prefilled so the replies arrive sorted. */}
             <a
-              href="mailto:mdlmcmaster@gmail.com?subject=Sponsorship%20package%20request"
+              href="mailto:mdl@mcmaster.ca?subject=Sponsorship%20package%20request"
               className="border border-navy-800 px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold uppercase leading-normal tracking-[1.68px] text-navy-800 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-800 [@media(hover:hover)]:hover:bg-navy-800 [@media(hover:hover)]:hover:text-paper"
             >
               request sponsorship package

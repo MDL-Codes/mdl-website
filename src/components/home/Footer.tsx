@@ -52,7 +52,7 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
     items: [
       { label: 'linktree', href: 'https://linktr.ee/mdlmcmaster' },
       { label: 'instagram', href: 'https://www.instagram.com/mdlmcmaster' },
-      { label: 'email', href: 'mailto:mdlmcmaster@gmail.com' },
+      { label: 'email', href: 'mailto:mdl@mcmaster.ca' },
       { label: 'linkedin', href: 'https://www.linkedin.com/company/mcmaster-design-league/posts/' },
       { label: 'youtube', href: 'https://www.youtube.com/channel/UCJu8GD4UfuH4Kf1ucAGVbaQ' },
     ],

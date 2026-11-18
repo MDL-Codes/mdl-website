@@ -288,10 +288,10 @@ export default function Hero() {
               2027 designathon
             </Link>
             <Link
-              to="/events"
+              to="/sponsors"
               className={`${BUTTON} border-white text-paper [@media(hover:hover)]:hover:border-paper-dim [@media(hover:hover)]:hover:bg-paper-dim [@media(hover:hover)]:hover:text-navy-950`}
             >
-              view events
+              our sponsors
             </Link>
           </div>
         </div>

@@ -255,12 +255,14 @@ export default function Events() {
             mt-auto — with the section content-sized there is no slack for an
             auto margin to absorb, and it would be a no-op that reads as intent. */}
         <div className="flex justify-center pt-[clamp(40px,4.03vw,58px)]">
-          <Link
-            to="/events"
+          <a
+            href="https://www.instagram.com/mdlmcmaster"
+            target="_blank"
+            rel="noreferrer"
             className="border border-navy-600 px-[clamp(16px,2.22vw,32px)] py-[18px] text-center font-plex text-[12px] font-semibold leading-normal tracking-[1.68px] uppercase text-navy-600 transition-colors duration-200 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-[3px] focus-visible:outline-navy-600 [@media(hover:hover)]:hover:bg-navy-600 [@media(hover:hover)]:hover:text-paper"
           >
-            see full events calendar
-          </Link>
+            follow for event updates
+          </a>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 /**
- * The redline UPCOMING chip, on both the Events page rows and the home cards.
+ * The redline UPCOMING chip on the home events cards.
  *
  * One component rather than the same nine classes in two files: it is the only
  * thing marking an event as still to come now that the page no longer splits

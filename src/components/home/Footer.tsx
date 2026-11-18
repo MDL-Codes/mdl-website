@@ -44,7 +44,7 @@ const COLUMNS: { heading: string; items: { label: string; to?: string; href?: st
     heading: 'compete',
     items: [
       { label: 'designathon', to: '/designathon' },
-      { label: 'workshops', to: '/events' },
+      { label: 'sponsor us', to: '/sponsors' },
     ],
   },
   {

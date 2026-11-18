@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 /**
- * The measured column for text pages (Team, Events, Designathon, Gallery, 404).
+ * The measured column for text pages (Team, Gallery, 404).
  *
  * Layout is full-bleed so that pages like Mission can paint edge-to-edge bands;
  * pages that are just a column of content get their gutter here instead. The

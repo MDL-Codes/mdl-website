@@ -20,7 +20,15 @@ export type Sponsor = {
   name: string
   logo: string
   tier: Tier
+  /** Their site. Set it and the plate on /sponsors becomes a link. */
+  url?: string
 }
+
+/**
+ * The one sponsorship ask, used by the home section and the /sponsors page.
+ * Subject prefilled so the replies arrive sorted.
+ */
+export const SPONSOR_MAILTO = 'mailto:mdl@mcmaster.ca?subject=Sponsorship%20package%20request'
 
 /**
  * The 2026-2027 sponsors.
@@ -43,3 +51,8 @@ export const sponsors: Sponsor[] = [
   { name: 'Charc Shawarma', logo: charcShawarma, tier: 'silver' },
   { name: 'Applied Electronics Limited', logo: appliedElectronics, tier: 'bronze' },
 ]
+
+/** Highest tier first — the order the home wall and the /sponsors page read in. */
+export const rankedSponsors = [...sponsors].sort(
+  (a, b) => TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier),
+)

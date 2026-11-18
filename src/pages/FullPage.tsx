@@ -2,7 +2,7 @@ import Home from './Home'
 import Designathon from './Designathon'
 import Mission from './Mission'
 import Team from './Team'
-import Events from './Events'
+import Sponsors from './Sponsors'
 import Gallery from './Gallery'
 
 const SECTIONS = [
@@ -10,7 +10,7 @@ const SECTIONS = [
   { id: 'designathon', component: Designathon },
   { id: 'mission', component: Mission },
   { id: 'team', component: Team },
-  { id: 'events', component: Events },
+  { id: 'sponsors', component: Sponsors },
   { id: 'gallery', component: Gallery },
 ]
 

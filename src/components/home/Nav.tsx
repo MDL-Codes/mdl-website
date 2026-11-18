@@ -13,7 +13,7 @@ const LINKS = [
   { to: '/designathon', label: 'Designathon', hash: 'designathon' },
   { to: '/mission', label: 'Mission', hash: 'mission' },
   { to: '/team', label: 'Team', hash: 'team' },
-  { to: '/events', label: 'Events', hash: 'events' },
+  { to: '/sponsors', label: 'Sponsors', hash: 'sponsors' },
   { to: '/gallery', label: 'Gallery', hash: 'gallery' },
 ]
 

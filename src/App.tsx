@@ -1,10 +1,10 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Designathon from './pages/Designathon'
 import Mission from './pages/Mission'
 import Team from './pages/Team'
-import Events from './pages/Events'
+import Sponsors from './pages/Sponsors'
 import Gallery from './pages/Gallery'
 import Designs from './pages/Designs'
 import FullPage from './pages/FullPage'
@@ -16,7 +16,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/designathon': 'Designathon — McMaster Design League',
   '/mission': 'Our Mission — McMaster Design League',
   '/team': 'Our Team — McMaster Design League',
-  '/events': 'Events — McMaster Design League',
+  '/sponsors': 'Sponsors — McMaster Design League',
   '/gallery': 'Gallery — McMaster Design League',
   '/designs': 'CAD Designs — McMaster Design League',
   '/full': 'McMaster Design League',
@@ -39,7 +39,9 @@ export default function App() {
         <Route path="/designathon" element={<Designathon />} />
         <Route path="/mission" element={<Mission />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/events" element={<Events />} />
+        <Route path="/sponsors" element={<Sponsors />} />
+        {/* Events page was retired; old links land on Home. */}
+        <Route path="/events" element={<Navigate to="/" replace />} />
         <Route path="/gallery" element={<Gallery />} />
         {/* Not in Nav's LINKS yet — this is a prototype you reach by typing the
             URL, so it can be evaluated without shipping it to visitors. */}

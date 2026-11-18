@@ -17,8 +17,8 @@ export type EventItem = {
   contain?: boolean
   /**
    * Where to register, when registration is open. Only upcoming events carry
-   * one; the Events page renders the button off this field, so clearing it when
-   * registration closes is what removes the button.
+   * one; the home events cards render the button off this field, so clearing
+   * it when registration closes is what removes the button.
    */
   register?: string
   /**

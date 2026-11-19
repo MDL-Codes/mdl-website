@@ -54,7 +54,7 @@ const CENTRELINE =
 const RULE = 'bg-paper-dim/50'
 
 // ponytail: three placeholder rows, local to the one section that renders them.
-// src/data/ is for content two pages share (eventsData, sponsorsData); promoting
+// src/data/ is for content two pages share (sponsorsData, faqData); promoting
 // these there now would be a folder with no second reader.
 const STATS = [
   { value: '500+', tol: '±50', label: 'participants' },

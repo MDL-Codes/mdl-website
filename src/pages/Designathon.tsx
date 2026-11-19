@@ -50,7 +50,7 @@ function ApplyLink({ className = '' }: { className?: string }) {
 }
 
 /**
- * The redline live dot from UpcomingTag, with this page's status in it. Closed,
+ * The redline live dot (.upcoming-dot), with this page's status in it. Closed,
  * it goes dim and stops pulsing: nothing is live any more.
  */
 function StatusTag({ open }: { open: boolean }) {

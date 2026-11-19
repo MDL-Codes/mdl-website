@@ -355,8 +355,8 @@ body {
   }
 }
 
-/* The UPCOMING tag on an event that has not happened yet — a redline chip with
-   a live dot inside it. The dot is what animates, not the chip: a pulsing
+/* The redline live dot on status chips (Designathon "now accepting
+   applications", Sponsors "partnering for designathon 2027"). The dot is what animates, not the chip: a pulsing
    border on a rectangle reads as a button asking to be pressed, and this is a
    status, not a control.
 

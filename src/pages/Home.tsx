@@ -9,7 +9,7 @@
 import Hero from '../components/home/Hero'
 import Countdown from '../components/home/Countdown'
 import AboutUs from '../components/home/AboutUs'
-import Events from '../components/home/Events'
+import WhatsOn from '../components/home/WhatsOn'
 import Recap from '../components/home/Recap'
 import Sponsors from '../components/home/Sponsors'
 import FinalCTA from '../components/home/FinalCTA'
@@ -20,7 +20,7 @@ export default function Home() {
       <Hero />
       <Countdown />
       <AboutUs />
-      <Events />
+      <WhatsOn />
       <Recap />
       <Sponsors />
       <FinalCTA />
